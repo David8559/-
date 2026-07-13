@@ -1,7 +1,7 @@
 ---
 type: project-status
 project: "数学建模知识库端到端验收"
-status: active
+status: completed
 updated: "2026-07-14"
 tags: [project/status]
 ---
@@ -10,7 +10,7 @@ tags: [project/status]
 
 ## 当前状态
 
-端到端链路已完成本地验收，正在完成 GitHub 推送验证。
+端到端链路已完成，GitHub 远端提交与本地状态已验证一致。
 
 ## 已完成事项
 
@@ -25,11 +25,11 @@ tags: [project/status]
 
 ## 待办事项
 
-- [ ] 验证 GitHub 远端提交与本地 HEAD 一致
+- [x] 验证 GitHub 远端提交与本地 HEAD 一致
 
 ## 下一步
 
-推送本次验收结果，记录远端提交并开始导入第二份真实研究资料。
+导入第二份真实研究资料，优先选择一个具体模型或竞赛题，验证更细粒度的自动分类。
 
 ## 风险
 

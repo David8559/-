@@ -1,6 +1,6 @@
 ---
 type: project-home
-status: active
+status: completed
 created: "2026-07-14"
 tags: [project/active]
 ---
@@ -20,7 +20,7 @@ tags: [project/active]
 - [x] Cleaner 在不删减、不总结、不改写观点的前提下生成清洗副本
 - [x] 资料只有一个 Research 主分类，同时拥有多个主题标签和 Hub 链接
 - [x] Knowledge Graph 与 Knowledge Base Audit 正常运行
-- [ ] GitHub `main` 与本地 HEAD 一致
+- [x] GitHub `main` 与本地 HEAD 一致
 
 ## 交付物
 
