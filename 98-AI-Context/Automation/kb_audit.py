@@ -73,6 +73,8 @@ def main() -> int:
     unresolved = []
     known_stems = set(stem_index)
     known_paths = {p.relative_to(VAULT).with_suffix("").as_posix().lower() for p in md_files}
+    known_stems.add(REPORT.stem.lower())
+    known_paths.add(REPORT.relative_to(VAULT).with_suffix("").as_posix().lower())
     for path, links in outbound.items():
         if path.name == "欢迎.md" or "90-Templates" in path.parts:
             continue

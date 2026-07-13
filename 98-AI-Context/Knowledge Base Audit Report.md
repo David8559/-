@@ -5,10 +5,10 @@ tags: [system/audit]
 
 # Knowledge Base Audit Report
 
-- 时间：2026-07-13T23:09:58+08:00
-- 文件：163（Markdown 140）
-- 问题项：1
-- 结构健康评分：99/100
+- 时间：2026-07-13T23:11:42+08:00
+- 文件：164（Markdown 140）
+- 问题项：0
+- 结构健康评分：100/100
 
 ## 重复内容
 
@@ -36,7 +36,7 @@ tags: [system/audit]
 
 ## 未解析内部链接
 
-- `知识库首页.md` → `[[Knowledge Base Audit Report]]`
+- 未发现问题。
 
 ## 结论
 
