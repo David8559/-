@@ -17,6 +17,11 @@ JUNK_SUFFIXES = {".tmp", ".bak", ".swp", ".part", ".pyc"}
 INVALID = re.compile(r'[<>:"|?*]|[ .]$')
 
 
+def is_pipeline_copy(path: Path) -> bool:
+    """Inbox working copies are expected lifecycle artifacts, not canonical notes."""
+    return rel(path).startswith(("00-Inbox/Downloaded/", "00-Inbox/Cleaned/"))
+
+
 def all_files() -> list[Path]:
     return [p for p in VAULT.rglob("*") if p.is_file() and not any(part in IGNORE_DIRS for part in p.parts)]
 
@@ -34,6 +39,8 @@ def main() -> int:
     md_files = [p for p in files if p.suffix.lower() == ".md" and p != REPORT]
     digest_map: dict[str, list[Path]] = defaultdict(list)
     for path in files:
+        if is_pipeline_copy(path):
+            continue
         if path.stat().st_size:
             digest_map[hashlib.sha256(path.read_bytes()).hexdigest()].append(path)
     duplicates = [", ".join(f"`{rel(p)}`" for p in paths) for paths in digest_map.values() if len(paths) > 1]
@@ -43,6 +50,8 @@ def main() -> int:
 
     stem_index: dict[str, list[Path]] = defaultdict(list)
     for p in md_files:
+        if is_pipeline_copy(p):
+            continue
         stem_index[p.stem.lower()].append(p)
     ambiguous = [f"名称 `{name}`：" + ", ".join(f"`{rel(p)}`" for p in paths) for name, paths in stem_index.items() if len(paths) > 1 and name not in {"readme", "agents"}]
 

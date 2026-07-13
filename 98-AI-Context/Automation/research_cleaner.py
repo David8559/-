@@ -89,7 +89,10 @@ def safe_name(title: str) -> str:
     return (value[:120] or "未命名研究资料") + ".md"
 
 
-def classify(text: str) -> str:
+def classify(text: str, title: str = "") -> str:
+    intro_markers = ("数学建模入门", "建模入门", "什么是数学建模", "数学建模基础")
+    if any(marker in title.lower() for marker in intro_markers):
+        return "04-Research/01-建模基础理论"
     lowered = text.lower()
     scored = [(sum(lowered.count(k.lower()) for k in keys), category) for category, keys in CATEGORY_RULES]
     score, category = max(scored, default=(0, "04-Research/01-建模基础理论"))
@@ -152,7 +155,7 @@ def clean_one(path: Path, promote: bool) -> dict[str, str]:
     source_match = re.search(r"https?://[^\s>)\]}]+", raw)
     source = meta.get("source") or meta.get("url") or (source_match.group(0) if source_match else "")
     author = meta.get("author", "")
-    category = classify(title + "\n" + body)
+    category = classify(title + "\n" + body, title)
     topics = detect_topics(title + "\n" + body)
     captured = meta.get("captured") or dt.datetime.now().astimezone().isoformat(timespec="seconds")
     tags = ["area/数学建模", "status/cleaned"] + [tag for tag, _ in topics]

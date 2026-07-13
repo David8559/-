@@ -58,7 +58,7 @@ tags: [project/status]
 | 日期 | 决策 | 理由 | 影响 |
 |---|---|---|---|
 "@
-$Home = @"
+$ProjectHome = @"
 ---
 type: project-home
 status: active
@@ -78,5 +78,13 @@ tags: [project/active]
 ## 复现方式
 "@
 [IO.File]::WriteAllText((Join-Path $Project 'Project-Status.md'), $Status, [Text.UTF8Encoding]::new($false))
-[IO.File]::WriteAllText((Join-Path $Project 'Readme.md'), $Home, [Text.UTF8Encoding]::new($false))
+[IO.File]::WriteAllText((Join-Path $Project 'Readme.md'), $ProjectHome, [Text.UTF8Encoding]::new($false))
+$SectionReadmes = @{
+    Code = "# Code`n`n保存可复现的 Python、MATLAB 与运行说明。`n"
+    Data = "# Data`n`n保存源数据、处理中间数据及字段说明。`n"
+    Paper = "# Paper`n`n保存论文正文、图表、参考文献与提交版本。`n"
+}
+foreach ($Section in $SectionReadmes.GetEnumerator()) {
+    [IO.File]::WriteAllText((Join-Path (Join-Path $Project $Section.Key) 'Readme.md'), $Section.Value, [Text.UTF8Encoding]::new($false))
+}
 Write-Output "Created project: $Project"
