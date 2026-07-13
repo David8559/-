@@ -1,0 +1,20 @@
+{
+  "schemaVersion": "0.1.0",
+  "name": "Research Capture",
+  "behavior": "create",
+  "noteNameFormat": "{{title|safe_name}}",
+  "path": "00-Inbox/Downloaded",
+  "context": "{{selectorHtml:article,main,[role=main],.post,.entry-content,.article-content,#content,.content|remove_html:(\"script,style,nav,header,footer,aside,form,button,svg,noscript,.ad,.ads,.advertisement,.comments,.related\")|markdown|replace:\"/\\n{3,}/g\":\"\\n\\n\"|trim}}",
+  "noteContentFormat": "# {{title}}\n\n> 来源：{{url}}\n> 作者：{{author}}\n> 发布时间：{{published|date:\"YYYY-MM-DD\"}}\n> 抓取时间：{{date|date:\"YYYY-MM-DD HH:mm:ss\"}}\n\n{{context}}",
+  "properties": [
+    {"name": "type", "value": "web-capture", "type": "text"},
+    {"name": "title", "value": "{{title}}", "type": "text"},
+    {"name": "source", "value": "{{url}}", "type": "text"},
+    {"name": "author", "value": "{{author}}", "type": "text"},
+    {"name": "published", "value": "{{published|date:\"YYYY-MM-DD\"}}", "type": "date"},
+    {"name": "captured", "value": "{{date|date:\"YYYY-MM-DD HH:mm:ss\"}}", "type": "date"},
+    {"name": "category", "value": "00-Inbox/Downloaded", "type": "text"},
+    {"name": "tags", "value": "source/web, status/untriaged", "type": "multitext"}
+  ],
+  "triggers": []
+}

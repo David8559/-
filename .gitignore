@@ -1,0 +1,27 @@
+# Obsidian per-device UI state and caches
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
+.obsidian/cache/
+.obsidian/plugins/obsidian-git/data.json.tmp
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
+desktop.ini
+*.tmp
+*.swp
+~$*
+
+# Python/MATLAB generated artifacts
+__pycache__/
+*.py[cod]
+.pytest_cache/
+*.asv
+*.autosave
+
+# Secrets and oversized raw scratch data
+.env
+.env.*
+*.key
+*.pem
+00-Inbox/Attachments/*.part
