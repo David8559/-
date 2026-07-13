@@ -1,0 +1,41 @@
+{
+	"schemaVersion": "0.1.0",
+	"name": "数学建模",
+	"behavior": "create",
+	"noteContentFormat": "#{{title}}\n来源：\n{{url}}\n\n作者：\n{{author}}\n\n抓取时间：\n{{date}}\n---\n{{content}}\n",
+	"properties": [
+		{
+			"name": "source",
+			"value": "{{url}}",
+			"type": "text"
+		},
+		{
+			"name": "author",
+			"value": "{{author}}",
+			"type": "multitext"
+		},
+		{
+			"name": "created",
+			"value": "{{date}}",
+			"type": "date"
+		},
+		{
+			"name": "status",
+			"value": "downloaded",
+			"type": "text"
+		},
+		{
+			"name": "type",
+			"value": "research",
+			"type": "text"
+		},
+		{
+			"name": "tags",
+			"value": "research",
+			"type": "multitext"
+		}
+	],
+	"triggers": [],
+	"noteNameFormat": "{{title}}",
+	"path": "00-Inbox/Downloaded"
+}
