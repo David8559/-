@@ -9,7 +9,10 @@ Maintain this Vault as a reproducible mathematical-modeling knowledge system for
 1. `98-AI-Context/About Me.md`
 2. `98-AI-Context/Current Focus.md`
 3. `98-AI-Context/AI Operating Context.md`
-4. The active project's `06-Projects/<name>/Project-Status.md`
+4. `98-AI-Context/数学建模知识库阅读与修改规范.md`
+5. The active project's `06-Projects/<name>/Project-Status.md`
+
+Before editing, inspect `git status`, search for existing notes with `rg`, and prefer extending the canonical note over creating a duplicate.
 
 ## Write rules
 
@@ -20,6 +23,12 @@ Maintain this Vault as a reproducible mathematical-modeling knowledge system for
 - Research Cleaner may change structure and metadata but must not delete, summarize, or rewrite source claims.
 - Every research claim needs a source; every code result needs environment, data, parameters, and reproduction steps.
 - Every project must contain `Project-Status.md` and keep status, completed work, tasks, next step, risks, and decisions current.
+- Use UTF-8 Markdown, preserve valid YAML frontmatter, and use Obsidian wiki links for internal relationships.
+- Distinguish sourced facts, computed results, assumptions, and Agent inference. Never invent a source, formula result, experiment, or validation outcome.
+- For mathematical models, record variables, units, assumptions, equations, data provenance, parameters, environment, validation, error or sensitivity analysis, limitations, and reproduction steps as applicable.
+- Make the smallest coherent change. Do not rename, move, delete, bulk-rewrite, change `.obsidian`, commit, or push unless the user explicitly authorizes that operation.
+- Treat `00-Inbox/Downloaded` and original datasets, papers, images, and other source artifacts as immutable. Create a cleaned or derived copy instead.
+- After structural or bulk changes, run the Vault audit and report changed files, validation performed, and unresolved risks.
 
 ## Memory routing
 
