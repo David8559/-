@@ -11,6 +11,10 @@ tags: [system/topic-index, topic/knowledge-graph]
 - [[评价模型 Hub]] — #topic/评价模型
 - [[预测模型 Hub]] — #topic/预测模型
 - [[优化模型 Hub]] — #topic/优化模型
+- [[动态规划 Hub]] — #topic/动态规划
+- [[马尔可夫决策过程 Hub]] — #topic/马尔可夫决策
+- [[博弈论 Hub]] — #topic/博弈论
+- [[蒙特卡洛 Hub]] — #topic/蒙特卡洛
 - [[图论网络 Hub]] — #topic/图论网络
 - [[微分方程动力学 Hub]] — #topic/动力学模型
 - [[智能优化 Hub]] — #topic/智能优化

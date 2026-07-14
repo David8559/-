@@ -77,6 +77,15 @@ def main() -> int:
         content += ["", "## 邻接主题", "", "- [[Topic Index]]", ""]
         (HUBS / f"{hub}.md").write_text("\n".join(content), encoding="utf-8")
 
+    index = [
+        "---", "type: map-of-content", "tags: [system/topic-index, topic/knowledge-graph]", "---", "",
+        "# Topic Index", "",
+        "一个文件只有一个主分类目录，但可以通过多个主题标签和内部链接进入多个 Hub。", "",
+    ]
+    index += [f"- [[{hub}]] — #{tag}" for hub, (tag, _) in TOPICS.items()]
+    index += [""]
+    (HUBS / "Topic Index.md").write_text("\n".join(index), encoding="utf-8")
+
     report = [
         "---", "type: knowledge-map-report", "tags: [system/knowledge-graph]", "---", "",
         "# Current Knowledge Map", "", f"> 扫描时间：{dt.datetime.now().astimezone().isoformat(timespec='seconds')} · 真实研究笔记：{len(notes)}", "",

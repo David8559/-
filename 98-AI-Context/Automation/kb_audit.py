@@ -53,7 +53,7 @@ def main() -> int:
         if is_pipeline_copy(p):
             continue
         stem_index[p.stem.lower()].append(p)
-    ambiguous = [f"名称 `{name}`：" + ", ".join(f"`{rel(p)}`" for p in paths) for name, paths in stem_index.items() if len(paths) > 1 and name not in {"readme", "agents"}]
+    ambiguous = [f"名称 `{name}`：" + ", ".join(f"`{rel(p)}`" for p in paths) for name, paths in stem_index.items() if len(paths) > 1 and name not in {"readme", "agents", "project-status"}]
 
     link_targets = CounterLike()
     outbound: dict[Path, list[str]] = {}
@@ -82,6 +82,7 @@ def main() -> int:
     unresolved = []
     known_stems = set(stem_index)
     known_paths = {p.relative_to(VAULT).with_suffix("").as_posix().lower() for p in md_files}
+    known_names = {p.name.lower() for p in files}
     known_stems.update(p.stem.lower() for p in files)
     known_paths.update(p.relative_to(VAULT).with_suffix("").as_posix().lower() for p in files)
     known_stems.add(REPORT.stem.lower())
@@ -91,7 +92,7 @@ def main() -> int:
             continue
         for item in links:
             normalized = item.replace("\\", "/").lower()
-            if normalized not in known_paths and Path(normalized).name not in known_stems:
+            if normalized not in known_paths and Path(normalized).name not in known_names and Path(normalized).stem not in known_stems:
                 unresolved.append(f"`{rel(path)}` → `[[{item}]]`")
 
     issue_count = sum(map(len, [duplicates, bad_names, empty_dirs, junk, ambiguous, orphans, conflicts, unresolved]))
