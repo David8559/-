@@ -5,14 +5,14 @@ tags: [system/audit]
 
 # Knowledge Base Audit Report
 
-- 时间：2026-07-14T12:35:44+08:00
-- 文件：205（Markdown 166）
-- 问题项：0
-- 结构健康评分：100/100
+- 时间：2026-07-14T16:42:35+08:00
+- 文件：3301（Markdown 170）
+- 问题项：2
+- 结构健康评分：93/100
 
 ## 重复内容
 
-- 未发现问题。
+- `未命名 1.canvas`, `未命名.canvas`, `.obsidian/appearance.json`
 
 ## 分类冲突
 
@@ -20,7 +20,7 @@ tags: [system/audit]
 
 ## 异常或含糊文件名
 
-- 未发现问题。
+- `未命名.canvas`
 
 ## 空目录
 
