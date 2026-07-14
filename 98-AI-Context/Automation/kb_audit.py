@@ -82,6 +82,8 @@ def main() -> int:
     unresolved = []
     known_stems = set(stem_index)
     known_paths = {p.relative_to(VAULT).with_suffix("").as_posix().lower() for p in md_files}
+    known_stems.update(p.stem.lower() for p in files)
+    known_paths.update(p.relative_to(VAULT).with_suffix("").as_posix().lower() for p in files)
     known_stems.add(REPORT.stem.lower())
     known_paths.add(REPORT.relative_to(VAULT).with_suffix("").as_posix().lower())
     for path, links in outbound.items():
