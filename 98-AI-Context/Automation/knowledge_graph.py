@@ -12,6 +12,12 @@ VAULT = Path(__file__).resolve().parents[2]
 RESEARCH = VAULT / "04-Research"
 HUBS = RESEARCH / "00-Topic-Hubs"
 REPORT = VAULT / "98-AI-Context" / "Current Knowledge Map.md"
+CODE_SECTION_BEGIN = "<!-- BEGIN AUTO-INTEGRATED-CODE -->"
+CODE_SECTION_END = "<!-- END AUTO-INTEGRATED-CODE -->"
+LANGUAGE_INDEX_BEGIN = "<!-- BEGIN AUTO-LANGUAGE-CODE-INDEX -->"
+LANGUAGE_INDEX_END = "<!-- END AUTO-LANGUAGE-CODE-INDEX -->"
+STUDY_GUIDE_BEGIN = "<!-- BEGIN AUTO-HUB-STUDY-GUIDE -->"
+STUDY_GUIDE_END = "<!-- END AUTO-HUB-STUDY-GUIDE -->"
 
 TOPICS = {
     "数学建模 Hub": ("topic/数学建模", ["数学建模", "建模竞赛", "模型选择"]),
@@ -40,9 +46,47 @@ GROUPS = {
     "平台": ["github", "obsidian", "kaggle", "知乎", "bilibili", "youtube", "微信"],
 }
 
+ADJACENCY = {
+    "数学建模 Hub": ["评价模型 Hub", "预测模型 Hub", "优化模型 Hub", "论文写作 Hub"],
+    "评价模型 Hub": ["数据处理 Hub", "模型检验 Hub", "可视化 Hub"],
+    "预测模型 Hub": ["数据处理 Hub", "模型检验 Hub", "微分方程动力学 Hub"],
+    "优化模型 Hub": ["动态规划 Hub", "智能优化 Hub", "图论网络 Hub"],
+    "动态规划 Hub": ["优化模型 Hub", "马尔可夫决策过程 Hub", "博弈论 Hub"],
+    "马尔可夫决策过程 Hub": ["动态规划 Hub", "蒙特卡洛 Hub", "博弈论 Hub"],
+    "博弈论 Hub": ["优化模型 Hub", "动态规划 Hub", "蒙特卡洛 Hub"],
+    "蒙特卡洛 Hub": ["模型检验 Hub", "数据处理 Hub", "微分方程动力学 Hub"],
+    "图论网络 Hub": ["优化模型 Hub", "动态规划 Hub", "可视化 Hub"],
+    "微分方程动力学 Hub": ["预测模型 Hub", "蒙特卡洛 Hub", "模型检验 Hub"],
+    "智能优化 Hub": ["优化模型 Hub", "数据处理 Hub", "模型检验 Hub"],
+    "数据处理 Hub": ["Python Hub", "MATLAB Hub", "可视化 Hub"],
+    "Python Hub": ["数据处理 Hub", "可视化 Hub", "优化模型 Hub"],
+    "MATLAB Hub": ["优化模型 Hub", "智能优化 Hub", "可视化 Hub"],
+    "可视化 Hub": ["数据处理 Hub", "论文写作 Hub", "Python Hub", "MATLAB Hub"],
+    "论文写作 Hub": ["可视化 Hub", "模型检验 Hub", "数学建模 Hub"],
+    "模型检验 Hub": ["数据处理 Hub", "蒙特卡洛 Hub", "论文写作 Hub"],
+}
+
 
 def note_link(path: Path) -> str:
     return path.relative_to(VAULT).with_suffix("").as_posix()
+
+
+def extract_generated_section(text: str, begin: str, end: str) -> str:
+    if begin not in text or end not in text:
+        return ""
+    return begin + text.split(begin, 1)[1].split(end, 1)[0] + end
+
+
+def preserved_generated_sections(path: Path) -> dict[str, str]:
+    """Keep study/code sections embedded by the code integrator on refresh."""
+    if not path.exists():
+        return {"study": "", "code": "", "language": ""}
+    text = path.read_text(encoding="utf-8", errors="replace")
+    return {
+        "study": extract_generated_section(text, STUDY_GUIDE_BEGIN, STUDY_GUIDE_END),
+        "code": extract_generated_section(text, CODE_SECTION_BEGIN, CODE_SECTION_END),
+        "language": extract_generated_section(text, LANGUAGE_INDEX_BEGIN, LANGUAGE_INDEX_END),
+    }
 
 
 def main() -> int:
@@ -67,15 +111,24 @@ def main() -> int:
 
     for hub, (tag, keys) in TOPICS.items():
         rows = sorted(matches.get(hub, []), key=lambda item: (-item[1], str(item[0])))
+        hub_path = HUBS / f"{hub}.md"
+        preserved = preserved_generated_sections(hub_path)
         content = [
             "---", "type: topic-hub", f"topic_tag: {tag}",
             "keywords: [" + ", ".join(keys) + "]", f"tags: [system/topic-hub, {tag}]", "---", "",
-            f"# {hub}", "", f"> 自动更新：{dt.date.today().isoformat()} · 匹配笔记：{len(rows)}", "",
-            "## 相关笔记", "",
+            f"# {hub}", "",
         ]
+        if preserved["study"]:
+            content += [preserved["study"], ""]
+        content += [f"> 自动更新：{dt.date.today().isoformat()} · 匹配笔记：{len(rows)}", "", "## 相关笔记", ""]
         content += [f"- [[{note_link(path)}]] — 相关度 {score}" for path, score in rows] or ["- 暂无真实研究笔记；等待导入。"]
-        content += ["", "## 邻接主题", "", "- [[Topic Index]]", ""]
-        (HUBS / f"{hub}.md").write_text("\n".join(content), encoding="utf-8")
+        content += ["", "## 邻接主题", "", "- [[Topic Index]]"]
+        content += [f"- [[{target}]]" for target in ADJACENCY.get(hub, [])]
+        content += [""]
+        for key in ("code", "language"):
+            if preserved[key]:
+                content += ["", preserved[key].rstrip(), ""]
+        hub_path.write_text("\n".join(content), encoding="utf-8")
 
     index = [
         "---", "type: map-of-content", "tags: [system/topic-index, topic/knowledge-graph]", "---", "",

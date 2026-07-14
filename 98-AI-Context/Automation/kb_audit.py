@@ -15,6 +15,7 @@ IGNORE_DIRS = {".git", ".trash", "__pycache__", ".cache"}
 JUNK_NAMES = {"thumbs.db", ".ds_store", "desktop.ini"}
 JUNK_SUFFIXES = {".tmp", ".bak", ".swp", ".part", ".pyc"}
 INVALID = re.compile(r'[<>:"|?*]|[ .]$')
+FENCED_CODE = re.compile(r"(?ms)^(`{3,}|~{3,})[^\n]*\n.*?^\1[ \t]*$")
 
 
 def is_pipeline_copy(path: Path) -> bool:
@@ -32,6 +33,26 @@ def rel(path: Path) -> str:
 
 def section(title: str, items: list[str], ok: str = "未发现问题。") -> list[str]:
     return [f"## {title}", ""] + ([f"- {item}" for item in items] if items else [f"- {ok}"]) + [""]
+
+
+def prose_only(text: str) -> str:
+    """Remove fenced source blocks before parsing Obsidian syntax.
+
+    Code-family notes intentionally embed original source verbatim.  Bracketed
+    arrays such as ``[[1, 2], [3, 4]]`` are code, not wiki links.
+    """
+    return FENCED_CODE.sub("", text)
+
+
+def link_key(value: str) -> str:
+    """Return an Obsidian link target basename without abusing Path suffixes.
+
+    A note title may legitimately contain dots (for example ``例2.1``), so
+    ``Path(...).stem`` would incorrectly truncate the title to ``例2``.
+    """
+    normalized = value.replace("\\", "/").rstrip("/").lower()
+    name = normalized.rsplit("/", 1)[-1]
+    return name[:-3] if name.endswith(".md") else name
 
 
 def main() -> int:
@@ -57,24 +78,27 @@ def main() -> int:
 
     link_targets = CounterLike()
     outbound: dict[Path, list[str]] = {}
+    prose_by_path: dict[Path, str] = {}
     for path in md_files:
         text = path.read_text(encoding="utf-8", errors="replace")
-        links = [m.split("|")[0].split("#")[0].strip() for m in re.findall(r"\[\[([^\]]+)\]\]", text)]
+        prose = prose_only(text)
+        prose_by_path[path] = prose
+        links = [m.split("|")[0].split("#")[0].strip() for m in re.findall(r"\[\[([^\]]+)\]\]", prose)]
         outbound[path] = [item for item in links if item]
         for item in outbound[path]:
-            link_targets.add(Path(item).name.lower())
+            link_targets.add(link_key(item))
     orphans = []
     for path in md_files:
         if path.name in {"知识库首页.md", "Topic Index.md"} or path.name.endswith("Template.md") or path.name == "Readme.md":
             continue
-        text = path.read_text(encoding="utf-8", errors="replace")
+        text = prose_by_path[path]
         has_tag = bool(re.search(r"(?m)^tags:\s*", text))
         if not outbound[path] and not link_targets.contains(path.stem.lower()) and not has_tag:
             orphans.append(f"`{rel(path)}`")
 
     conflicts = []
     for path in md_files:
-        text = path.read_text(encoding="utf-8", errors="replace")
+        text = prose_by_path[path]
         match = re.search(r"(?m)^category:\s*(.+)$", text)
         if match and ("," in match.group(1) or match.group(1).strip().startswith("[")):
             conflicts.append(f"`{rel(path)}`：category 不是单一值")
@@ -92,7 +116,8 @@ def main() -> int:
             continue
         for item in links:
             normalized = item.replace("\\", "/").lower()
-            if normalized not in known_paths and Path(normalized).name not in known_names and Path(normalized).stem not in known_stems:
+            target = link_key(item)
+            if normalized.removesuffix(".md") not in known_paths and target not in known_names and target not in known_stems:
                 unresolved.append(f"`{rel(path)}` → `[[{item}]]`")
 
     issue_count = sum(map(len, [duplicates, bad_names, empty_dirs, junk, ambiguous, orphans, conflicts, unresolved]))

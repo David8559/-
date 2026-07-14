@@ -5,6 +5,7 @@ from __future__ import annotations
 import csv
 import hashlib
 import json
+import re
 from collections import Counter, defaultdict
 from pathlib import Path
 
@@ -59,8 +60,55 @@ def classify_kind(extension: str) -> str:
     return "other"
 
 
-def language(extension: str) -> str:
-    return {
+def read_text_sample(path: Path) -> str:
+    for encoding in ("utf-8-sig", "gb18030", "utf-16", "latin-1"):
+        try:
+            return path.read_text(encoding=encoding)[:50_000]
+        except (UnicodeDecodeError, UnicodeError):
+            continue
+    return ""
+
+
+def looks_numeric_data(sample: str) -> bool:
+    """Conservatively identify line-oriented numeric tables saved as .txt."""
+    lines = [line.strip() for line in sample.splitlines() if line.strip()][:300]
+    if len(lines) < 4:
+        return False
+    data_lines = 0
+    for line in lines:
+        numbers = re.findall(r"(?<![A-Za-z_])[-+]?\d+(?:\.\d+)?(?:[Ee][-+]?\d+)?", line)
+        residue = re.sub(r"[-+]?\d+(?:\.\d+)?(?:[Ee][-+]?\d+)?", "", line)
+        if len(numbers) >= 2 and not re.search(r"[A-Za-z_\u4e00-\u9fff]", residue):
+            data_lines += 1
+    return data_lines / len(lines) >= 0.7
+
+
+def has_code_markers(sample: str) -> bool:
+    patterns = (
+        r"(?m)^\s*#\s*include\b|\bstd::",
+        r"(?m)^\s*(?:def|class|from|import)\s+\w+",
+        r"(?mi)^\s*(?:proc\s+\w+\s*;|data\s+\w+\s*;|run\s*;)",
+        r"(?i)\b(?:model:|sets:|endsets|@for\s*\(|@sum\s*\()",
+        r"(?mi)^\s*function\b|\b(?:clc|clear\s+all)\b|\b(?:plot|figure|zeros|ones)\s*\(",
+        r"(?m)^\s*(?:for|while|if)\b[^\n]*(?:;|:)?\s*$.*?^\s*end\b",
+    )
+    return any(re.search(pattern, sample) for pattern in patterns)
+
+
+def classify_text_file(relative_path: str, path: Path) -> str:
+    """Separate source-like .txt files from local datasets and documents."""
+    sample = read_text_sample(path)
+    filename = path.stem.lower()
+    data_named = any(keyword in filename for keyword in ("数据", "样本", "矩阵", "data", "dataset"))
+    if looks_numeric_data(sample) or (data_named and not has_code_markers(sample)):
+        return "data"
+    if has_code_markers(sample):
+        return "source-code"
+    return "document"
+
+
+def language(extension: str, path: Path) -> str:
+    known = {
         ".py": "Python",
         ".ipynb": "Python/Jupyter",
         ".m": "MATLAB",
@@ -72,6 +120,26 @@ def language(extension: str) -> str:
         ".c": "C",
         ".h": "C/C++ Header",
     }.get(extension, "")
+    if known or extension != ".txt":
+        return known
+    sample = read_text_sample(path).lower()
+    if "#include" in sample or "std::" in sample:
+        return "C++"
+    if "def " in sample or "import numpy" in sample or "import pandas" in sample:
+        return "Python"
+    if "proc " in sample and ("data " in sample or "run;" in sample):
+        return "SAS"
+    if "@for(" in sample or "endsets" in sample or "model:" in sample:
+        return "LINGO"
+    if any(
+        token in sample
+        for token in (
+            "clc", "clear all", "function ", "plot(", "zeros(", "ones(",
+            "linprog(", "quadprog(", "fmincon(", "disp(", "eig(", "%",
+        )
+    ):
+        return "MATLAB"
+    return "Code Snippet"
 
 
 def safety(extension: str) -> str:
@@ -106,13 +174,16 @@ def main() -> None:
         relative = path.relative_to(SOURCE).as_posix()
         extension = path.suffix.lower()
         collection = relative.split("/", 1)[0]
-        digest = source_hash(path, extension)
+        kind = classify_kind(extension)
+        if extension == ".txt":
+            kind = classify_text_file(relative, path)
+        digest = source_hash(path, extension) if kind == "source-code" else ""
         row = {
             "relative_path": relative,
             "collection": collection,
             "topic": classify_topic(relative),
-            "kind": classify_kind(extension),
-            "language": language(extension),
+            "kind": kind,
+            "language": language(extension, path) if kind == "source-code" else "",
             "extension": extension or "[none]",
             "size_kb": round(path.stat().st_size / 1024, 2),
             "safety": safety(extension),

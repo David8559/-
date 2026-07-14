@@ -52,6 +52,7 @@
 6.数学建模模型算法大全/元胞自动机/元胞自动机/论文讲解1-15（元胞自动机实例）/MatLab code/new_cars.m,6.数学建模模型算法大全,仿真与随机模型,source-code,MATLAB,.m,0.33,normal,40993ed9babedf6488730284681659e53d372d93f62d0b8e9737897ad128d220,
 6.数学建模模型算法大全/元胞自动机/元胞自动机/论文讲解1-15（元胞自动机实例）/MatLab code/show_plaza.m,6.数学建模模型算法大全,仿真与随机模型,source-code,MATLAB,.m,0.83,normal,db41189c7c4323f6b52688fd1ee7ad59ff8bf8937441ced98cf6e41bafd0a56d,
 6.数学建模模型算法大全/元胞自动机/元胞自动机/论文讲解1-15（元胞自动机实例）/MatLab code/switch_lanes.m,6.数学建模模型算法大全,仿真与随机模型,source-code,MATLAB,.m,1.08,normal,c7c104033d8128b6e8cf793c76e61b0a0dbeff64e9cdc8211ae6c0914500051f,
+6.数学建模模型算法大全/元胞自动机/元胞自动机程序.txt,6.数学建模模型算法大全,仿真与随机模型,source-code,MATLAB,.txt,17.69,normal,e730d380e9996c6fdb246b5ed85b30c22f64385e8d7a4c99cddb4fe3110c46c3,
 6.数学建模模型算法大全/司守奎数学建模算法课件/ZUIXIAOFEI/floydpath.m,6.数学建模模型算法大全,图论与排队,source-code,MATLAB,.m,0.45,normal,a8cc013f5de6915302e69fee5b88474fe181d7013acbb41fb6a3c8fb03e29ddd,
 6.数学建模模型算法大全/司守奎数学建模算法课件/ZUIXIAOFEI/mainexample19.m,6.数学建模模型算法大全,待人工分类,source-code,MATLAB,.m,0.3,normal,d6d0f9dd6769daff6eb41cdf0c55b456c64a08842905cfdf240b2c066f5a6e39,
 6.数学建模模型算法大全/司守奎数学建模算法课件/ZUIXIAOFEI/mincostmaxflow.m,6.数学建模模型算法大全,待人工分类,source-code,MATLAB,.m,0.74,normal,c14786ab7c524ae0bd43154308048a94c09f8e45d211433dc57c45955b09d090,
@@ -429,6 +430,11 @@
 6.数学建模模型算法大全/模拟退火/satools/m/satoolsversion.m,6.数学建模模型算法大全,优化与规划,source-code,MATLAB,.m,0.38,normal,7644ee78d3ac119c6034e0470479fc155c6a3c2c624c5f5e97af649e3f54d358,DUP-0079
 6.数学建模模型算法大全/模拟退火/satools/m/stillinger3Dpoints.m,6.数学建模模型算法大全,优化与规划,source-code,MATLAB,.m,1.52,normal,fca0a5b529aabd9938bec325c9fc2b07c04330dfe8b805b20c220043c12076ee,DUP-0080
 6.数学建模模型算法大全/模拟退火/satools/m/szu.m,6.数学建模模型算法大全,优化与规划,source-code,MATLAB,.m,0.58,normal,167e29eb27c086b6e280c5171437c3f0ea50fe17f343a0f3f90291a477d61295,DUP-0081
+6.数学建模模型算法大全/模拟退火/satools/m/template_cost.txt,6.数学建模模型算法大全,优化与规划,source-code,MATLAB,.txt,0.29,normal,e72f46f0cc210c5577c2cf1ce45f22009c007954ee0c09a2af27de12148cffe2,DUP-0082
+6.数学建模模型算法大全/模拟退火/satools/m/template_init.txt,6.数学建模模型算法大全,优化与规划,source-code,MATLAB,.txt,0.18,normal,cf3a17099fccefc4cfab0717da64c1370147d02a3ede773ff3a35272179ee98a,DUP-0083
+6.数学建模模型算法大全/模拟退火/satools/m/template_new.txt,6.数学建模模型算法大全,优化与规划,source-code,MATLAB,.txt,0.36,normal,0477642751a005607390483fc39081420db20a0f4ef4cdda1432b5f584d1766a,DUP-0084
+6.数学建模模型算法大全/模拟退火/satools/m/template_perturb.txt,6.数学建模模型算法大全,优化与规划,source-code,MATLAB,.txt,0.26,normal,2609d75e2dd5f3954a654d7b9a203b857581691c809ca4cb698e63eeb90d0ae9,DUP-0085
+6.数学建模模型算法大全/模拟退火/satools/m/template_try_me.txt,6.数学建模模型算法大全,优化与规划,source-code,MATLAB,.txt,1.36,normal,255ee88a9df9d61e00b461f8ff0e15f45b37b25fdde5b3aed1be7d8237f57201,DUP-0086
 6.数学建模模型算法大全/模拟退火/satools/m/TfinalNstop.m,6.数学建模模型算法大全,优化与规划,source-code,MATLAB,.m,1.63,normal,72134a4957141587b5d2dedfe00726bb37e85d53944a9aaf362fa21736df3cd8,DUP-0087
 6.数学建模模型算法大全/模拟退火/satools/m/thermospeedHC.m,6.数学建模模型算法大全,优化与规划,source-code,MATLAB,.m,1.14,normal,372b40e64956fe86db2ef38716014dc1479ec6109f9e72a79f049dc3cef6a0a2,DUP-0088
 6.数学建模模型算法大全/模拟退火/satools/m/thermospeedR.m,6.数学建模模型算法大全,优化与规划,source-code,MATLAB,.m,1.06,normal,1dfe1d45874fd9091699d829b2e56de9f06ffea59fd9b54b8f20e9f5cd3a37cb,DUP-0089
@@ -439,10 +445,18 @@
 6.数学建模模型算法大全/模拟退火/satools/m/TM.m,6.数学建模模型算法大全,优化与规划,source-code,MATLAB,.m,4.66,normal,f3df9c3de98481a6f0748ae42564b784ab928c673260328cc6a9580f9aa2d4df,DUP-0094
 6.数学建模模型算法大全/模拟退火/satools/m/tsallis.m,6.数学建模模型算法大全,优化与规划,source-code,MATLAB,.m,0.71,normal,8b10b8c6d0e872e64aff31f8446411cccac9ed103a440e8c7b3f096e0aa655b5,DUP-0095
 6.数学建模模型算法大全/模拟退火/模拟退火算法/monituihuo.m,6.数学建模模型算法大全,优化与规划,source-code,MATLAB,.m,1.24,normal,3afb99e4b4d2b918734519292327c05ea5d71d7a7268ae30a9a072c737bf0f0a,
+6.数学建模模型算法大全/模拟退火/模拟退火算法及禁忌搜索算法的matlab源程序.txt,6.数学建模模型算法大全,优化与规划,source-code,MATLAB,.txt,7.9,normal,d803488e9760961e35d099f63e9e927f446f70acac9ee4e6f136cca61973ff8d,
 6.数学建模模型算法大全/模拟退火/直接搜索算法/example23_3.m,6.数学建模模型算法大全,优化与规划,source-code,MATLAB,.m,0.42,normal,b731c576d894cecdd59ae71c9b28ee4943744b9ffc0fff0e49c7fc22b12f25fe,
 6.数学建模模型算法大全/灰色模型/bpnet(1).m,6.数学建模模型算法大全,预测与时间序列,source-code,MATLAB,.m,2.34,normal,4d3b1015e586811f84971693f25766c3adc59f97bdc62e0a4dd5265c636da34c,
+6.数学建模模型算法大全/神经网络/Matlab神经网络.txt,6.数学建模模型算法大全,机器学习与神经网络,source-code,MATLAB,.txt,3.2,normal,2b8c11778cdc2066ad0750d48cc203d06fcbfad426ecfe2242a76438edaaa884,
 6.数学建模模型算法大全/神经网络/神经网络预测/NumREC.m,6.数学建模模型算法大全,预测与时间序列,source-code,MATLAB,.m,0.45,normal,c22fdff55e3800b831edbd3c8544cc862fe1e23c74492898907194fa8f123bcd,DUP-0097
 6.数学建模模型算法大全/神经网络/神经网络预测/NumSIM.m,6.数学建模模型算法大全,预测与时间序列,source-code,MATLAB,.m,0.31,normal,c7bdbdddde568f36f5a3e135e08cf8716738f40cab01e45449f6d0944dd88924,DUP-0098
+6.数学建模模型算法大全/统计分析/00预备知识 SAS软件简介/数据.txt,6.数学建模模型算法大全,统计与数据处理,source-code,SAS,.txt,1.83,normal,dda6638ba37f0890c28f33a65fc36a8f8abac7879791a5dada2fadef34494591,
+6.数学建模模型算法大全/统计分析/00预备知识 SAS软件简介/第01章例题程序.txt,6.数学建模模型算法大全,统计与数据处理,source-code,SAS,.txt,3.99,normal,5b1488a93a836082a76fd31ec1f826ba4f0d7aa66122644fd5fbee9de67081dd,
+6.数学建模模型算法大全/统计分析/00预备知识 SAS软件简介/第3章例题程序.txt,6.数学建模模型算法大全,统计与数据处理,source-code,SAS,.txt,4.47,normal,cc2f3747429ca02959fd4dc285fe6369a1877927e3465a823444ef86ccca1a42,
+6.数学建模模型算法大全/统计分析/00预备知识 SAS软件简介/第4章例题程序.txt,6.数学建模模型算法大全,统计与数据处理,source-code,SAS,.txt,4.11,normal,1b785711a66bcbf3a17dc9c04c9890dbd9275f495f0dc5bce52184dcd0600505,
+6.数学建模模型算法大全/统计分析/00预备知识 SAS软件简介/第五章例题程序.txt,6.数学建模模型算法大全,统计与数据处理,source-code,SAS,.txt,10.67,normal,ee386a48cfc3ddb18534e0ecdb9a5c463b5042a24f680a8b65ab2ff7ea256f3b,
+6.数学建模模型算法大全/统计分析/00预备知识 SAS软件简介/第六章例题程序.txt,6.数学建模模型算法大全,统计与数据处理,source-code,SAS,.txt,9.11,normal,31906dcb9e5a8c7b3efec8864c7318b99647e11f36d14249c2e922eb6cbede81,
 6.数学建模模型算法大全/统计分析/多元分析/主成份分析/Untitled14.m,6.数学建模模型算法大全,统计与数据处理,source-code,MATLAB,.m,0.58,normal,4c817ca920a3b6985c4bcda247365f825b8b87503799d2ea170442fde24ab90f,
 6.数学建模模型算法大全/统计分析/多元分析/主成份分析/zhuchengfen.m,6.数学建模模型算法大全,统计与数据处理,source-code,MATLAB,.m,1.18,normal,dca8425268d00c140a079fd53d8b6847baa05fe033ddeba1fa999a22a6eb5448,
 6.数学建模模型算法大全/统计分析/多元分析/因子分析/yinzifenxi.m,6.数学建模模型算法大全,统计与数据处理,source-code,MATLAB,.m,0.82,normal,959feef572d88d47a1f2769b73ee1f6f4e510baf5d76de9f462b5e493def5bd7,
@@ -641,8 +655,12 @@
 6.数学建模模型算法大全/统计分析/时间序列/时间序列课件/时间序列/程序/第四章/例4.2.sas,6.数学建模模型算法大全,预测与时间序列,source-code,SAS,.sas,1.33,normal,3e12d7678e1aaba7d8878e4f75c2e03f2c89c466fe5411add8782b74bad922cc,
 6.数学建模模型算法大全/统计分析/时间序列/时间序列课件/时间序列/程序/第四章/例4.5.sas,6.数学建模模型算法大全,预测与时间序列,source-code,SAS,.sas,0.69,normal,939ab492f44a9a9c5df8f163980a106526d4f5daa9ab547797fc771774c16484,
 6.数学建模模型算法大全/统计分析/时间序列/时间序列课件/时间序列/程序/第四章/例4_7（续）.sas,6.数学建模模型算法大全,预测与时间序列,source-code,SAS,.sas,2.3,normal,c924eaf1c54df1379c44cb342c4c2e795e2b02fe73d6977a129b9eb897c043c9,
+6.数学建模模型算法大全/统计分析/模糊数学课件/程序/新建 文本文档 (2).txt,6.数学建模模型算法大全,统计与数据处理,source-code,MATLAB,.txt,5.92,normal,e793ac0ad9754c403475fe577f60e07cb8abae3300f334d75a06b1f4c4c46fcd,
+6.数学建模模型算法大全/统计分析/模糊数学课件/程序/新建 文本文档.txt,6.数学建模模型算法大全,统计与数据处理,source-code,MATLAB,.txt,4.75,normal,1783c668e2f3cb7830c2872249cee35cd5238df6c0810fbc2db591a7a01778af,
 6.数学建模模型算法大全/综合评价方法/主成份分析法/主成分分析/eig.m,6.数学建模模型算法大全,评价与决策,source-code,MATLAB,.m,1.3,normal,642c99cf96f9a217f1cb1b706494fc3b45d99c3d4de792c252916688013e053f,
 6.数学建模模型算法大全/综合评价方法/主成份分析法/主成分分析/xgjz.m,6.数学建模模型算法大全,评价与决策,source-code,MATLAB,.m,1.3,normal,9bd002961f31f177636ed04e88dd60d27ec01aeeef010c1a5790c25a536262d0,
+6.数学建模模型算法大全/综合评价方法/层次分析法/AHP理论/层次分析法MATLAB实现.txt,6.数学建模模型算法大全,评价与决策,source-code,MATLAB,.txt,0.74,normal,4f98c74fb783cfbd7dec67f98596097e17407eb5d24a4705ef77874f3edb963c,
+6.数学建模模型算法大全/综合评价方法/层次分析法/AHP理论/足球队排名matlab实现.txt,6.数学建模模型算法大全,评价与决策,source-code,MATLAB,.txt,3.35,normal,9182a9f131e20916b267c837c07436821188ddc45123edfcb20207c5c00c7fac,
 6.数学建模模型算法大全/综合评价方法/层次分析法/Untitled12.m,6.数学建模模型算法大全,评价与决策,source-code,MATLAB,.m,0.72,normal,bd087b8f7ea86dde20a69da6137644eec8ea726b6be60fc190dc0bb99eb116d7,
 6.数学建模模型算法大全/蒙特卡罗算法/蒙特卡洛法/蒙特卡洛/MonteCarlo/Demos/LakeArea/ConfidenceIntervalInMC.m,6.数学建模模型算法大全,仿真与随机模型,source-code,MATLAB,.m,1.57,normal,2494f0f2ff33c4e2e2966cd4f24bf31c5723c7b6d56ab5152dab894a14a9734a,
 6.数学建模模型算法大全/蒙特卡罗算法/蒙特卡洛法/蒙特卡洛/MonteCarlo/Demos/LakeArea/CreateConvexPolygon(1).m,6.数学建模模型算法大全,仿真与随机模型,source-code,MATLAB,.m,0.38,normal,dbb202c3a1bd6012440f6216c5445450c827b574d242e15c15370d54e23a5320,
@@ -705,6 +723,10 @@
 6.数学建模模型算法大全/蚁群算法/粒子群工具箱 - Particle Swarm (PSO) Toolbox-beta-0.3/Rosenbrock.m,6.数学建模模型算法大全,优化与规划,source-code,MATLAB,.m,0.52,normal,932283b1ec6907be37bedc4c45a3fbdd3438081fe50554445a737f99c4770377,DUP-0104
 6.数学建模模型算法大全/蚁群算法/粒子群工具箱 - Particle Swarm (PSO) Toolbox-beta-0.3/RunExp.m,6.数学建模模型算法大全,优化与规划,source-code,MATLAB,.m,7.3,normal,307da4eb911e0616ab49e71fb374b61520f0760763a70f5df6eed94a82f7cbea,
 6.数学建模模型算法大全/蚁群算法/粒子群工具箱 - Particle Swarm (PSO) Toolbox-beta-0.3/show_psoOptions.m,6.数学建模模型算法大全,优化与规划,source-code,MATLAB,.m,1.67,normal,cd389b01f1ee4496cf5ae0c004c38b53659bf11709dd4dfa6132f5b7c3f2b6a7,
+6.数学建模模型算法大全/蚁群算法/粒子群算法的源代码/pso1.txt,6.数学建模模型算法大全,优化与规划,source-code,MATLAB,.txt,6.39,normal,84bb08b9cdea548288f9f16e14599b20281b26291c98b19a935617ebc007eb06,
+6.数学建模模型算法大全/蚁群算法/粒子群算法的源代码/pso2.txt,6.数学建模模型算法大全,优化与规划,source-code,C++,.txt,3.94,normal,9c631016ea1f095d4fa4c939d81447722d4183bb43799ab922aee4513331febd,
+6.数学建模模型算法大全/蚁群算法/粒子群算法的源代码/粒子群算法的源代码.txt,6.数学建模模型算法大全,优化与规划,source-code,C++,.txt,11.78,normal,cd655386b1170e4e66555dae5f75c083b1b766846f8fa1c69b2c6839d6553741,
+6.数学建模模型算法大全/蚁群算法/蚁群算法matlab源码.txt,6.数学建模模型算法大全,优化与规划,source-code,MATLAB,.txt,3.01,normal,0a36a33ce293a86437133fde3d9756267c7b08bdebb29e23a3172429b8c77083,
 6.数学建模模型算法大全/遗传算法/GA_spline/checkPop(1).m,6.数学建模模型算法大全,优化与规划,source-code,MATLAB,.m,0.23,normal,5826c2675873b4277fa903044598f06d5189c7af2cc22b79ee89562763150a21,
 6.数学建模模型算法大全/遗传算法/GA_spline/cross.m,6.数学建模模型算法大全,优化与规划,source-code,MATLAB,.m,0.33,normal,e256cadcf64d54ae0b8dc2f133d26484c2e46c5bff08fd5ba3b8453927f32ba8,
 6.数学建模模型算法大全/遗传算法/GA_spline/fitness.m,6.数学建模模型算法大全,优化与规划,source-code,MATLAB,.m,0.77,normal,909e9debc77aadcc5f4d7b29745449642e5176412c2689667a97e20789ed6dc6,
@@ -798,6 +820,7 @@
 6.数学建模模型算法大全/遗传算法/遗传算法@遗传退火算法（算法简介+编程技巧+工具箱+应用大全）（含源代码）/遗传算法的一些应用于编程（含源代码）/MTSP问题求解/MTSP的求解程序代码/floyed.m,6.数学建模模型算法大全,优化与规划,source-code,MATLAB,.m,0.91,normal,ccb198e8f01bcb03064ed5f427c69a8468a5a49611dc2f116d8448c5617c9b83,
 6.数学建模模型算法大全/遗传算法/遗传算法@遗传退火算法（算法简介+编程技巧+工具箱+应用大全）（含源代码）/遗传算法的一些应用于编程（含源代码）/MTSP问题求解/MTSP的求解程序代码/mtspf_ga.m,6.数学建模模型算法大全,优化与规划,source-code,MATLAB,.m,5.96,normal,8abadf1a9de5ec2d001933d0cba8d15089bb3e4dd7fc9b664dc9c67ff3759315,
 6.数学建模模型算法大全/遗传算法/遗传算法@遗传退火算法（算法简介+编程技巧+工具箱+应用大全）（含源代码）/遗传算法的一些应用于编程（含源代码）/MTSP问题求解/MTSP的求解程序代码/myLength.m,6.数学建模模型算法大全,优化与规划,source-code,MATLAB,.m,0.12,normal,b3387939f0f3355f00b9bb8e9714d114e26737bcbdba2f7e42d88c78d99de7b6,
+6.数学建模模型算法大全/遗传算法/遗传算法@遗传退火算法（算法简介+编程技巧+工具箱+应用大全）（含源代码）/遗传算法的一些应用于编程（含源代码）/TSP问题求解/基于Matlab的遗传算法解决TSP问题的报告.txt,6.数学建模模型算法大全,优化与规划,source-code,MATLAB,.txt,18.15,normal,5fbac372e478779091bd7d3e055125ade49599c2cf583edcaf7ba9ba854eb3ad,
 6.数学建模模型算法大全/遗传算法/遗传算法@遗传退火算法（算法简介+编程技巧+工具箱+应用大全）（含源代码）/遗传算法的一些应用于编程（含源代码）/TSP问题求解/自创遗传算法解TSP操作/crossover.m,6.数学建模模型算法大全,优化与规划,source-code,MATLAB,.m,2.11,normal,5ce5e4d183194c51934593fdd6cac4c986aad02361ead0dadb122832f43270f9,
 6.数学建模模型算法大全/遗传算法/遗传算法@遗传退火算法（算法简介+编程技巧+工具箱+应用大全）（含源代码）/遗传算法的一些应用于编程（含源代码）/TSP问题求解/自创遗传算法解TSP操作/draw.m,6.数学建模模型算法大全,优化与规划,source-code,MATLAB,.m,0.54,normal,2d4c4809dd15aebec74a632881c4a124c880ae40b5f6617436c97f5dd066bdb7,
 6.数学建模模型算法大全/遗传算法/遗传算法@遗传退火算法（算法简介+编程技巧+工具箱+应用大全）（含源代码）/遗传算法的一些应用于编程（含源代码）/TSP问题求解/自创遗传算法解TSP操作/DrawPath.m,6.数学建模模型算法大全,优化与规划,source-code,MATLAB,.m,0.6,normal,096cd91f41dd4c715eb5ec09142bed6c6719939415fa918ca99ebf20f07221c2,DUP-0128
@@ -824,6 +847,7 @@
 6.数学建模模型算法大全/遗传算法/遗传算法@遗传退火算法（算法简介+编程技巧+工具箱+应用大全）（含源代码）/遗传算法的一些应用于编程（含源代码）/TSP问题求解/遗传算法求解TSP标准程序/Select.m,6.数学建模模型算法大全,优化与规划,source-code,MATLAB,.m,0.23,normal,52bdba55f65890e2b37cf7fbc73e1fa3fcf193ed28d30140aea14f47ba19ef28,
 6.数学建模模型算法大全/遗传算法/遗传算法@遗传退火算法（算法简介+编程技巧+工具箱+应用大全）（含源代码）/遗传算法的一些应用于编程（含源代码）/TSP问题求解/遗传算法求解TSP标准程序/Sus.m,6.数学建模模型算法大全,优化与规划,source-code,MATLAB,.m,0.44,normal,74809141812a4b2625b6b8a60cb874427a81a24cf85e14dce6d897ec1245b35f,
 6.数学建模模型算法大全/遗传算法/遗传算法@遗传退火算法（算法简介+编程技巧+工具箱+应用大全）（含源代码）/遗传算法的一些应用于编程（含源代码）/TSP问题求解/遗传算法求解TSP标准程序/test.m,6.数学建模模型算法大全,优化与规划,source-code,MATLAB,.m,0.18,normal,5053ca018c498e3f4ef4247fe1dd64ab5a705a949dff1711e23fe9fba52f6be4,
+6.数学建模模型算法大全/遗传算法/遗传算法@遗传退火算法（算法简介+编程技巧+工具箱+应用大全）（含源代码）/遗传算法的一些应用于编程（含源代码）/源程序.txt,6.数学建模模型算法大全,优化与规划,source-code,MATLAB,.txt,6.84,normal,ebef31117ca693ca11f54353e194f7b8ee0b2c82fe8ce422d96ddfa3f65c1127,DUP-0134
 6.数学建模模型算法大全/遗传算法/遗传算法@遗传退火算法（算法简介+编程技巧+工具箱+应用大全）（含源代码）/遗传算法的一些应用于编程（含源代码）/物流选址/免疫算法程序实现/bestselect.m,6.数学建模模型算法大全,优化与规划,source-code,MATLAB,.m,1.63,normal,f05fa6e2a0fc0f87a000cfab4095932952d84359f63400e1229f063ad491b12f,
 6.数学建模模型算法大全/遗传算法/遗传算法@遗传退火算法（算法简介+编程技巧+工具箱+应用大全）（含源代码）/遗传算法的一些应用于编程（含源代码）/物流选址/免疫算法程序实现/concentration.m,6.数学建模模型算法大全,优化与规划,source-code,MATLAB,.m,0.47,normal,8999aeb7343521126670c7286db80ec7299811e688c823c9903400ef12a42074,
 6.数学建模模型算法大全/遗传算法/遗传算法@遗传退火算法（算法简介+编程技巧+工具箱+应用大全）（含源代码）/遗传算法的一些应用于编程（含源代码）/物流选址/免疫算法程序实现/Cross.m,6.数学建模模型算法大全,优化与规划,source-code,MATLAB,.m,1.26,normal,32f8151959858c90f6e39cba55d7bd67b466c79d75226a6dc50fc6c47d215113,
@@ -890,6 +914,8 @@
 6.数学建模模型算法大全/遗传算法/遗传算法@遗传退火算法（算法简介+编程技巧+工具箱+应用大全）（含源代码）/遗传算法的一些应用于编程（含源代码）/车辆调度问题/vrp/mutate.m,6.数学建模模型算法大全,优化与规划,source-code,MATLAB,.m,0.11,normal,68d14d7d6bacc962b155d68cb12d3b4cec0bc9596537c926bdfc1ebf73aee0cb,
 6.数学建模模型算法大全/遗传算法/遗传算法@遗传退火算法（算法简介+编程技巧+工具箱+应用大全）（含源代码）/遗传算法的一些应用于编程（含源代码）/车辆调度问题/vrp/myLength.m,6.数学建模模型算法大全,优化与规划,source-code,MATLAB,.m,0.99,normal,40efd5ca6b9672ddb25337a88c2649f0b1ced2013a8cdc0811545488e6a3ebfc,
 6.数学建模模型算法大全/遗传算法/遗传算法@遗传退火算法（算法简介+编程技巧+工具箱+应用大全）（含源代码）/遗传算法的一些应用于编程（含源代码）/车辆调度问题/vrp/VRP.m,6.数学建模模型算法大全,优化与规划,source-code,MATLAB,.m,0.72,normal,bdb1333ac5c65c709cf65604f50e115e152c36584733001599b7f903213989db,
+6.数学建模模型算法大全/遗传算法/遗传算法@遗传退火算法（算法简介+编程技巧+工具箱+应用大全）（含源代码）/遗传算法的一些应用于编程（含源代码）/遗传算法程序 matlab.txt,6.数学建模模型算法大全,优化与规划,source-code,MATLAB,.txt,8.44,normal,5126c26a028c20578f8f37d66349184c4fed80e36ed7770aad75aa6d02d434ea,DUP-0135
+6.数学建模模型算法大全/遗传算法/遗传算法@遗传退火算法（算法简介+编程技巧+工具箱+应用大全）（含源代码）/遗传算法的一些应用于编程（含源代码）/遗传算法解决 TSP 问题.txt,6.数学建模模型算法大全,优化与规划,source-code,MATLAB,.txt,8.88,normal,365635e679a735c858baf795b05df00f1262d18cc3e82cf1cf18ba7998abe05c,DUP-0136
 6.数学建模模型算法大全/遗传算法/遗传算法@遗传退火算法（算法简介+编程技巧+工具箱+应用大全）（含源代码）/遗传退火算法/代码区/Anneal.m,6.数学建模模型算法大全,优化与规划,source-code,MATLAB,.m,0.87,normal,a68b0f4e7a157bbf0c8065df9cefa07bfa3e3703d32607f81f39c48fe5edf1e1,DUP-0137
 6.数学建模模型算法大全/遗传算法/遗传算法@遗传退火算法（算法简介+编程技巧+工具箱+应用大全）（含源代码）/遗传退火算法/代码区/Anneal5.m,6.数学建模模型算法大全,优化与规划,source-code,MATLAB,.m,0.84,normal,32d699e6edca2b93a3d028447b6b895efc9b2e020c8bc7a94dea7e6681e6fc4d,DUP-0138
 6.数学建模模型算法大全/遗传算法/遗传算法@遗传退火算法（算法简介+编程技巧+工具箱+应用大全）（含源代码）/遗传退火算法/代码区/Anneal7.m,6.数学建模模型算法大全,优化与规划,source-code,MATLAB,.m,1.39,normal,26fac9884ecdd4dbb143f51bfafd3bf0ca778257fe5ce13c14650734dabf2243,DUP-0139
@@ -976,6 +1002,11 @@
 6.数学建模模型算法大全/遗传算法/遗传算法@遗传退火算法（算法简介+编程技巧+工具箱+应用大全）（含源代码）/遗传退火算法/遗传退火算法工具箱（二）/satoolsversion.m,6.数学建模模型算法大全,优化与规划,source-code,MATLAB,.m,0.38,normal,7644ee78d3ac119c6034e0470479fc155c6a3c2c624c5f5e97af649e3f54d358,DUP-0079
 6.数学建模模型算法大全/遗传算法/遗传算法@遗传退火算法（算法简介+编程技巧+工具箱+应用大全）（含源代码）/遗传退火算法/遗传退火算法工具箱（二）/stillinger3Dpoints.m,6.数学建模模型算法大全,优化与规划,source-code,MATLAB,.m,1.52,normal,fca0a5b529aabd9938bec325c9fc2b07c04330dfe8b805b20c220043c12076ee,DUP-0080
 6.数学建模模型算法大全/遗传算法/遗传算法@遗传退火算法（算法简介+编程技巧+工具箱+应用大全）（含源代码）/遗传退火算法/遗传退火算法工具箱（二）/szu.m,6.数学建模模型算法大全,优化与规划,source-code,MATLAB,.m,0.58,normal,167e29eb27c086b6e280c5171437c3f0ea50fe17f343a0f3f90291a477d61295,DUP-0081
+6.数学建模模型算法大全/遗传算法/遗传算法@遗传退火算法（算法简介+编程技巧+工具箱+应用大全）（含源代码）/遗传退火算法/遗传退火算法工具箱（二）/template_cost.txt,6.数学建模模型算法大全,优化与规划,source-code,MATLAB,.txt,0.29,normal,e72f46f0cc210c5577c2cf1ce45f22009c007954ee0c09a2af27de12148cffe2,DUP-0082
+6.数学建模模型算法大全/遗传算法/遗传算法@遗传退火算法（算法简介+编程技巧+工具箱+应用大全）（含源代码）/遗传退火算法/遗传退火算法工具箱（二）/template_init.txt,6.数学建模模型算法大全,优化与规划,source-code,MATLAB,.txt,0.18,normal,cf3a17099fccefc4cfab0717da64c1370147d02a3ede773ff3a35272179ee98a,DUP-0083
+6.数学建模模型算法大全/遗传算法/遗传算法@遗传退火算法（算法简介+编程技巧+工具箱+应用大全）（含源代码）/遗传退火算法/遗传退火算法工具箱（二）/template_new.txt,6.数学建模模型算法大全,优化与规划,source-code,MATLAB,.txt,0.36,normal,0477642751a005607390483fc39081420db20a0f4ef4cdda1432b5f584d1766a,DUP-0084
+6.数学建模模型算法大全/遗传算法/遗传算法@遗传退火算法（算法简介+编程技巧+工具箱+应用大全）（含源代码）/遗传退火算法/遗传退火算法工具箱（二）/template_perturb.txt,6.数学建模模型算法大全,优化与规划,source-code,MATLAB,.txt,0.26,normal,2609d75e2dd5f3954a654d7b9a203b857581691c809ca4cb698e63eeb90d0ae9,DUP-0085
+6.数学建模模型算法大全/遗传算法/遗传算法@遗传退火算法（算法简介+编程技巧+工具箱+应用大全）（含源代码）/遗传退火算法/遗传退火算法工具箱（二）/template_try_me.txt,6.数学建模模型算法大全,优化与规划,source-code,MATLAB,.txt,1.36,normal,255ee88a9df9d61e00b461f8ff0e15f45b37b25fdde5b3aed1be7d8237f57201,DUP-0086
 6.数学建模模型算法大全/遗传算法/遗传算法@遗传退火算法（算法简介+编程技巧+工具箱+应用大全）（含源代码）/遗传退火算法/遗传退火算法工具箱（二）/TfinalNstop.m,6.数学建模模型算法大全,优化与规划,source-code,MATLAB,.m,1.63,normal,72134a4957141587b5d2dedfe00726bb37e85d53944a9aaf362fa21736df3cd8,DUP-0087
 6.数学建模模型算法大全/遗传算法/遗传算法@遗传退火算法（算法简介+编程技巧+工具箱+应用大全）（含源代码）/遗传退火算法/遗传退火算法工具箱（二）/thermospeedHC.m,6.数学建模模型算法大全,优化与规划,source-code,MATLAB,.m,1.14,normal,372b40e64956fe86db2ef38716014dc1479ec6109f9e72a79f049dc3cef6a0a2,DUP-0088
 6.数学建模模型算法大全/遗传算法/遗传算法@遗传退火算法（算法简介+编程技巧+工具箱+应用大全）（含源代码）/遗传退火算法/遗传退火算法工具箱（二）/thermospeedR.m,6.数学建模模型算法大全,优化与规划,source-code,MATLAB,.m,1.06,normal,1dfe1d45874fd9091699d829b2e56de9f06ffea59fd9b54b8f20e9f5cd3a37cb,DUP-0089
@@ -1004,6 +1035,13 @@
 6.数学建模模型算法大全/预测方法/回归分析/第11讲 回归分析/yhat.m,6.数学建模模型算法大全,预测与时间序列,source-code,MATLAB,.m,0.08,normal,6ed09bed3549bb8b9c63284c1787b549c3c77e9772baacdbfbfa2a9a75b9416b,
 6.数学建模模型算法大全/预测方法/神经网络预测/NumREC.m,6.数学建模模型算法大全,预测与时间序列,source-code,MATLAB,.m,0.45,normal,c22fdff55e3800b831edbd3c8544cc862fe1e23c74492898907194fa8f123bcd,DUP-0097
 6.数学建模模型算法大全/预测方法/神经网络预测/NumSIM.m,6.数学建模模型算法大全,预测与时间序列,source-code,MATLAB,.m,0.31,normal,c7bdbdddde568f36f5a3e135e08cf8716738f40cab01e45449f6d0944dd88924,DUP-0098
+推荐基础数模资料学习/十大算法/dijkstra  c++程序/dijk.txt,推荐基础数模资料学习,图论与排队,source-code,C++,.txt,16.29,normal,2dfbc31cb362c44c4918a2aec01cd029f8451b17392ad7da602ebab960a026fa,
+推荐基础数模资料学习/十大算法/免疫算法.txt,推荐基础数模资料学习,待人工分类,source-code,MATLAB,.txt,9.44,normal,3d6bf9ca684282aa1035311d435d950d8c63db8cda41c28a2856326a05ea6eb8,
+推荐基础数模资料学习/十大算法/分治算法/c程序.txt,推荐基础数模资料学习,待人工分类,source-code,MATLAB,.txt,0.39,normal,4757391acc76fbf63d9438a2aa590330c3cf29636e2dcda7aa96e41398c0c7a7,
+推荐基础数模资料学习/十大算法/分治算法/中国数学建模-编程交流-分治算法_1.txt,推荐基础数模资料学习,待人工分类,source-code,MATLAB,.txt,12.65,normal,8b0f71ded73c0c1f2a5c02c37e1aa0b96d06d75e0d08b2241da7518eda360fb3,
+推荐基础数模资料学习/十大算法/分治算法/中国数学建模-编程交流-分治算法_2.txt,推荐基础数模资料学习,待人工分类,source-code,MATLAB,.txt,6.34,normal,ffa567a3261b238728331f526aea7c8113f1551bca75eea163ddab943d68c6f9,
+推荐基础数模资料学习/十大算法/动态规划/中国数学建模-编程交流-动态规划算法_1.txt,推荐基础数模资料学习,优化与规划,source-code,MATLAB,.txt,20.28,normal,adaae3bf248d5ae09037ae141739920dff0c4fdb966e303d92578b8395a03fd5,
+推荐基础数模资料学习/十大算法/动态规划/中国数学建模-编程交流-动态规划算法_2.txt,推荐基础数模资料学习,优化与规划,source-code,MATLAB,.txt,33.71,normal,49c462a1033c5abef92cf6d45111bed55a362f158cf190a4b214d0828cb4731a,
 推荐基础数模资料学习/十大算法/图论/哈密尔顿回路/TSP模拟退火/accept.m,推荐基础数模资料学习,优化与规划,source-code,MATLAB,.m,0.07,normal,37f1a15d9220107e0a423c380806ab76821db32cdc10186547b85038388c356a,
 推荐基础数模资料学习/十大算法/图论/哈密尔顿回路/TSP模拟退火/annealing.m,推荐基础数模资料学习,优化与规划,source-code,MATLAB,.m,0.67,normal,746a570d02cd07bcd7498d9fa560d3daab38a00c56fca92525c370e1cd725092,
 推荐基础数模资料学习/十大算法/图论/哈密尔顿回路/TSP模拟退火/calculate.m,推荐基础数模资料学习,优化与规划,source-code,MATLAB,.m,0.2,normal,fbb2b408402373689177973becfcf4bf7e8e3ad6295dbcb8fdbf00af54493d44,
@@ -1013,6 +1051,9 @@
 推荐基础数模资料学习/十大算法/图论/哈密尔顿回路/三边交换简单算法/bianquan.m,推荐基础数模资料学习,图论与排队,source-code,MATLAB,.m,0.54,normal,f2855c207c85a400617240c87300a516440286b593799105317b160a1c3e0d92,
 推荐基础数模资料学习/十大算法/图论/哈密尔顿回路/三边交换简单算法/cost_sum.m,推荐基础数模资料学习,图论与排队,source-code,MATLAB,.m,0.1,normal,370bfa87c544488ebce51e97a1102db4a99bd974183fa746d6ca05bb72fdfa65,DUP-0162
 推荐基础数模资料学习/十大算法/图论/哈密尔顿回路/三边交换简单算法/jiaohuan3.m,推荐基础数模资料学习,图论与排队,source-code,MATLAB,.m,1.26,normal,1f874395344a4e840d279ae18577c1b313d869c7f295422a06e6506598a11cfe,
+推荐基础数模资料学习/十大算法/搜索算法/中国数学建模-编程交流-搜索算法基础.txt,推荐基础数模资料学习,待人工分类,source-code,MATLAB,.txt,23.08,normal,d44767f9de91fc71279a8c61978a7a58f6f32184fa3e51c9feec711d7998c8c4,
+推荐基础数模资料学习/十大算法/概率算法/中国数学建模-编程交流-概率算法简介.txt,推荐基础数模资料学习,待人工分类,source-code,MATLAB,.txt,10.24,normal,82d836473b732f7246f0cff98ebbed46eeb7a98b0a18180655755006da88eae9,
+推荐基础数模资料学习/十大算法/模拟退火算法/中国数学建模-编程交流-模拟退火算法.txt,推荐基础数模资料学习,优化与规划,source-code,MATLAB,.txt,13.94,normal,59a8c73557afc40dbf6da5230e19e8a251551688bb7790f26b0085a9541042e0,
 推荐基础数模资料学习/十大算法/模拟退火，禁忌搜索，遗传算法，神经网络-MATLAB程序合集/简单函数优化的遗传算法程序/cro.m,推荐基础数模资料学习,优化与规划,source-code,MATLAB,.m,0.39,normal,562446dab063a1febd8e13f5743cc08f5cdec9dcd0a707900a7a4c8030f9f66d,DUP-0105
 推荐基础数模资料学习/十大算法/模拟退火，禁忌搜索，遗传算法，神经网络-MATLAB程序合集/简单函数优化的遗传算法程序/ft.m,推荐基础数模资料学习,优化与规划,source-code,MATLAB,.m,0.05,normal,57f88d5be46ddaa7246d2261256c320f1502811625b08cf4a2c930fefe512767,DUP-0106
 推荐基础数模资料学习/十大算法/模拟退火，禁忌搜索，遗传算法，神经网络-MATLAB程序合集/简单函数优化的遗传算法程序/ga.m,推荐基础数模资料学习,优化与规划,source-code,MATLAB,.m,2.38,normal,c1a709b588c07db1b31853790ebcc2ddc6f98fa21af62b990e1cbfcae0558734,DUP-0107
@@ -1022,6 +1063,11 @@
 推荐基础数模资料学习/十大算法/模拟退火，禁忌搜索，遗传算法，神经网络-MATLAB程序合集/简单函数优化的遗传算法程序/objf.m,推荐基础数模资料学习,优化与规划,source-code,MATLAB,.m,0.39,normal,73548fe322b023fe09a1fb2476af4ad2b6bee3ed1198e8cfbc61caf76e7d4eb4,DUP-0111
 推荐基础数模资料学习/十大算法/模拟退火，禁忌搜索，遗传算法，神经网络-MATLAB程序合集/简单函数优化的遗传算法程序/pro.m,推荐基础数模资料学习,优化与规划,source-code,MATLAB,.m,0.11,normal,2daa3229d842fb0154fdfb8be18da2df13254bc6bdf471a948649d3019fa2d0c,DUP-0112
 推荐基础数模资料学习/十大算法/模拟退火，禁忌搜索，遗传算法，神经网络-MATLAB程序合集/简单函数优化的遗传算法程序/sel.m,推荐基础数模资料学习,优化与规划,source-code,MATLAB,.m,0.22,normal,802791b541fcfaf8a7371d45db2a939462bce2280829a70f2769c258c5c697fd,DUP-0113
+推荐基础数模资料学习/十大算法/灰色预测/灰色预测MATLAB程序.txt,推荐基础数模资料学习,预测与时间序列,source-code,MATLAB,.txt,3.86,normal,10f8c4f6ec283d118c26ba49dc03231155fa535bf72608e58762adf3e1251d0c,
+推荐基础数模资料学习/十大算法/穷举法求解0-1整数规划的matlab程序.txt,推荐基础数模资料学习,优化与规划,source-code,MATLAB,.txt,5.25,normal,39edfa6e314f5bd902a845559d40bdc8cf72f0682b7a16d93038fb28e696aa01,
+推荐基础数模资料学习/十大算法/组合算法/中国数学建模-编程交流-组合算法概论.txt,推荐基础数模资料学习,待人工分类,source-code,MATLAB,.txt,51.42,normal,67c17e9e3854be8744ef10882a10ca01a0e946f16f1e9c87084704408e2ebce2,
+推荐基础数模资料学习/十大算法/贪婪算法/中国数学建模-编程交流-贪婪算法_1.txt,推荐基础数模资料学习,待人工分类,source-code,MATLAB,.txt,56.86,normal,9521da8225fcaa9be49d08fe4cec8582acce02662ed2db86291bc651922d68ef,
+推荐基础数模资料学习/十大算法/贪婪算法/中国数学建模-编程交流-贪婪算法_2.txt,推荐基础数模资料学习,待人工分类,source-code,MATLAB,.txt,24.22,normal,016d25be5fb8343a1f43ffb6326ebc252405317afc7b1a04792baab42c280b5e,
 推荐基础数模资料学习/十大算法/遗传算法/与已有的相同/B2F.m,推荐基础数模资料学习,优化与规划,source-code,MATLAB,.m,0.64,normal,caea6aa308c917bc76e4d3980872e51b48889a0d128b746fe638d85f752e5ef7,DUP-0114
 推荐基础数模资料学习/十大算法/遗传算法/与已有的相同/changes.m,推荐基础数模资料学习,优化与规划,source-code,MATLAB,.m,0.94,normal,6131cf2e58e7b2cd7e9544b4bf335f9125fc89508b6b115d574e43c2a6e1a1d3,DUP-0115
 推荐基础数模资料学习/十大算法/遗传算法/与已有的相同/cross.m,推荐基础数模资料学习,优化与规划,source-code,MATLAB,.m,1.13,normal,8eddbc1746d3ce06c04e4f33f27630936f1363ff0bd4e46b9e4728f0d6a4ef96,DUP-0116
@@ -1035,6 +1081,9 @@
 推荐基础数模资料学习/十大算法/遗传算法/与已有的相同/myfun.m,推荐基础数模资料学习,优化与规划,source-code,MATLAB,.m,0.15,normal,b1855695ae6d222117e6b1937ef2063bbcdbb87810659120e19177ed1da2ed9c,DUP-0124
 推荐基础数模资料学习/十大算法/遗传算法/与已有的相同/myga.m,推荐基础数模资料学习,优化与规划,source-code,MATLAB,.m,1.57,normal,e81f0d48d2000673960cd2f40e86e892a8cab20282d90de7bc0ae7280a0552b2,DUP-0125
 推荐基础数模资料学习/十大算法/遗传算法/与已有的相同/xcross.m,推荐基础数模资料学习,优化与规划,source-code,MATLAB,.m,0.13,normal,2ec2484033d8e1167922fbb2b1b9f7c57f2c16034f64f52652be91c9cd4cec84,DUP-0126
+推荐基础数模资料学习/十大算法/遗传算法/源程序.txt,推荐基础数模资料学习,优化与规划,source-code,MATLAB,.txt,6.84,normal,ebef31117ca693ca11f54353e194f7b8ee0b2c82fe8ce422d96ddfa3f65c1127,DUP-0134
+推荐基础数模资料学习/十大算法/遗传算法/遗传算法程序 matlab.txt,推荐基础数模资料学习,优化与规划,source-code,MATLAB,.txt,8.44,normal,5126c26a028c20578f8f37d66349184c4fed80e36ed7770aad75aa6d02d434ea,DUP-0135
+推荐基础数模资料学习/十大算法/遗传算法/遗传算法解决 TSP 问题.txt,推荐基础数模资料学习,优化与规划,source-code,MATLAB,.txt,8.88,normal,365635e679a735c858baf795b05df00f1262d18cc3e82cf1cf18ba7998abe05c,DUP-0136
 推荐基础数模资料学习/十大算法/遗传退火法/Anneal.m,推荐基础数模资料学习,待人工分类,source-code,MATLAB,.m,0.87,normal,a68b0f4e7a157bbf0c8065df9cefa07bfa3e3703d32607f81f39c48fe5edf1e1,DUP-0137
 推荐基础数模资料学习/十大算法/遗传退火法/Anneal5.m,推荐基础数模资料学习,待人工分类,source-code,MATLAB,.m,0.84,normal,32d699e6edca2b93a3d028447b6b895efc9b2e020c8bc7a94dea7e6681e6fc4d,DUP-0138
 推荐基础数模资料学习/十大算法/遗传退火法/Anneal7.m,推荐基础数模资料学习,待人工分类,source-code,MATLAB,.m,1.39,normal,26fac9884ecdd4dbb143f51bfafd3bf0ca778257fe5ce13c14650734dabf2243,DUP-0139
@@ -1121,6 +1170,11 @@
 推荐基础数模资料学习/十大算法/遗传退火法/一个Matlab的模拟退火算法工具箱/satoolsversion.m,推荐基础数模资料学习,优化与规划,source-code,MATLAB,.m,0.38,normal,7644ee78d3ac119c6034e0470479fc155c6a3c2c624c5f5e97af649e3f54d358,DUP-0079
 推荐基础数模资料学习/十大算法/遗传退火法/一个Matlab的模拟退火算法工具箱/stillinger3Dpoints.m,推荐基础数模资料学习,优化与规划,source-code,MATLAB,.m,1.52,normal,fca0a5b529aabd9938bec325c9fc2b07c04330dfe8b805b20c220043c12076ee,DUP-0080
 推荐基础数模资料学习/十大算法/遗传退火法/一个Matlab的模拟退火算法工具箱/szu.m,推荐基础数模资料学习,优化与规划,source-code,MATLAB,.m,0.58,normal,167e29eb27c086b6e280c5171437c3f0ea50fe17f343a0f3f90291a477d61295,DUP-0081
+推荐基础数模资料学习/十大算法/遗传退火法/一个Matlab的模拟退火算法工具箱/template_cost.txt,推荐基础数模资料学习,优化与规划,source-code,MATLAB,.txt,0.29,normal,e72f46f0cc210c5577c2cf1ce45f22009c007954ee0c09a2af27de12148cffe2,DUP-0082
+推荐基础数模资料学习/十大算法/遗传退火法/一个Matlab的模拟退火算法工具箱/template_init.txt,推荐基础数模资料学习,优化与规划,source-code,MATLAB,.txt,0.18,normal,cf3a17099fccefc4cfab0717da64c1370147d02a3ede773ff3a35272179ee98a,DUP-0083
+推荐基础数模资料学习/十大算法/遗传退火法/一个Matlab的模拟退火算法工具箱/template_new.txt,推荐基础数模资料学习,优化与规划,source-code,MATLAB,.txt,0.36,normal,0477642751a005607390483fc39081420db20a0f4ef4cdda1432b5f584d1766a,DUP-0084
+推荐基础数模资料学习/十大算法/遗传退火法/一个Matlab的模拟退火算法工具箱/template_perturb.txt,推荐基础数模资料学习,优化与规划,source-code,MATLAB,.txt,0.26,normal,2609d75e2dd5f3954a654d7b9a203b857581691c809ca4cb698e63eeb90d0ae9,DUP-0085
+推荐基础数模资料学习/十大算法/遗传退火法/一个Matlab的模拟退火算法工具箱/template_try_me.txt,推荐基础数模资料学习,优化与规划,source-code,MATLAB,.txt,1.36,normal,255ee88a9df9d61e00b461f8ff0e15f45b37b25fdde5b3aed1be7d8237f57201,DUP-0086
 推荐基础数模资料学习/十大算法/遗传退火法/一个Matlab的模拟退火算法工具箱/TfinalNstop.m,推荐基础数模资料学习,优化与规划,source-code,MATLAB,.m,1.63,normal,72134a4957141587b5d2dedfe00726bb37e85d53944a9aaf362fa21736df3cd8,DUP-0087
 推荐基础数模资料学习/十大算法/遗传退火法/一个Matlab的模拟退火算法工具箱/thermospeedHC.m,推荐基础数模资料学习,优化与规划,source-code,MATLAB,.m,1.14,normal,372b40e64956fe86db2ef38716014dc1479ec6109f9e72a79f049dc3cef6a0a2,DUP-0088
 推荐基础数模资料学习/十大算法/遗传退火法/一个Matlab的模拟退火算法工具箱/thermospeedR.m,推荐基础数模资料学习,优化与规划,source-code,MATLAB,.m,1.06,normal,1dfe1d45874fd9091699d829b2e56de9f06ffea59fd9b54b8f20e9f5cd3a37cb,DUP-0089
@@ -1478,12 +1532,36 @@
 数学建模Python相关/数学建模常用算法（Python 程序及数据）/程序及数据/20第20章  数字图像处理(Python 程序及数据)/Pex20_8.py,数学建模Python相关,可视化与图像,source-code,Python,.py,0.27,normal,1495258830f6ba86cc1945190f97e94b1d2292d209937d84c2cbfe77b94d8219,
 数学建模Python相关/数学建模常用算法（Python 程序及数据）/程序及数据/20第20章  数字图像处理(Python 程序及数据)/Pex20_9.py,数学建模Python相关,可视化与图像,source-code,Python,.py,0.36,normal,e024a1a983e5df5730b88dd5b61c1bb60c082f1b1e39939ae024cee499b563c2,
 数学建模Python相关/数学建模常用算法（Python 程序及数据）/程序及数据/20第20章  数字图像处理(Python 程序及数据)/Pz20_1.py,数学建模Python相关,可视化与图像,source-code,Python,.py,0.1,normal,09930f38a218937bd6caffe96ca80aa4fbd3655a53639e93869b3178fdbd1127,
+数学建模程序代码资料合集/Dijkstra算法找最短路径代码.txt,数学建模程序代码资料合集,图论与排队,source-code,MATLAB,.txt,2.03,normal,d40493c81e9f32a7a8e92e824c418616dc46cf6e206575d69cb14279ad07eeb1,
+数学建模程序代码资料合集/Floyd算法求最小距离代码.txt,数学建模程序代码资料合集,图论与排队,source-code,MATLAB,.txt,0.68,normal,e8ee1147deb430d0906cd5642ef79a79451072c8e8d1d63a16c50a2be8d1ea91,
+数学建模程序代码资料合集/K-means算法代码.txt,数学建模程序代码资料合集,统计与数据处理,source-code,MATLAB,.txt,2.06,normal,1fec7baeb7d32a66b9d71559c9e51f77a9e70834f95d5809cda1c8d538610447,
 数学建模程序代码资料合集/RBF神经网络做回归预测代码/jingxiangjiyuce.m,数学建模程序代码资料合集,预测与时间序列,source-code,MATLAB,.m,1.73,normal,d9be4fbd2e5877a6e5e4b1ede750f8b2bc4a65e61f63d3d426176749e89ed017,
+数学建模程序代码资料合集/SVM分类器代码.txt,数学建模程序代码资料合集,机器学习与神经网络,source-code,MATLAB,.txt,7.12,normal,23a713a5d6f2b2fcb585294e5a0093ab73a15ee52fd4f82049946b81a4c3f72f,
+数学建模程序代码资料合集/Topsis算法综合评价代码.txt,数学建模程序代码资料合集,评价与决策,source-code,MATLAB,.txt,1.25,normal,77ec89fc1eb901c8ba2554f054fe3ac07eb5b63afcec08f04a2ae914eb0de737,
+数学建模程序代码资料合集/三次指数平滑及其时间序列预测.txt,数学建模程序代码资料合集,预测与时间序列,source-code,MATLAB,.txt,0.76,normal,f63ead062cc341b719119c785a5ca1a23a8d756c32e9a861d0c4a1c42eabfedb,
+数学建模程序代码资料合集/二次指数平滑及其时间序列预测代码.txt,数学建模程序代码资料合集,预测与时间序列,source-code,MATLAB,.txt,0.53,normal,47c42c2c24c4c39c33dee5ad0770ee8f25914f1071f3e6389080abd380c671e9,
 数学建模程序代码资料合集/元胞自动机代码可直接运行（建议学会基本原理再用）/NaSchr.m,数学建模程序代码资料合集,仿真与随机模型,source-code,MATLAB,.m,4.24,normal,3be45ef0cabf25b4b699223c5809d68b6fd8c07edc467febe47ce639395e3d08,
 数学建模程序代码资料合集/元胞自动机代码可直接运行（建议学会基本原理再用）/ts.m,数学建模程序代码资料合集,仿真与随机模型,source-code,MATLAB,.m,0.33,normal,ca4ff3b32c8c45f4db0b087e344338444e9235620682c145b15a9854a7a89597,
+数学建模程序代码资料合集/元胞自动机代码演示案例.txt,数学建模程序代码资料合集,仿真与随机模型,source-code,MATLAB,.txt,10.96,normal,af0fb280fd7b9f4c439497434fabf57f72da000ddb2844c1baaec254171f9b88,
+数学建模程序代码资料合集/回归预测分析MATLAB代码.txt,数学建模程序代码资料合集,预测与时间序列,source-code,MATLAB,.txt,1.44,normal,eff8a3199303d8e3758829f04bb6ae0ad59911b3859fdd04133dc3a92ae0967e,
+数学建模程序代码资料合集/图论算法代码.txt,数学建模程序代码资料合集,图论与排队,source-code,MATLAB,.txt,2.77,normal,cdf76117f44877ea7010d93d82863333e0b2c41e45eccda48f21c66f2f9f90ff,
+数学建模程序代码资料合集/小波异常值提取代码.txt,数学建模程序代码资料合集,统计与数据处理,source-code,MATLAB,.txt,0.78,normal,2240e2624c2ee20c1b4e7e6436796338e858b66656f55cff63d430777f64c86f,
+数学建模程序代码资料合集/小波特征提取算法代码.txt,数学建模程序代码资料合集,待人工分类,source-code,MATLAB,.txt,3.54,normal,6fbe1a96d0f7af464602675f011b7ff64fe5c20e62b1bd34edffb83c21a3c794,
 数学建模程序代码资料合集/小波神经网络预测代码/cengcifenxi.m,数学建模程序代码资料合集,预测与时间序列,source-code,MATLAB,.m,0.51,normal,cceef31492709df622488482d3f95b07cc658f98a924013e62262e638a1ebf6a,
 数学建模程序代码资料合集/小波神经网络预测代码/d_mymorlet.m,数学建模程序代码资料合集,预测与时间序列,source-code,MATLAB,.m,0.09,normal,160e94178e245bd92a655321bc523f7fa063107ab4de29b373579489d9d592f4,
 数学建模程序代码资料合集/小波神经网络预测代码/mymorlet.m,数学建模程序代码资料合集,预测与时间序列,source-code,MATLAB,.m,0.09,normal,37036e6b7a4250b0cde4e393f79dc77486e230bb1de105726954c78babe373e7,
 数学建模程序代码资料合集/小波神经网络预测代码/shenjingwangluo.m,数学建模程序代码资料合集,预测与时间序列,source-code,MATLAB,.m,0.27,normal,889c1260bd8f1bda2fb6e7094c457a9dd218e4f766cd9f4d0ad6cf2003cb910a,
 数学建模程序代码资料合集/小波神经网络预测代码/wavenn.m,数学建模程序代码资料合集,预测与时间序列,source-code,MATLAB,.m,5.34,normal,0c03effe328b434bf0c9cd9d614c36cc5753ee9a44abd016c63d2ab5b6c5f236,
+数学建模程序代码资料合集/排队论算法代码.txt,数学建模程序代码资料合集,图论与排队,source-code,MATLAB,.txt,6.04,normal,e4775207ebdc5ac3af39588e585e34d57d0302c2e3bd315796a63ff7dbfdd6b6,
+数学建模程序代码资料合集/插值与拟合代码.txt,数学建模程序代码资料合集,统计与数据处理,source-code,MATLAB,.txt,1.11,normal,4d0a854a000887713fbefdf05f6eeeaf434a7711baf4facaa03d48e221532fd0,
+数学建模程序代码资料合集/时间序列-滑动平均代码.txt,数学建模程序代码资料合集,预测与时间序列,source-code,MATLAB,.txt,0.38,normal,4ba1bbb6d800aeb0f197814f5c21df042b54982b87d128058aeb865550858041,
+数学建模程序代码资料合集/时间序列-移动平均法代码.txt,数学建模程序代码资料合集,预测与时间序列,source-code,MATLAB,.txt,0.41,normal,f6bede96882efd620d1ed2f3c2c53fc54d6c405763df134774f5a9163524ab70,
+数学建模程序代码资料合集/智能算法之模拟退火算法代码.txt,数学建模程序代码资料合集,优化与规划,source-code,MATLAB,.txt,1.88,normal,770e767ad32d436234e294e7e49de5f970e245b302249bed994c2af4e1907ed6,
+数学建模程序代码资料合集/智能算法之粒子群优化算法代码.txt,数学建模程序代码资料合集,优化与规划,source-code,MATLAB,.txt,2.26,normal,f30a59e5a81945ce506385ba72f12516e78f62fbc2a0d20038ecde0b8e055ae4,
+数学建模程序代码资料合集/智能算法之遗传算法代码.txt,数学建模程序代码资料合集,优化与规划,source-code,MATLAB,.txt,5.83,normal,d0cfb87da9901dc87d91290a186cff81e6e02e6714bfdbdc4ed7951e1e423da8,
+数学建模程序代码资料合集/灰色预测算法代码.txt,数学建模程序代码资料合集,预测与时间序列,source-code,MATLAB,.txt,0.74,normal,511876bdf4ad9fe07bac643604afd11362703afa5387f6db846ee2ac545e6e5a,
+数学建模程序代码资料合集/神经网络图像分类代码.txt,数学建模程序代码资料合集,机器学习与神经网络,source-code,MATLAB,.txt,7.93,normal,06712e199c2834a3e3d4f1495acdc9ed1069f4bfc224359304d25683bc962ec4,
 数学建模程序代码资料合集/神经网络图像分类代码（可直接运行）/LiChen.m,数学建模程序代码资料合集,机器学习与神经网络,source-code,MATLAB,.m,7.86,normal,f3a47f111c8031e3943b73a885f752d3abeecc72090bbfb23c8f98c143092064,
+数学建模程序代码资料合集/神经网络算法代码（可直接运行）.txt,数学建模程序代码资料合集,机器学习与神经网络,source-code,MATLAB,.txt,0.66,normal,a0587c40feaceaa55bb51c2ace2316ceec9e1fc44f8be9251dde73999ed5c764,
+数学建模程序代码资料合集/聚类分析代码.txt,数学建模程序代码资料合集,统计与数据处理,source-code,MATLAB,.txt,3.2,normal,e102f685cf5c84d8b0aa723df5ff7715877af227616a6acdd66f86de0bc17af8,
+数学建模程序代码资料合集/蒙特卡洛算法模拟随机数代码.txt,数学建模程序代码资料合集,仿真与随机模型,source-code,MATLAB,.txt,0.52,normal,400184b369299357882ead8a38c89327528f3bfcf6a0aa497896cb120afddf3b,
