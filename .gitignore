@@ -26,3 +26,13 @@ __pycache__/
 *.key
 *.pem
 00-Inbox/Attachments/*.part
+
+# Local raw modeling resource packs (catalogs are synced instead)
+00-Inbox/Downloaded/2023年赛题/
+00-Inbox/Downloaded/6.数学建模模型算法大全/
+00-Inbox/Downloaded/9.数学建模经验分享（36篇）/
+00-Inbox/Downloaded/MATLAB其他源程序代码/
+00-Inbox/Downloaded/推荐基础数模资料学习/
+00-Inbox/Downloaded/数学建模Python相关/
+00-Inbox/Downloaded/数学建模程序代码资料合集/
+00-Inbox/Downloaded/数学建模30个常用算法(Python代码).zip
