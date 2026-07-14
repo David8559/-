@@ -7,11 +7,20 @@ CODE_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(CODE_ROOT / "src"))
 
 from desert_core import Action, FIRST_LEVEL_CONFIG, State, Weather, advance, buy, terminal_cash
+from b078_core import (
+    B078_FIRST_SPECIAL_MAP,
+    B078_FIRST_WEATHER,
+    floyd_warshall,
+    reconstruct_path,
+    sample_weather,
+    solve_mining_backtracking,
+    solve_no_mining,
+)
 from graph_reconstruction import infer_edges, load_distance_matrix, validate
 
 
 class GraphReconstructionTests(unittest.TestCase):
-    def test_b078_distance_matrix_closes_exactly(self):
+    def test_b078_level4_distance_matrix_closes_exactly(self):
         nodes, matrix = load_distance_matrix()
         edges = infer_edges(nodes, matrix)
         validate(nodes, matrix, edges)
@@ -20,6 +29,17 @@ class GraphReconstructionTests(unittest.TestCase):
         self.assertIn((1, 2), edges)
         self.assertIn((1, 6), edges)
         self.assertNotIn((1, 7), edges)
+
+    def test_floyd_reconstructs_path(self):
+        adjacency = (
+            (0, 1, 0, 0),
+            (1, 0, 1, 0),
+            (0, 1, 0, 1),
+            (0, 0, 1, 0),
+        )
+        distance, next_hop = floyd_warshall(adjacency)
+        self.assertEqual(distance[0][3], 3)
+        self.assertEqual(reconstruct_path(next_hop, 0, 3), [0, 1, 2, 3])
 
 
 class DesertRuleTests(unittest.TestCase):
@@ -61,6 +81,27 @@ class DesertRuleTests(unittest.TestCase):
         self.assertEqual(terminal_cash(FIRST_LEVEL_CONFIG, mined), 2107.5)
 
 
+class B078AlgorithmTests(unittest.TestCase):
+    def test_no_mining_reproduces_paper_baseline(self):
+        result = solve_no_mining(FIRST_LEVEL_CONFIG, B078_FIRST_WEATHER, distance=3)
+        self.assertEqual((result.initial_water, result.initial_food, result.score), (42, 38, 9410))
+
+    def test_mining_backtracking_reproduces_10470(self):
+        result = solve_mining_backtracking(
+            FIRST_LEVEL_CONFIG,
+            B078_FIRST_SPECIAL_MAP,
+            B078_FIRST_WEATHER,
+        )
+        self.assertEqual(result.score, 10470)
+        self.assertEqual((result.initial_water, result.initial_food), (178, 333))
+        self.assertEqual(result.final_state.day, 24)
+        self.assertEqual(result.final_state.node, B078_FIRST_SPECIAL_MAP.end)
+
+    def test_weather_sampling_is_reproducible(self):
+        first = sample_weather(10, (17 / 30, 1 / 3, 1 / 10), seed=2020)
+        second = sample_weather(10, (17 / 30, 1 / 3, 1 / 10), seed=2020)
+        self.assertEqual(first, second)
+
+
 if __name__ == "__main__":
     unittest.main()
-

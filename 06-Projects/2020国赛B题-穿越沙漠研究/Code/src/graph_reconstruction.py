@@ -7,8 +7,8 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-MATRIX_PATH = ROOT / "data" / "level1_b078_distance_matrix.csv"
-EDGE_PATH = ROOT / "data" / "level1_b078_edges.csv"
+MATRIX_PATH = ROOT / "data" / "level4_b078_distance_matrix.csv"
+EDGE_PATH = ROOT / "data" / "level4_b078_edges.csv"
 
 
 def load_distance_matrix(path: Path = MATRIX_PATH) -> tuple[list[int], list[list[int]]]:
@@ -84,7 +84,7 @@ def main() -> None:
     edges = infer_edges(nodes, matrix)
     validate(nodes, matrix, edges)
     write_edges(edges)
-    print(f"PASS: {len(nodes)} nodes, {len(edges)} undirected edges; all-pairs distances match B078.")
+    print(f"PASS: B078 level 4 has {len(nodes)} nodes and {len(edges)} undirected edges; all distances match.")
 
 
 if __name__ == "__main__":
