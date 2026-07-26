@@ -1,27 +1,15 @@
 ---
-type: research-area
+type: code-index
 status: active
-topic: 模型完整代码
-tags:
-  - area/数学建模
-  - topic/模型完整代码
+tags: [area/数学建模, tool/Python]
 ---
 
-# 模型完整代码
+# Python 模型完整代码
 
-## 收录范围
+| 文件 | 核心函数 |
+|---|---|
+| [evaluation_models.py](evaluation_models.py) | `ahp_weights`、`entropy_weights`、`topsis`、`grey_relational_grade`、`fuzzy_comprehensive_evaluation` |
+| [forecast_models.py](forecast_models.py) | `linear_regression_ols`、`simple_exponential_smoothing`、`gm11`、`arima_forecast`、`build_lstm` |
+| [network_dynamics_models.py](network_dynamics_models.py) | `shortest_path`、`minimum_spanning_tree`、`maximum_flow_minimum_cut`、`mm1_metrics`、`simulate_sir`、`simulate_logistic`、`diffuse_1d_explicit` |
 
-收录与“模型完整代码”直接相关的理论、模型说明、代码、数据、案例和复现记录。
-
-## 建议内容结构
-
-- 原理与适用条件
-- 数学表达与关键假设
-- Python / MATLAB 实现
-- 参数、数据与运行环境
-- 结果解释、检验方法与常见错误
-- 相关模型：[[Topic Index]]
-
-## 质量标准
-
-结论可追溯到来源；代码可运行；数据来源明确；模型局限和检验方法必须记录。
+每个函数只保留算法核心和输入检查，不绑定示例数据。对应原理、适用边界和验证要求从 [[04-Research/02-经典建模模型库/Readme|经典模型库]] 进入。

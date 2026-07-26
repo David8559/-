@@ -1,27 +1,16 @@
 ---
-type: research-area
+type: code-index
 status: active
-topic: 智能算法代码
-tags:
-  - area/数学建模
-  - topic/智能算法代码
+tags: [area/数学建模, tool/MATLAB, topic/智能优化]
 ---
 
-# 智能算法代码
+# MATLAB 智能算法代码
 
-## 收录范围
+[metaheuristics.m](metaheuristics.m) 提供：
 
-收录与“智能算法代码”直接相关的理论、模型说明、代码、数据、案例和复现记录。
+- `metaheuristics("ga", objective, lb, ub, seed)`
+- `metaheuristics("pso", objective, lb, ub, seed)`
+- `metaheuristics("sa", objective, initial, lb, ub, seed)`
+- `metaheuristics("aco-tsp", distance, ants, iterations, seed)`
 
-## 建议内容结构
-
-- 原理与适用条件
-- 数学表达与关键假设
-- Python / MATLAB 实现
-- 参数、数据与运行环境
-- 结果解释、检验方法与常见错误
-- 相关模型：[[Topic Index]]
-
-## 质量标准
-
-结论可追溯到来源；代码可运行；数据来源明确；模型局限和检验方法必须记录。
+GA/PSO/SA 需要 Global Optimization Toolbox；ACO-TSP 为本地教学实现。所有方法按最小化目标，正式比较必须控制相同函数评估预算并进行多种子重复。

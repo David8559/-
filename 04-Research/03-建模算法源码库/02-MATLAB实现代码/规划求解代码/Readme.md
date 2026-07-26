@@ -1,27 +1,15 @@
 ---
-type: research-area
+type: code-index
 status: active
-topic: 规划求解代码
-tags:
-  - area/数学建模
-  - topic/规划求解代码
+tags: [area/数学建模, tool/MATLAB, topic/优化模型, topic/图论网络]
 ---
 
-# 规划求解代码
+# MATLAB 规划与图网络代码
 
-## 收录范围
+[optimization_network_models.m](optimization_network_models.m) 提供统一入口：
 
-收录与“规划求解代码”直接相关的理论、模型说明、代码、数据、案例和复现记录。
+- `"lp"`、`"milp"`、`"weighted-sum"`
+- `"knapsack"`、`"interval"`
+- `"shortest"`、`"mst"`、`"maxflow"`、`"mm1"`
 
-## 建议内容结构
-
-- 原理与适用条件
-- 数学表达与关键假设
-- Python / MATLAB 实现
-- 参数、数据与运行环境
-- 结果解释、检验方法与常见错误
-- 相关模型：[[Topic Index]]
-
-## 质量标准
-
-结论可追溯到来源；代码可运行；数据来源明确；模型局限和检验方法必须记录。
+规划结果必须检查 `exitflag`、约束回代和整数间隙；图结果需回算边权、守恒或连通性。

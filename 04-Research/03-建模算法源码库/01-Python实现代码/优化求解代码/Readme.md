@@ -1,27 +1,14 @@
 ---
-type: research-area
+type: code-index
 status: active
-topic: 优化求解代码
-tags:
-  - area/数学建模
-  - topic/优化求解代码
+tags: [area/数学建模, tool/Python, topic/优化模型]
 ---
 
-# 优化求解代码
+# Python 优化求解代码
 
-## 收录范围
+| 文件 | 核心函数 |
+|---|---|
+| [optimization_models.py](optimization_models.py) | `solve_linear_program`、`solve_milp`、`weighted_sum_multiobjective`、`zero_one_knapsack`、`greedy_interval_scheduling` |
+| [metaheuristics.py](metaheuristics.py) | `genetic_algorithm`、`particle_swarm`、`simulated_annealing`、`ant_colony_tsp` |
 
-收录与“优化求解代码”直接相关的理论、模型说明、代码、数据、案例和复现记录。
-
-## 建议内容结构
-
-- 原理与适用条件
-- 数学表达与关键假设
-- Python / MATLAB 实现
-- 参数、数据与运行环境
-- 结果解释、检验方法与常见错误
-- 相关模型：[[Topic Index]]
-
-## 质量标准
-
-结论可追溯到来源；代码可运行；数据来源明确；模型局限和检验方法必须记录。
+精确规划先检查求解状态、可行性和 MIP gap；随机算法固定种子、多次重复，并在相同函数评估预算下比较。

@@ -1,27 +1,15 @@
 ---
-type: research-area
+type: code-index
 status: active
-topic: 拟合与预测脚本
-tags:
-  - area/数学建模
-  - topic/拟合与预测脚本
+tags: [area/数学建模, tool/MATLAB, topic/预测模型]
 ---
 
-# 拟合与预测脚本
+# MATLAB 评价、拟合与预测脚本
 
-## 收录范围
+| 文件 | 调用方法 |
+|---|---|
+| [evaluation_models.m](evaluation_models.m) | `"ahp"`、`"entropy"`、`"topsis"`、`"gra"`、`"fuzzy"` |
+| [forecast_models.m](forecast_models.m) | `"ols"`、`"ses"`、`"gm11"`、`"arima"`、`"lstm-layers"` |
+| [dynamics_models.m](dynamics_models.m) | `"sir"`、`"logistic"`、`"diffusion"` |
 
-收录与“拟合与预测脚本”直接相关的理论、模型说明、代码、数据、案例和复现记录。
-
-## 建议内容结构
-
-- 原理与适用条件
-- 数学表达与关键假设
-- Python / MATLAB 实现
-- 参数、数据与运行环境
-- 结果解释、检验方法与常见错误
-- 相关模型：[[Topic Index]]
-
-## 质量标准
-
-结论可追溯到来源；代码可运行；数据来源明确；模型局限和检验方法必须记录。
+统一入口示例：`[w, CR, ok] = evaluation_models("ahp", A)`。工具箱依赖见 [[04-Research/03-建模算法源码库/Readme|源码库说明]]。
