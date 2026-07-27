@@ -33,7 +33,7 @@ def main() -> int:
     failures: list[str] = []
     hubs = sorted({integration.destination([variants[index] for index in group]) for group in groups})
     hub_text = {
-        hub: integration.HUB_DIR.joinpath(f"{hub}.md").read_text(encoding="utf-8")
+        hub: integration.hub_path(hub).read_text(encoding="utf-8")
         for hub in hubs
     }
 
@@ -61,7 +61,7 @@ def main() -> int:
                 failures.append(f"study card count != 1: {hub}/{label}")
 
     for language in ("Python", "MATLAB"):
-        text = integration.HUB_DIR.joinpath(f"{language} Hub.md").read_text(encoding="utf-8")
+        text = integration.hub_path(f"{language} Hub").read_text(encoding="utf-8")
         if integration.LANG_BEGIN not in text or integration.LANG_END not in text:
             failures.append(f"missing language navigation index: {language}")
         if integration.STUDY_BEGIN not in text or integration.STUDY_END not in text:

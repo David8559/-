@@ -1,7 +1,7 @@
 ---
 type: topic-hub
 topic_tag: topic/图论网络
-keywords: [图论, 最短路径, 生成树, 最大流, 排队论]
+keywords: [图论, 最短路径, 生成树, 最大流]
 tags: [system/topic-hub, topic/图论网络]
 ---
 
@@ -21,7 +21,6 @@ tags: [system/topic-hub, topic/图论网络]
 | [[#Floyd最短路 · 复习|Floyd最短路]] | 求任意两点之间的最短距离和路径。 | 6 | LINGO, MATLAB, Python |
 | [[#图与网络综合例程 · 复习|图与网络综合例程]] | 把实体与关系抽象为节点、边和权重后完成路径、连通或流量分析。 | 6 | MATLAB |
 | [[#图论与排队 · 复习|图论与排队]] | 汇总图网络与服务系统中的路径、连通、流量和等待问题。 | 21 | MATLAB, Python |
-| [[#排队论 · 复习|排队论]] | 估计随机到达与随机服务系统的等待和拥堵。 | 1 | MATLAB |
 | [[#最小生成树 · 复习|最小生成树]] | 以最小总权连接无向图全部节点。 | 4 | MATLAB, Python |
 | [[#网络流 · 复习|网络流]] | 在容量限制网络中求最大流、最小费用流或匹配。 | 5 | LINGO, MATLAB, Python |
 
@@ -71,17 +70,6 @@ tags: [system/topic-hub, topic/图论网络]
 - **优先阅读**：[[#floydpath · MATLAB · 1a51c231|floydpath]]、[[#相似实现组 · Python · c2f0a841|Pex10_5]]、[[#mydijkstra · MATLAB · 8ee5fec3|mydijkstra]]（按核心算法证据、可复用入口与脚本完整度排序）
 - **全部实现**：[[#图论与排队 · 实现|跳转到源码实现区]]
 
-#### 排队论 · 复习
-
-- **解决什么**：估计随机到达与随机服务系统的等待和拥堵。
-- **核心思想**：用到达率、服务率、服务台数及稳态分布刻画队列。
-- **标准流程**：检验分布假设 → 计算利用率 → 选M/M/1等模型 → 求队长/等待 → 仿真验证。
-- **何时调用**：服务系统存在随机等待且关注容量配置时使用。
-- **最易出错**：必须先检查稳定条件，现实到达/服务分布可能不满足指数假设。
-- **库内覆盖**：1 个独立实现、1 个原始来源；语言：MATLAB；其中 1 个识别到函数/类型入口。
-- **优先阅读**：[[#排队论算法代码 · MATLAB · 9242c0d2|排队论算法代码]]（按核心算法证据、可复用入口与脚本完整度排序）
-- **全部实现**：[[#排队论 · 实现|跳转到源码实现区]]
-
 #### 最小生成树 · 复习
 
 - **解决什么**：以最小总权连接无向图全部节点。
@@ -114,11 +102,11 @@ tags: [system/topic-hub, topic/图论网络]
 
 <!-- END AUTO-HUB-STUDY-GUIDE -->
 
-> 自动更新：2026-07-14 · 匹配笔记：5
+> 自动更新：2026-07-27 · 匹配笔记：5
 
 ## 相关笔记
 
-- [[04-Research/03-建模算法源码库/代码资料索引]] — 相关度 7
+- [[04-Research/03-建模算法源码库/代码资料索引]] — 相关度 6
 - [[04-Research/04-竞赛真题研究/01-全国大学生数学建模竞赛/2020-B题-穿越沙漠/2020-B题-穿越沙漠-题目总览]] — 相关度 3
 - [[04-Research/04-竞赛真题研究/01-全国大学生数学建模竞赛/2020-B题-穿越沙漠/2020-B题-B078第四关地图与邻接关系]] — 相关度 2
 - [[04-Research/04-竞赛真题研究/03-优秀获奖论文拆解/2020-B题-穿越沙漠/B078-论文拆解]] — 相关度 2
@@ -137,9 +125,9 @@ tags: [system/topic-hub, topic/图论网络]
 > [!warning] 使用边界
 > 以下源码保留全文与来源，但默认均未运行验证。数据依赖明细已从阅读页省略；调用时按代码理解卡完成参数化、最小样例和结果检验。来源显示为可复制路径，不直接调用 Windows 打开未知扩展名。
 
-- 本 Hub 收录原始源码文件：52
-- 精确去重后的独立实现：52
-- 合并后的实现组：46
+- 本 Hub 收录原始源码文件：51
+- 精确去重后的独立实现：51
+- 合并后的实现组：45
 
 ### 实现索引
 
@@ -149,7 +137,6 @@ tags: [system/topic-hub, topic/图论网络]
 | [[#Floyd最短路 · 实现|Floyd最短路]] | 6 | 6 |
 | [[#图与网络综合例程 · 实现|图与网络综合例程]] | 6 | 6 |
 | [[#图论与排队 · 实现|图论与排队]] | 21 | 21 |
-| [[#排队论 · 实现|排队论]] | 1 | 1 |
 | [[#最小生成树 · 实现|最小生成树]] | 4 | 4 |
 | [[#网络流 · 实现|网络流]] | 5 | 5 |
 
@@ -5474,234 +5461,6 @@ path_edges=list(zip(p,p[1:]))
 nx.draw_networkx_edges(G,pos,edgelist=path_edges,
             edge_color='r',width=3)
 plt.savefig("figure10_9.png",pdi=500); plt.show()
-````
-
-</details>
-
-### 排队论 · 实现
-
-#### 排队论算法代码 · MATLAB · 9242c0d2
-
-- 归属算法：排队论
-- 用途：结果绘图与展示
-- 独立实现变体：1
-- 原始来源文件：1
-- 复习入口：[[#排队论 · 复习]]
-- 验证状态：`raw-unverified`；自动归类不代表算法或结果已经验证。
-
-##### 代码理解与调用
-
-- **定位**：函数/类型实现，可优先封装复用；当前用于排队论中的“结果绘图与展示”。
-- **执行主线**：把计算结果转换为二维、三维或图像表达。
-- **调用方式**：优先调用 `MMSmteam`；先核对参数顺序和返回值。
-- **主要输出**：图形
-- **调用风险**：未发现明显静态风险，但仍需运行测试和结果校验。
-
-- SHA-256：`e4775207ebdc5ac3af39588e585e34d57d0302c2e3bd315796a63ff7dbfdd6b6`
-- 语言：MATLAB
-- 符号：`MMSmteam`
-- 原始路径：
-  - 源文件：`00-Inbox/Downloaded/数学建模程序代码资料合集/排队论算法代码.txt`
-
-<details>
-<summary>展开原始代码</summary>
-
-````matlab
-步骤：
-（1）确定问题是否属于排队论领域
-（2）确定修理工个数s
-（3）确定机器源数m
-（4）找到时间终止点T
-（5）带入模型即可
-function out=MMSmteam(s,m,mu1,mu2,T)
-%M/M/S/m排队模型
-%s——修理工个数
-%m——机器源数
-%T——时间终止点
-%mu1——机器离开-到达时间服从指数分布
-%mu2——修理时间服从指数分布
-%事件表：
-%  p_s——修理工空闲概率
-%   arrive_time——机器到达事件
-%   leave_time——机器离开事件
-%mintime——事件表中的最近事件
-%current_time——当前时间
-%L——队长
-%tt——时间序列
-%LL——队长序列
-%c——机器到达时间序列
-%b——修理开始时间序列
-%e——机器离开时间序列
-%a_count——到达机器数
-%b_count——修理机器数
-%e_count——损失机器数
-
-%初始化
-
-arrive_time=exprnd(mu1,1,m);
-arrive_time=sort(arrive_time);
-leave_time=[];
-current_time=0;
-L=0;
-LL=[L];
-tt=[current_time];
-c=[];
-b=[];
-e=[];
-a_count=0;
-%循环
-while min([arrive_time,leave_time])<T
-    current_time=min([arrive_time,leave_time]);
-    tt=[tt,current_time];    %记录时间序列
-    if current_time==min(arrive_time)      %机器到达子过程
-        arrive_time(1)=[];  % 从事件表中抹去机器到达事件
-        a_count=a_count+1; %累加到达机器数
-        if  L<s            %有空闲修理工
-            L=L+1;        %更新队长
-            c=[c,current_time];%记录机器到达时间序列
-            b=[b,current_time];%记录修理开始时间序列
-            leave_time=[leave_time,current_time+exprnd(mu2)];%产生新的机器离开事件
-            leave_time=sort(leave_time);%离开事件表排序
-        else             %无空闲修理工
-            L=L+1;        %更新队长
-            c=[c,current_time];%记录机器到达时间序列
-        end
-    else                   %机器离开子过程
-            leave_time(1)=[];%从事件表中抹去机器离开事件
-            arrive_time=[arrive_time,current_time+exprnd(mu1)];
-            arrive_time=sort(arrive_time);%到达事件表排序
-            e=[e,current_time];%记录机器离开时间序列
-            if L>s   %有机器等待
-                L=L-1;        %更新队长
-                b=[b,current_time];%记录修理开始时间序列
-                leave_time=[leave_time,current_time+exprnd(mu2)];%产生新的机器离开事件
-                leave_time=sort(leave_time);%离开事件表排序
-            else    %无机器等待
-                L=L-1;        %更新队长
-            end
-    end
-    LL=[LL,L];   %记录队长序列
-end
-Ws=sum(e-c(1:length(e)))/length(e);
-Wq=sum(b-c(1:length(b)))/length(b);
-Wb=sum(e-b(1:length(e)))/length(e);
-Ls=sum(diff([tt,T]).*LL)/T;
-Lq=sum(diff([tt,T]).*max(LL-s,0))/T;
-p_s=1.0/(factorial(m)/factorial(m).*(mu2/mu1)^0+factorial(m)/factorial(m-1).*(mu2/mu1)^1+factorial(m-2)/factorial(m-1).*(mu2/mu1)^2+factorial(m)/factorial(m-2).*(mu2/mu1)^2+factorial(m)/factorial(m-4).*(mu2/mu1)^4+factorial(m)/factorial(m-5).*(mu2/mu1)^5);
-fprintf('修理工空闲概率:%d\n',p_s)%修理工空闲概率
-fprintf('到达机器数:%d\n',a_count)%到达机器数
-fprintf('平均逗留时间:%f\n',sum(e-c(1:length(e)))/length(e))%平均逗留时间
-fprintf('平均等待时间:%f\n',sum(b-c(1:length(b)))/length(b))%平均等待时间
-fprintf('平均修理时间:%f\n',sum(e-b(1:length(e)))/length(e))%平均修理时间
-fprintf('平均队长:%f\n',sum(diff([tt,T]).*LL)/T)%平均队长
-fprintf('平均等待队长:%f\n',sum(diff([tt,T]).*max(LL-s,0))/T)%平均等待队长
-for i=0:m
-     p(i+1)=sum((LL==i).*diff([tt,T]))/T;%队长为i的概率
-     fprintf('队长为%d的概率:%f\n',i,p(i+1));
-end
-fprintf('机器不能马上得到修理的概率:%f\n',1-sum(p(1:s)))%机器不能马上得到修理的概率
-out=[Ws,Wq,Wb,Ls,Lq,p];
-
-
-演示代码
-clear 
-clc 
-%***************************************** 
-%初始化顾客源 
-%***************************************** 
-%总仿真时间 
-Total_time = 10; 
-%队列最大长度 
-N = 10000000000; 
-%到达率与服务率 
-lambda = 10; 
-mu = 6; 
-%平均到达时间与平均服务时间 
-arr_mean = 1/lambda; 
-ser_mean = 1/mu; 
-arr_num = round(Total_time*lambda*2); 
-events = []; 
-%按负指数分布产生各顾客达到时间间隔 
-events(1,:) = exprnd(arr_mean,1,arr_num); 
-%各顾客的到达时刻等于时间间隔的累积和 
-events(1,:) = cumsum(events(1,:)); 
-%按负指数分布产生各顾客服务时间 
-events(2,:) = exprnd(ser_mean,1,arr_num); 
-%计算仿真顾客个数，即到达时刻在仿真时间内的顾客数 
-len_sim = sum(events(1,:)<= Total_time); 
-%***************************************** 
-%计算第 1个顾客的信息 
-%***************************************** 
-%第 1个顾客进入系统后直接接受服务，无需等待 
-events(3,1) = 0; 
-%其离开时刻等于其到达时刻与服务时间之和 
-events(4,1) = events(1,1)+events(2,1); 
-%其肯定被系统接纳，此时系统内共有 
-%1个顾客，故标志位置1 
-events(5,1) = 1; 
-%其进入系统后，系统内已有成员序号为 1 
-member = [1]; 
-for i = 2:arr_num 
-%如果第 i个顾客的到达时间超过了仿真时间，则跳出循环 
-
-if events(1,i)>Total_time 
-
-break; 
-
-else 
-number = sum(events(4,member) > events(1,i)); 
-%如果系统已满，则系统拒绝第 i个顾客，其标志位置 0 
-if number >= N+1 
-events(5,i) = 0; 
-%如果系统为空，则第 i个顾客直接接受服务 
-else 
-if number == 0 
-%其等待时间为 0
-
-2009.1516
-
-%PROGRAMLANGUAGEPROGRAMLANGUAGE
-events(3,i) = 0; 
-%其离开时刻等于到达时刻与服务时间之和 
-events(4,i) = events(1,i)+events(2,i); 
-%其标志位置 1 
-events(5,i) = 1; 
-member = [member,i]; 
-%如果系统有顾客正在接受服务，且系统等待队列未满，则 第 i个顾客进入系统 
-
-else len_mem = length(member); 
-%其等待时间等于队列中前一个顾客的离开时刻减去其到 达时刻 
-events(3,i)=events(4,member(len_mem))-events(1,i); 
-%其离开时刻等于队列中前一个顾客的离开时刻加上其服 
-%务时间 
-events(4,i)=events(4,member(len_mem))+events(2,i); 
-%标识位表示其进入系统后，系统内共有的顾客数 
-events(5,i) = number+1; 
-member = [member,i]; 
-end 
-end 
-
-end 
-end 
-%仿真结束时，进入系统的总顾客数 
-len_mem = length(member); 
-%***************************************** 
-%输出结果 
-%***************************************** 
-%绘制在仿真时间内，进入系统的所有顾客的到达时刻和离 
-%开时刻曲线图（stairs：绘制二维阶梯图） 
-stairs([0 events(1,member)],0:len_mem); 
-hold on; 
-stairs([0 events(4,member)],0:len_mem,'.-r'); 
-legend('到达时间 ','离开时间 '); 
-hold off; 
-grid on; 
-%绘制在仿真时间内，进入系统的所有顾客的停留时间和等 
-%待时间曲线图（plot：绘制二维线性图） 
-figure; 
-plot(1:len_mem,events(3,member),'r-*',1: len_mem,events(2,member)+events(3,member),'k-'); 
-legend('等待时间 ','停留时间 '); 
-grid on;
 ````
 
 </details>

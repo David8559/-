@@ -42,7 +42,7 @@ tags: [system/topic-hub, topic/博弈论]
 
 <!-- END AUTO-HUB-STUDY-GUIDE -->
 
-> 自动更新：2026-07-14 · 匹配笔记：8
+> 自动更新：2026-07-27 · 匹配笔记：8
 
 ## 相关笔记
 

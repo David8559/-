@@ -23,7 +23,32 @@ LANG_BEGIN = "<!-- BEGIN AUTO-LANGUAGE-CODE-INDEX -->"
 LANG_END = "<!-- END AUTO-LANGUAGE-CODE-INDEX -->"
 STUDY_BEGIN = "<!-- BEGIN AUTO-HUB-STUDY-GUIDE -->"
 STUDY_END = "<!-- END AUTO-HUB-STUDY-GUIDE -->"
-HUB_DIR = core.VAULT / "04-Research" / "00-Topic-Hubs"
+RESEARCH = core.VAULT / "04-Research"
+HUB_PATHS = {
+    "数学建模 Hub": RESEARCH / "01-建模基础理论" / "数学建模 Hub.md",
+    "评价模型 Hub": RESEARCH / "02-经典建模模型库" / "01-评价类模型" / "评价模型 Hub.md",
+    "预测模型 Hub": RESEARCH / "02-经典建模模型库" / "02-预测类模型" / "预测模型 Hub.md",
+    "优化模型 Hub": RESEARCH / "02-经典建模模型库" / "03-优化类模型" / "优化模型 Hub.md",
+    "动态规划 Hub": RESEARCH / "02-经典建模模型库" / "03-优化类模型" / "动态规划" / "动态规划 Hub.md",
+    "图论网络 Hub": RESEARCH / "02-经典建模模型库" / "04-图论与网络模型" / "图论网络 Hub.md",
+    "微分方程动力学 Hub": RESEARCH / "02-经典建模模型库" / "05-微分方程动力学模型" / "微分方程动力学 Hub.md",
+    "智能优化 Hub": RESEARCH / "02-经典建模模型库" / "06-智能优化算法" / "智能优化 Hub.md",
+    "博弈论 Hub": RESEARCH / "02-经典建模模型库" / "07-随机决策与仿真模型" / "博弈论 Hub.md",
+    "马尔可夫决策过程 Hub": RESEARCH / "02-经典建模模型库" / "07-随机决策与仿真模型" / "马尔可夫决策过程 Hub.md",
+    "蒙特卡洛 Hub": RESEARCH / "02-经典建模模型库" / "07-随机决策与仿真模型" / "蒙特卡洛 Hub.md",
+    "数据处理 Hub": RESEARCH / "05-数据处理方法" / "数据处理 Hub.md",
+    "可视化 Hub": RESEARCH / "06-绘图可视化方法" / "可视化 Hub.md",
+    "模型检验 Hub": RESEARCH / "07-模型检验与改进" / "模型检验 Hub.md",
+    "论文写作 Hub": RESEARCH / "08-论文写作与复现" / "论文写作 Hub.md",
+    "Python Hub": RESEARCH / "03-建模算法源码库" / "01-Python实现代码" / "Python Hub.md",
+    "MATLAB Hub": RESEARCH / "03-建模算法源码库" / "02-MATLAB实现代码" / "MATLAB Hub.md",
+}
+
+
+def hub_path(name: str) -> Path:
+    path = HUB_PATHS[name]
+    path.parent.mkdir(parents=True, exist_ok=True)
+    return path
 
 MODEL_HUB = {
     "AHP层次分析": "评价模型 Hub", "TOPSIS": "评价模型 Hub", "熵权法": "评价模型 Hub",
@@ -35,7 +60,7 @@ MODEL_HUB = {
     "遗传算法GA": "智能优化 Hub", "粒子群PSO": "智能优化 Hub", "模拟退火SA": "智能优化 Hub",
     "蚁群算法ACO": "智能优化 Hub",
     "Dijkstra最短路": "图论网络 Hub", "Floyd最短路": "图论网络 Hub", "最小生成树": "图论网络 Hub",
-    "网络流": "图论网络 Hub", "排队论": "图论网络 Hub",
+    "网络流": "图论网络 Hub", "排队论": "蒙特卡洛 Hub",
     "常微分方程": "微分方程动力学 Hub", "偏微分方程": "微分方程动力学 Hub",
     "差分方程": "微分方程动力学 Hub",
     "Monte Carlo": "蒙特卡洛 Hub", "元胞自动机": "蒙特卡洛 Hub",
@@ -646,7 +671,7 @@ def write_language_indexes(variants: list[core.SourceVariant], groups: list[list
             count = sum(len(group) for group in hub_groups)
             study.append(f"- [[{hub}]]：{count} 个独立实现")
         study.extend(["", STUDY_END, ""])
-        replace_study_guide(HUB_DIR / f"{language} Hub.md", "\n".join(study))
+        replace_study_guide(hub_path(f"{language} Hub"), "\n".join(study))
         lines = [
             LANG_BEGIN,
             "## 本地源码主题分布", "",
@@ -661,7 +686,7 @@ def write_language_indexes(variants: list[core.SourceVariant], groups: list[list
             source_count = sum(len(variants[index].paths) for group in hub_groups for index in group)
             lines.append(f"| [[{hub}]] | {variant_count} | {source_count} |")
         lines.extend(["", LANG_END, ""])
-        replace_language_index(HUB_DIR / f"{language} Hub.md", "\n".join(lines))
+        replace_language_index(hub_path(f"{language} Hub"), "\n".join(lines))
 
 
 def main() -> int:
@@ -683,7 +708,7 @@ def main() -> int:
             model_groups[primary_label([variants[index] for index in group])].append(group)
         source_count = sum(len(variants[index].paths) for group in hub_groups for index in group)
         variant_count = sum(len(group) for group in hub_groups)
-        replace_study_guide(HUB_DIR / f"{hub}.md", render_study_guide(hub, model_groups, variants))
+        replace_study_guide(hub_path(hub), render_study_guide(hub, model_groups, variants))
         lines = [
             BEGIN,
             "## 源码实现库（按需调用）", "",
@@ -709,7 +734,7 @@ def main() -> int:
             for group in sorted(label_groups, key=lambda value: variants[value[0]].canonical_path):
                 lines.extend(render_group(group, variants))
         lines.extend([END, ""])
-        replace_section(HUB_DIR / f"{hub}.md", "\n".join(lines))
+        replace_section(hub_path(hub), "\n".join(lines))
         written_sources += source_count
         embedded_variants += variant_count
 
@@ -717,7 +742,7 @@ def main() -> int:
 
     # Validate coverage after writing.  Every catalog row must appear exactly in
     # at least one destination section; exact duplicates intentionally share code.
-    hub_text = "\n".join((HUB_DIR / f"{hub}.md").read_text(encoding="utf-8") for hub in routed)
+    hub_text = "\n".join(hub_path(hub).read_text(encoding="utf-8") for hub in routed)
     missing = [row["relative_path"] for row in code_rows if f"源文件：`00-Inbox/Downloaded/{row['relative_path']}" not in hub_text]
     result = {
         "status": "PASS" if not missing and written_sources == len(code_rows) and embedded_variants == len(variants) else "FAIL",

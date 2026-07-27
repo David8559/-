@@ -10,8 +10,27 @@ from pathlib import Path
 
 VAULT = Path(__file__).resolve().parents[2]
 RESEARCH = VAULT / "04-Research"
-HUBS = RESEARCH / "00-Topic-Hubs"
-REPORT = VAULT / "98-AI-Context" / "Current Knowledge Map.md"
+INDEX_PATH = RESEARCH / "00-知识导航" / "Topic Index.md"
+REPORT = VAULT / "98-AI-Context" / "Knowledge Map.md"
+HUB_PATHS = {
+    "数学建模 Hub": RESEARCH / "01-建模基础理论" / "数学建模 Hub.md",
+    "评价模型 Hub": RESEARCH / "02-经典建模模型库" / "01-评价类模型" / "评价模型 Hub.md",
+    "预测模型 Hub": RESEARCH / "02-经典建模模型库" / "02-预测类模型" / "预测模型 Hub.md",
+    "优化模型 Hub": RESEARCH / "02-经典建模模型库" / "03-优化类模型" / "优化模型 Hub.md",
+    "动态规划 Hub": RESEARCH / "02-经典建模模型库" / "03-优化类模型" / "动态规划" / "动态规划 Hub.md",
+    "图论网络 Hub": RESEARCH / "02-经典建模模型库" / "04-图论与网络模型" / "图论网络 Hub.md",
+    "微分方程动力学 Hub": RESEARCH / "02-经典建模模型库" / "05-微分方程动力学模型" / "微分方程动力学 Hub.md",
+    "智能优化 Hub": RESEARCH / "02-经典建模模型库" / "06-智能优化算法" / "智能优化 Hub.md",
+    "博弈论 Hub": RESEARCH / "02-经典建模模型库" / "07-随机决策与仿真模型" / "博弈论 Hub.md",
+    "马尔可夫决策过程 Hub": RESEARCH / "02-经典建模模型库" / "07-随机决策与仿真模型" / "马尔可夫决策过程 Hub.md",
+    "蒙特卡洛 Hub": RESEARCH / "02-经典建模模型库" / "07-随机决策与仿真模型" / "蒙特卡洛 Hub.md",
+    "数据处理 Hub": RESEARCH / "05-数据处理方法" / "数据处理 Hub.md",
+    "可视化 Hub": RESEARCH / "06-绘图可视化方法" / "可视化 Hub.md",
+    "模型检验 Hub": RESEARCH / "07-模型检验与改进" / "模型检验 Hub.md",
+    "论文写作 Hub": RESEARCH / "08-论文写作与复现" / "论文写作 Hub.md",
+    "Python Hub": RESEARCH / "03-建模算法源码库" / "01-Python实现代码" / "Python Hub.md",
+    "MATLAB Hub": RESEARCH / "03-建模算法源码库" / "02-MATLAB实现代码" / "MATLAB Hub.md",
+}
 CODE_SECTION_BEGIN = "<!-- BEGIN AUTO-INTEGRATED-CODE -->"
 CODE_SECTION_END = "<!-- END AUTO-INTEGRATED-CODE -->"
 LANGUAGE_INDEX_BEGIN = "<!-- BEGIN AUTO-LANGUAGE-CODE-INDEX -->"
@@ -27,8 +46,8 @@ TOPICS = {
     "动态规划 Hub": ("topic/动态规划", ["动态规划", "多阶段决策", "bellman"]),
     "马尔可夫决策过程 Hub": ("topic/马尔可夫决策", ["马尔可夫决策", "mdp", "状态转移概率", "动作价值"]),
     "博弈论 Hub": ("topic/博弈论", ["博弈", "纳什均衡", "支付矩阵", "混合策略", "占优策略"]),
-    "蒙特卡洛 Hub": ("topic/蒙特卡洛", ["蒙特卡洛", "随机模拟", "抽样统计"]),
-    "图论网络 Hub": ("topic/图论网络", ["图论", "最短路径", "生成树", "最大流", "排队论"]),
+    "蒙特卡洛 Hub": ("topic/蒙特卡洛", ["蒙特卡洛", "随机模拟", "抽样统计", "排队论"]),
+    "图论网络 Hub": ("topic/图论网络", ["图论", "最短路径", "生成树", "最大流"]),
     "微分方程动力学 Hub": ("topic/动力学模型", ["微分方程", "sir", "sis", "logistic", "扩散"]),
     "智能优化 Hub": ("topic/智能优化", ["遗传算法", "粒子群", "模拟退火", "蚁群"]),
     "数据处理 Hub": ("topic/数据处理", ["数据清洗", "缺失值", "异常值", "标准化", "插值"]),
@@ -37,6 +56,17 @@ TOPICS = {
     "可视化 Hub": ("topic/可视化", ["绘图", "可视化", "图表", "matplotlib"]),
     "论文写作 Hub": ("topic/论文写作", ["论文", "摘要", "假设", "结果分析", "排版"]),
     "模型检验 Hub": ("topic/模型检验", ["灵敏度", "敏感性", "稳定性", "鲁棒性", "误差"]),
+}
+
+INDEX_GROUPS = {
+    "总览": ["数学建模 Hub"],
+    "经典模型": [
+        "评价模型 Hub", "预测模型 Hub", "优化模型 Hub", "动态规划 Hub",
+        "图论网络 Hub", "微分方程动力学 Hub", "智能优化 Hub",
+        "博弈论 Hub", "马尔可夫决策过程 Hub", "蒙特卡洛 Hub",
+    ],
+    "研究流程": ["数据处理 Hub", "可视化 Hub", "模型检验 Hub", "论文写作 Hub"],
+    "编程工具": ["Python Hub", "MATLAB Hub"],
 }
 
 GROUPS = {
@@ -90,8 +120,11 @@ def preserved_generated_sections(path: Path) -> dict[str, str]:
 
 
 def main() -> int:
-    HUBS.mkdir(parents=True, exist_ok=True)
-    notes = [p for p in RESEARCH.rglob("*.md") if HUBS not in p.parents and p.name != "Readme.md"]
+    for path in HUB_PATHS.values():
+        path.parent.mkdir(parents=True, exist_ok=True)
+    INDEX_PATH.parent.mkdir(parents=True, exist_ok=True)
+    hub_files = set(HUB_PATHS.values()) | {INDEX_PATH}
+    notes = [p for p in RESEARCH.rglob("*.md") if p not in hub_files and p.name != "Readme.md"]
     matches: dict[str, list[tuple[Path, int]]] = defaultdict(list)
     group_counts: dict[str, Counter[str]] = {name: Counter() for name in GROUPS}
     topic_counts = Counter()
@@ -111,7 +144,7 @@ def main() -> int:
 
     for hub, (tag, keys) in TOPICS.items():
         rows = sorted(matches.get(hub, []), key=lambda item: (-item[1], str(item[0])))
-        hub_path = HUBS / f"{hub}.md"
+        hub_path = HUB_PATHS[hub]
         preserved = preserved_generated_sections(hub_path)
         content = [
             "---", "type: topic-hub", f"topic_tag: {tag}",
@@ -135,20 +168,34 @@ def main() -> int:
         "# Topic Index", "",
         "一个文件只有一个主分类目录，但可以通过多个主题标签和内部链接进入多个 Hub。", "",
     ]
-    index += [f"- [[{hub}]] — #{tag}" for hub, (tag, _) in TOPICS.items()]
-    index += [""]
-    (HUBS / "Topic Index.md").write_text("\n".join(index), encoding="utf-8")
+    for group, hubs in INDEX_GROUPS.items():
+        index += [f"## {group}", ""]
+        index += [f"- [[{hub}]] — #{TOPICS[hub][0]}" for hub in hubs]
+        index += [""]
+    INDEX_PATH.write_text("\n".join(index), encoding="utf-8")
 
     report = [
         "---", "type: knowledge-map-report", "tags: [system/knowledge-graph]", "---", "",
-        "# Current Knowledge Map", "", f"> 扫描时间：{dt.datetime.now().astimezone().isoformat(timespec='seconds')} · 真实研究笔记：{len(notes)}", "",
+        "# Knowledge Map", "", f"> 扫描时间：{dt.datetime.now().astimezone().isoformat(timespec='seconds')} · 真实研究笔记：{len(notes)}", "",
+        "## 核心路径", "",
+        "`[[知识库首页]] → [[Topic Index]] → 模型 Hub → 模型复习卡/代码实现 → 竞赛案例 → 项目复现`", "",
+        "- 文件夹负责主分类，Hub 放回对应父目录；`00-知识导航` 只保存跨主题入口。",
+        "- 新节点必须至少提供一种独有价值：知识结论、可执行流程、真实索引、复现证据或项目状态。", "",
         "## 高频主题", "", "| 主题 | 词频 | Hub |", "|---|---:|---|",
     ]
     report += [f"| {hub.removesuffix(' Hub')} | {count} | [[{hub}]] |" for hub, count in topic_counts.most_common()] or ["| 暂无 | 0 | 等待真实资料 |"]
     for group, counter in group_counts.items():
         report += ["", f"## 高频{group}", ""]
         report += [f"- {term}：{count}" for term, count in counter.most_common(15)] or [f"- 当前 `04-Research` 中没有形成可判定的高频{group}。"]
-    report += ["", "## 结构关系", "", "基础理论 → 模型库 → 数据处理与代码实现 → 模型检验 → 论文写作与复现；竞赛真题通过 Topic Hub 横向连接模型、工具和检验方法。", ""]
+    report += [
+        "", "## 结构关系", "",
+        "- `01-建模基础理论`：建模总览与数学基础。",
+        "- `02-经典建模模型库`：评价、预测、优化、图网络、动力学、智能优化、随机决策与仿真。",
+        "- `03-建模算法源码库`：Python / MATLAB 语言入口与正式基础实现。",
+        "- `04-竞赛真题研究`：竞赛流程、题目、论文和数据。",
+        "- `05–08`：数据处理、可视化、模型检验、论文写作。",
+        ""
+    ]
     REPORT.write_text("\n".join(report), encoding="utf-8")
     print(f"research_notes={len(notes)} hubs={len(TOPICS)} report={REPORT}")
     return 0

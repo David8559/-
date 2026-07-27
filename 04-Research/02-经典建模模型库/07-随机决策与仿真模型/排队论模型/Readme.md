@@ -3,7 +3,7 @@ type: research-method
 status: active
 topic: 排队论模型
 updated: 2026-07-26
-tags: [area/数学建模, topic/图论网络, method/排队论]
+tags: [area/数学建模, topic/随机仿真, method/排队论]
 ---
 
 # 排队论模型
@@ -48,4 +48,4 @@ Little 定律 $L=\lambda W,\ L_q=\lambda W_q$ 是重要一致性检查。
 
 ## 关联
 
-[[图论网络 Hub]] · [[蒙特卡洛 Hub]] · [[模型检验 Hub]]
+[[蒙特卡洛 Hub]] · [[马尔可夫决策过程 Hub]] · [[模型检验 Hub]]
