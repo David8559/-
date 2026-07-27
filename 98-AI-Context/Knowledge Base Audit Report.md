@@ -5,8 +5,8 @@ tags: [system/audit]
 
 # Knowledge Base Audit Report
 
-- 时间：2026-07-27T15:16:34+08:00
-- 文件：3315（Markdown 173）
+- 时间：2026-07-27T21:29:51+08:00
+- 文件：3245（Markdown 103）
 - 问题项：0
 - 结构健康评分：100/100
 

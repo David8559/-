@@ -5,6 +5,10 @@ tags: [system/projects]
 
 # Project Status Index
 
-每个 `06-Projects/<项目名>/` 必须包含 `Project-Status.md`。使用 `98-AI-Context/Automation/New-Project.ps1 -Name "项目名"` 创建项目，避免漏掉状态文件。
+## 当前项目
 
-状态枚举：`idea` → `active` → `blocked` / `on-hold` → `completed` → `archived`。
+- [[06-Projects/2020国赛B题-穿越沙漠研究/Project-Status|2020 国赛 B 题：穿越沙漠研究]] — `active`
+
+新项目只有在目标、交付物和负责人明确后才创建。每个项目保留一个 `Project-Status.md`；Code、Data、Paper 目录不再自动放置空 Readme，有真实内容时再建立说明。
+
+状态：`idea` → `active` → `blocked` / `on-hold` → `completed` → `archived`。
