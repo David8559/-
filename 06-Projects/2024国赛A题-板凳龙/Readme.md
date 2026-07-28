@@ -15,6 +15,7 @@ tags: [project/completed, area/数学建模, contest/CUMCM, topic/几何运动�
 - 代码与复现：[[Code/Readme]]
 - 论文与证据：[[Paper/Readme]]
 - 通用方法入口：[[数学建模 Hub]]、[[优化模型 Hub]]、[[模型检验 Hub]]、[[可视化 Hub]]
+- 竞赛研究关系：[[04-Research/04-竞赛真题研究/Readme|竞赛真题研究中的板凳龙案例图]]
 
 > [!success] 项目已完成
 > 问题 1–5、统一检验、模型评价、摘要、参考文献、附录和最终版式均已完成。终稿见 `Paper/Final/板凳龙建模论文-最终稿.docx` 与同名 PDF；可复现材料见 `Paper/Final/板凳龙建模支撑材料.zip`。详细验收记录以 [[Project-Status]] 为准。
