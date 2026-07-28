@@ -1,0 +1,31 @@
+{
+  "criticalPitchM": 0.4503373930274392,
+  "criticalPair": [
+    0,
+    19
+  ],
+  "criticalThetaRad": 63.797752634544665,
+  "criticalHeadRadiusM": 4.5726032573988995,
+  "criticalPairMarginM": 2.2939983246317297e-13,
+  "criticalGlobalMarginM": 2.2939983246317297e-13,
+  "pitchLowerBoundM": 0.45033739302714815,
+  "pitchUpperBoundM": 0.45033739302773024,
+  "lowerBoundMarginM": -6.178391132038996e-14,
+  "upperBoundMarginM": 5.480338405305929e-13,
+  "oneMicrometreBelowMarginM": -9.98076452929375e-07,
+  "oneMicrometreAboveMarginM": 9.98076935987413e-07,
+  "roundedSixDecimalPitchM": 0.450337,
+  "roundedSixDecimalMarginM": -3.9227129486341106e-07,
+  "safeSixDecimalPitchM": 0.450338,
+  "safeSixDecimalMarginM": 6.058054135560376e-07,
+  "sampledGlobalIntervals": 480,
+  "sampledGlobalMinimum": {
+    "marginM": 1.6683930573191397e-06,
+    "thetaRad": 63.80707193626348,
+    "headRadiusM": 4.573271203645224,
+    "pair": [
+      0,
+      19
+    ]
+  }
+}
