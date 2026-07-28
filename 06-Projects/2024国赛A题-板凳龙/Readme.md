@@ -1,9 +1,9 @@
 ---
 type: project-home
-status: active
+status: completed
 created: 2026-07-28
 updated: 2026-07-28
-tags: [project/active, area/数学建模, contest/CUMCM, topic/几何运动学]
+tags: [project/completed, area/数学建模, contest/CUMCM, topic/几何运动学]
 ---
 
 # 2024 国赛 A 题：板凳龙
@@ -16,8 +16,8 @@ tags: [project/active, area/数学建模, contest/CUMCM, topic/几何运动学]
 - 论文与证据：[[Paper/Readme]]
 - 通用方法入口：[[数学建模 Hub]]、[[优化模型 Hub]]、[[模型检验 Hub]]、[[可视化 Hub]]
 
-> [!important] 当前阶段门
-> 本项目采用“每题汇报、用户确认、再进入下一题”的执行方式。问题 1–5 已完成并通过阶段验证；当前等待用户确认是否进入论文整合与交付审计。以 [[Project-Status]] 为唯一执行看板。
+> [!success] 项目已完成
+> 问题 1–5、统一检验、模型评价、摘要、参考文献、附录和最终版式均已完成。终稿见 `Paper/Final/板凳龙建模论文-最终稿.docx` 与同名 PDF；可复现材料见 `Paper/Final/板凳龙建模支撑材料.zip`。详细验收记录以 [[Project-Status]] 为准。
 
 ## 项目目标
 
