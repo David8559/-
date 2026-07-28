@@ -1,13 +1,15 @@
 ---
 type: project-paper
-status: outline
+status: completed
 updated: 2026-07-28
 tags: [project/paper, topic/论文写作]
 ---
 
 # Paper
 
-论文正文尚未开始写入。问题 1–5 的证据、摘要素材、假设、符号和章节验收标准已经冻结，等待用户确认后进入正文整合。
+论文正文入口：[[论文正文]]。
+
+论文写作和最终交付均已完成。正文整合了五问模型、约束残差、临界双侧扰动、网格收敛、失败基线、软件回归、适用边界和可执行改进；7 张图均位于对应正文位置并配有图题和解释。最终文件为 `Final/板凳龙建模论文-最终稿.docx`、`Final/板凳龙建模论文-最终稿.pdf` 和 `Final/板凳龙建模支撑材料.zip`；完整验收结果见 [[../Project-Status|Project-Status]]。
 
 ## 适用格式
 
