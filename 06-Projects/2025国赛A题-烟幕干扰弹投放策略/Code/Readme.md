@@ -38,6 +38,25 @@ python Code/src/run_problem1.py --output-dir Code/outputs --figure-dir Paper/fig
 
 本次结果：11 个测试全部通过；完整圆柱判据时长 1.391643 s；目标中心基准时长 1.435082 s。
 
+## 已实现：问题 2
+
+- `src/problem2_model.py`：任意单弹策略的运动学、可行参数化、中心视线代理、完整圆柱目标函数、差分进化与坐标精化。
+- `src/run_problem2.py`：三随机种子全局搜索、完整圆柱重排、离散收敛、JSON/CSV 和 5 组论文图的一键生成。
+- `tests/test_problem2.py`：8 个策略转换、约束、轨迹、区间和问题 1 回归测试。
+- `outputs/problem2_result.json`：最优参数、遮蔽区间、离散收敛和运行环境。
+- `outputs/problem2_timeseries.csv`：最优策略的完整圆柱/中心视线距离时间序列。
+- `outputs/problem2_optimization_history.csv`：三组差分进化收敛历史。
+- `outputs/problem2_sensitivity.csv`：航向、速度、投放与引信延迟的单因素扰动。
+
+### 复现命令
+
+```powershell
+python -m unittest discover -s Code/tests -p 'test_*.py' -v
+python Code/src/run_problem2.py --output-dir Code/outputs --figure-dir Paper/figures
+```
+
+问题 1–2 共 19 个测试全部通过。问题 2 完整圆柱最优时长为 4.587672 s；三组中心视线代理搜索均收敛到约 4.83249 s 的同一主盆地，最终结果经 180–1440 周向点复算。
+
 ## 实现顺序
 
 1. `geometry/kinematics`：导弹、无人机、干扰弹、烟幕中心轨迹。

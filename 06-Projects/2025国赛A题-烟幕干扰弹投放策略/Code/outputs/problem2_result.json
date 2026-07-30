@@ -1,0 +1,53 @@
+{
+  "criterion": "complete-cylinder all-sampled-boundary sight lines",
+  "heading_deg": 6.946062920904979,
+  "speed_mps": 140.0,
+  "drop_time_s": 0.0,
+  "fuse_delay_s": 0.7390416849204616,
+  "burst_time_s": 0.7390416849204616,
+  "drop_point_m": [
+    17800.0,
+    0.0,
+    1800.0
+  ],
+  "burst_point_m": [
+    17902.706441883063,
+    12.512633292100173,
+    1797.3237052009547
+  ],
+  "effective_intervals_s": [
+    [
+      0.7390731124007421,
+      5.326744793260962
+    ]
+  ],
+  "effective_duration_s": 4.58767168086022,
+  "baseline_problem1_duration_s": 1.3916426692903094,
+  "improvement_s": 3.1960290115699106,
+  "improvement_ratio": 3.2965873942337347,
+  "theta_convergence_duration_s": {
+    "180": 4.587672319002449,
+    "360": 4.587672319002449,
+    "720": 4.587672319002449,
+    "1440": 4.58767168086022
+  },
+  "optimization": {
+    "method": "multi-seed differential evolution on centerline proxy; complete-cylinder ranking and coordinate refinement",
+    "seeds": [
+      20250731,
+      20250732,
+      7
+    ],
+    "proxy_best_duration_s": [
+      4.832492759679509,
+      4.83249321642606,
+      4.832495971785255
+    ]
+  },
+  "environment": {
+    "platform": "Windows-11-10.0.22631-SP0",
+    "python": "3.12.5 (tags/v3.12.5:ff3bc82, Aug  6 2024, 20:45:27) [MSC v.1940 64 bit (AMD64)]",
+    "numpy": "2.4.3",
+    "matplotlib": "3.10.8"
+  }
+}
