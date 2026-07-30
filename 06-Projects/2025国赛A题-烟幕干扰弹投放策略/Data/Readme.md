@@ -1,7 +1,7 @@
 ---
 type: project-data
 status: active
-updated: 2026-07-30
+updated: 2026-07-31
 ---
 
 # 数据与原始材料
@@ -20,6 +20,9 @@ updated: 2026-07-30
 | `Raw/result1.xlsx` | `D:\BaiduNetdiskDownload\A题\附件\result1.xlsx` | 10316 | `AF04B16E6A4719628971BCF5A03D230C9DA6738E67EEBAC9276D254FDD4DF1A7` |
 | `Raw/result2.xlsx` | `D:\BaiduNetdiskDownload\A题\附件\result2.xlsx` | 10438 | `C681D5E378538F71C77FCA199A3CA8303A04DBCFC7BD95F870AE22F01AB69F91` |
 | `Raw/result3.xlsx` | `D:\BaiduNetdiskDownload\A题\附件\result3.xlsx` | 9763 | `B648C82D63E459BA6E6B3711AE79875E373521CD543B45571C4D8FF1AD5EC54A` |
+| `Raw/format2013.doc` | 全国大学生数学建模竞赛官网，2026-07-31 下载 | 53248 | `A65591C040D483D3F5632335DDA6BB6D5F894E00B5BD7A8A249659C36C789F4D` |
+
+`format2013.doc` 是官网标注“请以此为准”的 2013 年修订格式规范。2025 年参赛说明规定电子论文不含承诺书和编号页、第一页为摘要页；官网于 2026-03-03 才发布后续修订版，因此本赛后复现稿采用“2013 格式规范 + 2025 参赛/AI 规则”，不倒推使用 2026 新规。
 
 ## 结果模板字段
 
@@ -49,6 +52,6 @@ updated: 2026-07-30
 
 ## 待补
 
-- [ ] 2025 年原始论文格式/提交说明文件。
+- [x] 2025 年适用的论文格式与提交说明口径已核对并保存官网格式源文件。
 - [ ] 题面坐标和模板小数精度的最终解释。
 - [ ] 每次生成派生结果时记录脚本版本与参数。
