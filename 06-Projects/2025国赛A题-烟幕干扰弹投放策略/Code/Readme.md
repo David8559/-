@@ -60,6 +60,28 @@ python Code/src/run_problem1.py --output-dir Code/outputs --figure-dir Paper/fig
 
 默认采用 Python 科学计算栈；若后续变更语言，必须在状态页登记。最终图形优先导出 SVG/PDF，位图预览不少于 300 dpi，并在最终排版尺寸下人工检查字体、线宽和标注。
 
+### 工具路由
+
+| 场景 | 首选工具 | 备用或后续工具 |
+|---|---|---|
+| 数据比较、统计分布、回归、时间序列与预测 | Matplotlib | Seaborn、Plotly、Origin |
+| 优化过程、收敛性、灵敏度与参数空间 | Matplotlib | Plotly；三维问题可用 MATLAB |
+| 网络拓扑、路径规划与车辆路径 | NetworkX | 未安装时用 Matplotlib 绘制简化节点—边图 |
+| 空间分布、热力地图与聚类地图 | GeoPandas、Folium | 未安装时先绘制坐标系中的空间散点、轨迹或热力图 |
+| 三维曲面、等高线、曲率和相图 | Matplotlib、MATLAB | Origin 用于最终科研风格美化 |
+| 评价模型、特征解释与降维 | Matplotlib | Plotly、scikit-learn、SHAP、UMAP |
+| 技术路线、算法流程和系统框图 | PPT、Visio/亿图图示 | 工具不可用时采用可编辑的 Mermaid 或简洁矢量图 |
+| 最终矢量美化 | 原绘图工具直接导出 SVG/PDF | Origin、Illustrator；不得丢失原始数据、代码或可编辑源文件 |
+
+问题 1 的四组图继续使用 Matplotlib。问题 2 优先生成目标函数地形、收敛曲线和灵敏度图；问题 3–5 的时间调度、路径和任务分配图可先用 Matplotlib，待 Plotly 或 NetworkX 可用后再按展示需要升级。是否使用某类图由模型结论和证据需求决定。
+
+### 当前可用性（2026-07-30）
+
+- 已验证可调用：Python 3.12.5、NumPy 2.4.3、Pandas、Matplotlib 3.10.8、MATLAB（`D:\bin\matlab.exe`）。
+- 当前 Python 环境未检测到：Seaborn、Plotly、NetworkX、GeoPandas、Folium、scikit-learn、SHAP、UMAP。
+- 当前命令环境未检测到：Origin、Visio、PowerPoint、Illustrator；这不排除存在未加入命令路径的桌面安装。
+- 不为本项目自行安装缺失软件；先用已验证工具完成可复现图表，用户安装新工具后再复查可用性。
+
 ## 最小测试集
 
 - 初始时刻位置与速度。
