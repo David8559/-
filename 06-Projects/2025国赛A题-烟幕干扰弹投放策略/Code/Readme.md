@@ -99,6 +99,28 @@ python Code/src/run_problem4.py --output-dir Code/outputs --figure-dir Paper/fig
 
 问题 4 三段完整圆柱有效区间互不重叠，联合遮蔽时长为 11.632853 s，等于三个单机高质量数值最优时长之和。180–1440 周向点复算差异约 $1.72\times10^{-5}$ s。
 
+## 已实现：问题 5
+
+- `src/problem5_model.py`：五机三导弹轨迹、单弹目标分配、完整圆柱有效区间、机内投放组合、区间并集与约束校验。
+- `src/run_problem5.py`：15 个机—弹组合搜索、固定航迹单弹候选库、机内方案筛选、五机组合枚举、精算、JSON/CSV 和 5 组论文图。
+- `tests/test_problem5.py`：对象登记、导弹到达、参数化、投放间隔、固定航迹和最终 9 枚弹策略回归测试。
+- `outputs/problem5_result.json`：最终航迹、9 枚弹的点位/区间、三导弹并集时长、离散收敛和运行环境。
+- `outputs/problem5_intervals.csv`：逐弹有效区间和 M1–M3 并集。
+- `outputs/problem5_pair_search_history.csv`：15 个机—弹连续路径搜索记录。
+- `outputs/problem5_atomic_candidates.csv`：固定航迹单弹候选库。
+- `outputs/problem5_fleet_candidates.csv`：五机联合候选方案。
+- `outputs/problem5_timeseries.csv`：三枚导弹有效状态和累计覆盖时间序列。
+- `Data/Derived/result3.xlsx`：按官方原始模板生成的派生结果表。
+
+### 复现命令
+
+```powershell
+python -m unittest discover -s Code/tests -p 'test_*.py' -v
+python Code/src/run_problem5.py --output-dir Code/outputs --figure-dir Paper/figures
+```
+
+问题 1–5 共 39 个测试全部通过。问题 5 使用 9 枚有效干扰弹，M1、M2、M3 的完整圆柱有效时长分别为 13.000935、10.637703、6.687083 s，总计 30.325721 s。该结果是所生成候选库上的可行数值下界；360–720 周向点复算差异约 $3.1\times10^{-5}$ s。
+
 ## 实现顺序
 
 1. `geometry/kinematics`：导弹、无人机、干扰弹、烟幕中心轨迹。
