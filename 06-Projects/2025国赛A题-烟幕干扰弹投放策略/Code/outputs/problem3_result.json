@@ -1,0 +1,125 @@
+{
+  "criterion": "complete-cylinder all-sampled-boundary sight lines",
+  "objective": "maximize the measure of the union of three effective intervals",
+  "heading_deg": 9.23648438557577,
+  "speed_mps": 103.59649265282755,
+  "bombs": [
+    {
+      "bomb_id": 1,
+      "drop_time_s": 0.0,
+      "fuse_delay_s": 0.005101962649377057,
+      "burst_time_s": 0.005101962649377057,
+      "drop_point_m": [
+        17800.0,
+        0.0,
+        1800.0
+      ],
+      "burst_point_m": [
+        17800.52169245182,
+        0.08483668874051731,
+        1799.999872452888
+      ],
+      "effective_intervals_s": [
+        [
+          4.824835192599448,
+          7.401397165955157
+        ]
+      ],
+      "effective_duration_s": 2.5765619733557097
+    },
+    {
+      "bomb_id": 2,
+      "drop_time_s": 1.0,
+      "fuse_delay_s": 0.0,
+      "burst_time_s": 1.0,
+      "drop_point_m": [
+        17902.253287151314,
+        16.628245749873482,
+        1800.0
+      ],
+      "burst_point_m": [
+        17902.253287151314,
+        16.628245749873482,
+        1800.0
+      ],
+      "effective_intervals_s": [
+        [
+          1.0000012073665858,
+          4.82488362275064
+        ]
+      ],
+      "effective_duration_s": 3.8248824153840544
+    },
+    {
+      "bomb_id": 3,
+      "drop_time_s": 2.0,
+      "fuse_delay_s": 0.0,
+      "burst_time_s": 2.0,
+      "drop_point_m": [
+        18004.506574302628,
+        33.256491499746964,
+        1800.0
+      ],
+      "burst_point_m": [
+        18004.506574302628,
+        33.256491499746964,
+        1800.0
+      ],
+      "effective_intervals_s": [],
+      "effective_duration_s": 0.0
+    }
+  ],
+  "union_intervals_s": [
+    [
+      1.0000012073665858,
+      7.401397165955157
+    ]
+  ],
+  "union_duration_s": 6.401395958588571,
+  "overlap_duration_s": 4.8430151192491167e-05,
+  "third_bomb_tie_break": "zero marginal contribution under the strict criterion; choose earliest feasible release and detonation",
+  "theta_convergence_duration_s": {
+    "180": 6.4013961463432025,
+    "360": 6.4013961463432025,
+    "720": 6.4013961463432025,
+    "1440": 6.401395958588571
+  },
+  "optimization": {
+    "method": "three-seed centerline differential evolution; direct complete-cylinder differential evolution; coordinate refinement and exact boundary recomputation",
+    "proxy_seeds": [
+      20250802,
+      20250803,
+      19
+    ],
+    "full_seed": 20250804,
+    "proxy_best_duration_s": [
+      6.399179378664733,
+      6.399179378569319,
+      6.3991793786709525
+    ],
+    "coarse_full_best_duration_s": 6.399058720605628,
+    "refine_history_s": [
+      6.4007775329875365,
+      6.4007775329875365,
+      6.4007775329875365,
+      6.4007775329875365,
+      6.4007775329875365,
+      6.401032920933078,
+      6.401032920933078,
+      6.401209540445205,
+      6.401209540445205,
+      6.401209540445205,
+      6.401264572440758,
+      6.401264572440758,
+      6.401264572440758,
+      6.401264586730335,
+      6.401264586730335
+    ]
+  },
+  "environment": {
+    "platform": "Windows-11-10.0.22631-SP0",
+    "python": "3.12.5 (tags/v3.12.5:ff3bc82, Aug  6 2024, 20:45:27) [MSC v.1940 64 bit (AMD64)]",
+    "numpy": "2.4.3",
+    "matplotlib": "3.10.8"
+  }
+}

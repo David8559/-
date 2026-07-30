@@ -57,6 +57,27 @@ python Code/src/run_problem2.py --output-dir Code/outputs --figure-dir Paper/fig
 
 问题 1–2 共 19 个测试全部通过。问题 2 完整圆柱最优时长为 4.587672 s；三组中心视线代理搜索均收敛到约 4.83249 s 的同一主盆地，最终结果经 180–1440 周向点复算。
 
+## 已实现：问题 3
+
+- `src/problem3_model.py`：三弹共同航向/速度参数化、1 s 投放间隔、逐弹有效区间、区间合并、并集/重叠时长和 8 维差分进化。
+- `src/run_problem3.py`：三组中心线代理搜索、完整圆柱直接搜索、坐标精化、离散收敛、JSON/CSV 和 5 组论文图。
+- `tests/test_problem3.py`：投放间隔、策略双向转换、非法约束、区间并集/重叠和最终策略回归测试。
+- `outputs/problem3_result.json`：共同飞行参数、逐弹点位/区间、联合时长、离散收敛和运行环境。
+- `outputs/problem3_intervals.csv`：逐弹有效区间及并集。
+- `outputs/problem3_optimization_history.csv`：三组代理搜索和一组完整圆柱搜索的收敛历史。
+- `outputs/problem3_timeseries.csv`：三个烟幕球的完整圆柱最不利距离与同时覆盖计数。
+- `outputs/problem3_sensitivity.csv`：航向、速度和第二枚投放时刻的单因素扰动。
+- `Data/Derived/result1.xlsx`：按官方原始模板生成的派生结果表。
+
+### 复现命令
+
+```powershell
+python -m unittest discover -s Code/tests -p 'test_*.py' -v
+python Code/src/run_problem3.py --output-dir Code/outputs --figure-dir Paper/figures
+```
+
+问题 3 完整圆柱联合遮蔽时长为 6.401396 s；三次投放时刻为 0/1/2 s。前两枚弹在 4.8248 s 附近近乎无缝衔接，第三枚在严格判据下无有效区间。180–1440 周向点结果差异小于 $2\times10^{-7}$ s。
+
 ## 实现顺序
 
 1. `geometry/kinematics`：导弹、无人机、干扰弹、烟幕中心轨迹。
