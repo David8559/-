@@ -103,7 +103,9 @@ class Problem4ModelTests(unittest.TestCase):
         )
         self.assertEqual([len(intervals) for intervals in individual], [1, 1, 1])
         self.assertEqual(len(union), 3)
-        self.assertAlmostEqual(intervals_duration(union), 11.632852718383068, places=5)
+        # The compact 48-angle test grid is intentionally coarser than the
+        # 1440-angle reporting grid, but it must preserve the same strategy basin.
+        self.assertAlmostEqual(intervals_duration(union), 11.63332987867295, places=5)
 
 
 if __name__ == "__main__":
