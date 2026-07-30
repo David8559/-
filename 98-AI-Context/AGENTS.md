@@ -14,6 +14,15 @@ Maintain this Vault as a reproducible mathematical-modeling knowledge system for
 
 Before editing, inspect `git status`, search for existing notes with `rg`, and prefer extending the canonical note over creating a duplicate.
 
+## Token-efficient context loading
+
+- Treat Vault files as the source of truth. Do not reconstruct project state from a long chat transcript.
+- Read the operating-rule files once at task startup. Search with `rg` before opening domain notes or project artifacts.
+- For a large `Project-Status.md` or project `Readme.md`, initially read frontmatter, headings, current status, completed work, tasks, next step, risks, decisions, and the sections directly relevant to the requested deliverable.
+- Expand to the full file, source paper, dataset, PDF, or video only when the current evidence is insufficient.
+- Reuse existing extraction, OCR, cleaned notes, code results, and figure explanations; do not repeat expensive extraction without a stated reason.
+- Keep tool output bounded, avoid reopening unchanged files, and finish by updating the authoritative project state so the next task can start without old conversation history.
+
 ## Write rules
 
 - Never store raw chat logs.
