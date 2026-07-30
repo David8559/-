@@ -1,6 +1,6 @@
 ---
 type: project-code
-status: planned
+status: active
 updated: 2026-07-30
 ---
 
@@ -11,6 +11,32 @@ updated: 2026-07-30
 - `src/`：轨迹、遮蔽判据、有效区间、优化、结果导出与绘图代码。
 - `tests/`：解析解、边界条件、约束和结果模板测试。
 - `outputs/`：可再生的数值结果、日志和中间图，不存放唯一证据。
+
+## 已实现：问题 1
+
+- `src/problem1_model.py`：轨迹、线段距离、完整圆柱/中心视线遮蔽判据、区间端点和解析复核。
+- `src/run_problem1.py`：结果、时间序列和四组论文图的一键生成。
+- `tests/test_problem1.py`：11 个轨迹、边界、收敛与复核测试。
+- `outputs/problem1_result.json`：机器可读关键结果和运行环境。
+- `outputs/problem1_timeseries.csv`：遮蔽距离、投影参数和导弹—烟幕距离时间序列。
+
+### 实际运行环境
+
+- Windows 11
+- Python 3.12.5
+- NumPy 2.4.3
+- Matplotlib 3.10.8
+
+### 复现命令
+
+在项目根目录执行：
+
+```powershell
+python -m unittest discover -s Code/tests -p 'test_*.py' -v
+python Code/src/run_problem1.py --output-dir Code/outputs --figure-dir Paper/figures
+```
+
+本次结果：11 个测试全部通过；完整圆柱判据时长 1.391643 s；目标中心基准时长 1.435082 s。
 
 ## 实现顺序
 

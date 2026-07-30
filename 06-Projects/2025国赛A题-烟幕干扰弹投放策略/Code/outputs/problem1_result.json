@@ -1,0 +1,68 @@
+{
+  "drop_time_s": 1.5,
+  "burst_time_s": 5.1,
+  "cloud_expiry_time_s": 25.1,
+  "missile_arrival_time_s": 66.99917080747261,
+  "missile_cloud_sphere_crossings_s": [
+    9.389247539873253,
+    9.448088158701848
+  ],
+  "drop_point_m": [
+    17620.0,
+    0.0,
+    1800.0
+  ],
+  "burst_point_m": [
+    17188.0,
+    0.0,
+    1736.496
+  ],
+  "full_cylinder_intervals_s": [
+    [
+      8.056445489414035,
+      9.448088158704344
+    ]
+  ],
+  "full_cylinder_duration_s": 1.3916426692903094,
+  "centerline_intervals_s": [
+    [
+      8.013006056733428,
+      9.448088158704344
+    ]
+  ],
+  "centerline_duration_s": 1.4350821019709166,
+  "cylinder_n_theta": 1440,
+  "convergence": [
+    {
+      "n_theta": 360,
+      "start_s": 8.056445489414035,
+      "end_s": 9.448088158704344,
+      "duration_s": 1.3916426692903094
+    },
+    {
+      "n_theta": 720,
+      "start_s": 8.056445489414035,
+      "end_s": 9.448088158704344,
+      "duration_s": 1.3916426692903094
+    },
+    {
+      "n_theta": 1440,
+      "start_s": 8.056445489414035,
+      "end_s": 9.448088158704344,
+      "duration_s": 1.3916426692903094
+    },
+    {
+      "n_theta": 2880,
+      "start_s": 8.056445489414035,
+      "end_s": 9.448088158704344,
+      "duration_s": 1.3916426692903094
+    }
+  ],
+  "environment": {
+    "python": "3.12.5",
+    "numpy": "2.4.3",
+    "matplotlib": "3.10.8",
+    "platform": "Windows-11-10.0.22631-SP0",
+    "command": "python Code/src/run_problem1.py --output-dir Code/outputs --figure-dir Paper/figures"
+  }
+}
