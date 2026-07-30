@@ -18,9 +18,12 @@ from problem4_model import (  # noqa: E402
     DroneBombStrategy,
     MultiDroneStrategy,
     burst_point,
+    cylinder_surface_points,
     decode_decision,
     drop_point,
     encode_strategy,
+    exact_multi_drone_intervals,
+    intervals_duration,
     seed_strategies,
     validate_bomb_strategy,
 )
@@ -67,6 +70,40 @@ class Problem4ModelTests(unittest.TestCase):
         strategy = decode_decision(decision)
         self.assertIsInstance(strategy, MultiDroneStrategy)
         self.assertEqual(len(strategy.bombs), 3)
+
+    def test_reported_strategy_regression(self) -> None:
+        strategy = MultiDroneStrategy(
+            (
+                DroneBombStrategy(
+                    "FY1",
+                    np.radians(6.945852317258661),
+                    140.0,
+                    0.0,
+                    0.7390456916109627,
+                ),
+                DroneBombStrategy(
+                    "FY2",
+                    np.radians(280.19192130188935),
+                    119.7465028251595,
+                    5.612725805244697,
+                    5.869072353881609,
+                ),
+                DroneBombStrategy(
+                    "FY3",
+                    np.radians(78.24891581523705),
+                    132.66917535866548,
+                    21.390227030047182,
+                    2.422908693922376,
+                ),
+            )
+        )
+        target_points = cylinder_surface_points(n_theta=48, n_z=5, n_r=4)
+        individual, union = exact_multi_drone_intervals(
+            strategy, target_points, scan_step=0.01
+        )
+        self.assertEqual([len(intervals) for intervals in individual], [1, 1, 1])
+        self.assertEqual(len(union), 3)
+        self.assertAlmostEqual(intervals_duration(union), 11.632852718383068, places=5)
 
 
 if __name__ == "__main__":

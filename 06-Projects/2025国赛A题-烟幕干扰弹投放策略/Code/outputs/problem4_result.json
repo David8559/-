@@ -1,0 +1,123 @@
+{
+  "criterion": "complete-cylinder all-sampled-boundary sight lines",
+  "objective": "maximize the union of one interval set per drone",
+  "decomposition": "the three individual optima are disjoint, so their sum equals the union and attains the separable numerical upper bound",
+  "drones": [
+    {
+      "drone_id": "FY1",
+      "heading_deg": 6.945852317258661,
+      "speed_mps": 140.0,
+      "drop_time_s": 0.0,
+      "fuse_delay_s": 0.7390456916109627,
+      "burst_time_s": 0.7390456916109627,
+      "drop_point_m": [
+        17800.0,
+        0.0,
+        1800.0
+      ],
+      "burst_point_m": [
+        17902.707044695282,
+        12.512323605957963,
+        1797.3236761819853
+      ],
+      "effective_intervals_s": [
+        [
+          0.739112534830064,
+          5.326784500637742
+        ]
+      ],
+      "effective_duration_s": 4.587671965807678
+    },
+    {
+      "drone_id": "FY2",
+      "heading_deg": 280.19192130188935,
+      "speed_mps": 119.7465028251595,
+      "drop_time_s": 5.612725805244697,
+      "fuse_delay_s": 5.869072353881609,
+      "burst_time_s": 11.481798159126306,
+      "drop_point_m": [
+        12118.926142963037,
+        738.5011379871289,
+        1400.0
+      ],
+      "burst_point_m": [
+        12243.28392597925,
+        46.79004824601384,
+        1231.2145495540226
+      ],
+      "effective_intervals_s": [
+        [
+          11.482244045231603,
+          15.40934376737114
+        ]
+      ],
+      "effective_duration_s": 3.9270997221395376
+    },
+    {
+      "drone_id": "FY3",
+      "heading_deg": 78.24891581523705,
+      "speed_mps": 132.66917535866548,
+      "drop_time_s": 21.390227030047182,
+      "fuse_delay_s": 2.422908693922376,
+      "burst_time_s": 23.81313572396956,
+      "drop_point_m": [
+        6577.9519777979485,
+        -221.65241154101568,
+        700.0
+      ],
+      "burst_point_m": [
+        6643.417616367807,
+        93.05591377780638,
+        671.2346159584853
+      ],
+      "effective_intervals_s": [
+        [
+          23.81343230662368,
+          26.931513337059535
+        ]
+      ],
+      "effective_duration_s": 3.118081030435853
+    }
+  ],
+  "union_intervals_s": [
+    [
+      0.739112534830064,
+      5.326784500637742
+    ],
+    [
+      11.482244045231603,
+      15.40934376737114
+    ],
+    [
+      23.81343230662368,
+      26.931513337059535
+    ]
+  ],
+  "union_duration_s": 11.632852718383068,
+  "overlap_duration_s": 0.0,
+  "theta_convergence_duration_s": {
+    "180": 11.63286990802736,
+    "360": 11.63286990802736,
+    "720": 11.632860063016416,
+    "1440": 11.632852718383068
+  },
+  "optimization": {
+    "method": "per-drone proximity seeding, centerline duration differential evolution, complete-cylinder ranking and coordinate refinement",
+    "proximity_seeds": {
+      "FY1": 20250860,
+      "FY2": 20250861,
+      "FY3": 20250862
+    },
+    "duration_seeds": {
+      "FY1": 20250870,
+      "FY2": 20250871,
+      "FY3": 20250872
+    }
+  },
+  "environment": {
+    "platform": "Windows-11-10.0.22631-SP0",
+    "python": "3.12.5 (tags/v3.12.5:ff3bc82, Aug  6 2024, 20:45:27) [MSC v.1940 64 bit (AMD64)]",
+    "numpy": "2.4.3",
+    "matplotlib": "3.10.8"
+  }
+}
