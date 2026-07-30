@@ -83,7 +83,15 @@ def configure_style() -> None:
 
 def save_figure(fig: plt.Figure, output_stem: Path) -> None:
     fig.savefig(output_stem.with_suffix(".png"), bbox_inches="tight", dpi=300)
-    fig.savefig(output_stem.with_suffix(".svg"), bbox_inches="tight")
+    svg_path = output_stem.with_suffix(".svg")
+    fig.savefig(svg_path, bbox_inches="tight")
+    # Matplotlib SVG path data contains harmless trailing spaces by default.
+    # Normalise them so repository whitespace validation remains meaningful.
+    svg_text = svg_path.read_text(encoding="utf-8")
+    svg_path.write_text(
+        "\n".join(line.rstrip() for line in svg_text.splitlines()) + "\n",
+        encoding="utf-8",
+    )
     plt.close(fig)
 
 
