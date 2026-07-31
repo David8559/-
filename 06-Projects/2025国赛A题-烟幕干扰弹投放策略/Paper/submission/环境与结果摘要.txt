@@ -18,9 +18,9 @@ Matplotlib 3.10.8
 问题 5：M1=13.000935 s，M2=10.637703 s，M3=6.687083 s，总计 30.325721 s
 
 验证：
-2026-07-31 执行 39 个 unittest，全部通过。
-20 页论文与 4 页 AI 工具使用详情已逐页检查，公式、图表、表格和编号无越界或截断。
-正文采用 15 幅关键图，并给出空间离散收敛、多起点复算、失败搜索、端点复核和参数灵敏度证据。
+2026-07-31 执行 42 项 unittest，全部通过。
+25 页论文与 4 页 AI 工具使用详情已逐页检查，公式、图表、表格和编号无越界或截断。
+正文采用 17 幅关键图和 36 个独立编号公式，并给出空间离散收敛、多起点复算、失败搜索、端点复核、参数灵敏度和 2000 轮执行误差压力测试证据。
 问题 5 是候选库上的可行数值下界，不宣称解析全局最优。
 问题 3 第三枚弹在严格判据下无新增有效时长。
 
@@ -31,6 +31,7 @@ python Code/src/run_problem2.py --output-dir Code/outputs --figure-dir Paper/fig
 python Code/src/run_problem3.py --reuse-result --output-dir Code/outputs --figure-dir Paper/figures
 python Code/src/run_problem4.py --reuse-result --output-dir Code/outputs --figure-dir Paper/figures
 python Code/src/run_problem5.py --reuse-result --output-dir Code/outputs --figure-dir Paper/figures
+python Code/src/run_paper_expert_validation.py --output-dir Code/outputs --figure-dir Paper/figures
 
 AI 使用：
 模型、代码、图表和论文由 OpenAI Codex 实质性辅助生成，问题 1—5 已由用户逐阶段复核。实际后端模型标识仍须从会话界面或导出记录人工核对，禁止猜测。

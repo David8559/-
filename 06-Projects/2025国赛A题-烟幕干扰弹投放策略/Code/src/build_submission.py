@@ -18,7 +18,12 @@ from docx import Document
 from docx.enum.section import WD_SECTION
 from docx.enum.style import WD_STYLE_TYPE
 from docx.enum.table import WD_ALIGN_VERTICAL, WD_CELL_VERTICAL_ALIGNMENT
-from docx.enum.text import WD_ALIGN_PARAGRAPH, WD_BREAK, WD_LINE_SPACING
+from docx.enum.text import (
+    WD_ALIGN_PARAGRAPH,
+    WD_BREAK,
+    WD_LINE_SPACING,
+    WD_TAB_ALIGNMENT,
+)
 from docx.oxml import OxmlElement
 from docx.oxml.ns import qn
 from docx.shared import Cm, Pt, RGBColor
@@ -168,6 +173,58 @@ def configure_document(doc: Document):
 INLINE_PATTERN = re.compile(r"(\*\*.*?\*\*|`.*?`|\$.*?\$|\[[^\]]+\]\([^)]+\))")
 
 
+def latex_inline_to_text(source: str) -> str:
+    """Convert compact inline LaTeX to readable text on the Word baseline."""
+    text = source.strip()
+    text = re.sub(r"\\(?:boldsymbol|mathbf|mathrm|mathcal)\s+", "", text)
+    text = re.sub(
+        r"\\(?:boldsymbol|mathbf|mathrm|mathcal)\{([^{}]*)\}",
+        r"\1",
+        text,
+    )
+    text = text.replace(r"\widehat\lambda", "λ̂")
+    text = text.replace(r"\bar J", "J̄")
+    replacements = {
+        r"\ldots": "…",
+        r"\lambda": "λ",
+        r"\theta": "θ",
+        r"\Omega": "Ω",
+        r"\phi": "φ",
+        r"\tau": "τ",
+        r"\mu": "μ",
+        r"\pi": "π",
+        r"\leq": "≤",
+        r"\geq": "≥",
+        r"\le": "≤",
+        r"\ge": "≥",
+        r"\in": "∈",
+        r"\min": "min",
+        r"\max": "max",
+        r"\sum": "Σ",
+        r"\|": "‖",
+        r"\{": "{",
+        r"\}": "}",
+        r"\,": " ",
+    }
+    for old, new in replacements.items():
+        text = text.replace(old, new)
+
+    superscript_map = str.maketrans("0123456789+-", "⁰¹²³⁴⁵⁶⁷⁸⁹⁺⁻")
+
+    def superscript(match):
+        value = match.group(1)
+        if all(ch in "0123456789+-" for ch in value):
+            return value.translate(superscript_map)
+        return f"^{value}"
+
+    text = re.sub(r"\^\{([^{}]+)\}", superscript, text)
+    text = re.sub(r"_\{([^{}]+)\}", r"_\1", text)
+    text = text.replace("^*", "*")
+    text = text.replace(r"\ ", " ")
+    # Unknown commands remain readable and are caught by the residual-TeX QA.
+    return re.sub(r"\\([A-Za-z]+)", r"\1", text)
+
+
 def add_inline(paragraph, text: str, base_size=10.5):
     pos = 0
     for match in INLINE_PATTERN.finditer(text):
@@ -181,7 +238,7 @@ def add_inline(paragraph, text: str, base_size=10.5):
             run = paragraph.add_run(token[1:-1])
             set_run_font(run, cn="等线", latin="Consolas", size=max(base_size - 1, 8.5))
         elif token.startswith("$"):
-            run = paragraph.add_run(token[1:-1])
+            run = paragraph.add_run(latex_inline_to_text(token[1:-1]))
             set_run_font(run, cn="Cambria Math", latin="Cambria Math", size=base_size)
         else:
             label, url = re.match(r"\[([^\]]+)\]\(([^)]+)\)", token).groups()
@@ -254,11 +311,17 @@ def normalized_image_path(image_path: Path) -> Path:
 def equation_image_path(latex: str) -> Path:
     """Render display math as a high-resolution image when OMML conversion is unavailable."""
     source = " ".join(part.strip() for part in latex.splitlines()).strip()
-    source = source.replace(r"\boldsymbol ", " ")
+    source = re.sub(r"\\boldsymbol\s*", "", source)
     source = source.replace(r"\frac12", r"\frac{1}{2}")
     source = re.sub(r"\\le(?![A-Za-z])", r"\\leq", source)
     source = re.sub(r"\\ge(?![A-Za-z])", r"\\geq", source)
     source = source.replace(r"\mathsf T", r"\mathsf{T}")
+    source = source.replace(r"\bar J", r"\bar{J}")
+    source = source.replace(r"\sqrt n", r"\sqrt{n}")
+    source = source.replace(r"\mathbb E", r"\mathbb{E}")
+    source = re.sub(r"\\mathcal\s+([A-Za-z])", r"\\mathcal{\1}", source)
+    source = re.sub(r"\\text\{([^{}]+)\}", r"\\mathrm{\1}", source)
+    source = re.sub(r"\\operatorname\{([^{}]+)\}", r"\\mathrm{\1}", source)
     digest = hashlib.sha256(source.encode("utf-8")).hexdigest()[:16]
     target_dir = Path(tempfile.gettempdir()) / "codex-stage-g-equations"
     target_dir.mkdir(parents=True, exist_ok=True)
@@ -284,20 +347,24 @@ def equation_image_path(latex: str) -> Path:
     return target
 
 
-def add_equation(doc: Document, latex: str):
+def add_equation(doc: Document, latex: str, number: int):
     p = doc.add_paragraph(style="Equation CN")
     p.paragraph_format.keep_together = True
+    p.paragraph_format.tab_stops.add_tab_stop(Cm(15.4), WD_TAB_ALIGNMENT.RIGHT)
     try:
         image_path = equation_image_path(latex)
         with Image.open(image_path) as image:
             native_width_cm = image.width / 300 * 2.54
-        width = Cm(min(14.6, max(3.0, native_width_cm)))
+        width = Cm(min(13.8, max(3.0, native_width_cm)))
         p.add_run().add_picture(str(image_path), width=width)
     except Exception:
         # Last-resort readable fallback; never silently drop a formula.
         fallback = " ".join(part.strip() for part in latex.splitlines())
         run = p.add_run(fallback)
         set_run_font(run, cn="Cambria Math", latin="Cambria Math", size=10.5)
+    p.add_run("\t")
+    number_run = p.add_run(f"({number})")
+    set_run_font(number_run, cn="宋体", latin="Times New Roman", size=10.5)
 
 
 def add_figure(doc: Document, image_path: Path, caption: str, figure_number: int):
@@ -349,6 +416,7 @@ def build_from_markdown(
     in_code = False
     code_lines: list[str] = []
     figure_no = 0
+    equation_no = 0
     first_title = True
     skip_ai_template = False
     i = 0
@@ -397,7 +465,8 @@ def build_from_markdown(
                 in_equation = True
                 equation_lines = []
             else:
-                add_equation(doc, "\n".join(equation_lines))
+                equation_no += 1
+                add_equation(doc, "\n".join(equation_lines), equation_no)
                 in_equation = False
             i += 1
             continue

@@ -1,0 +1,39 @@
+{
+  "purpose": "problem-2 execution-error stress test; distributions are scenario assumptions, not题面 measurements",
+  "seed": 20260731,
+  "samples": 2000,
+  "assumptions": {
+    "heading_error_deg": "Normal(0, 0.5^2)",
+    "speed_error_mps": "Normal(0, 1.5^2), clipped to [70, 140] m/s",
+    "release_delay_s": "abs(Normal(0, 0.08^2))",
+    "fuse_error_s": "Normal(0, 0.05^2), clipped to physical fuse range"
+  },
+  "nominal_duration_s_same_grid": 4.587778786301781,
+  "mean_duration_s": 4.154196410546136,
+  "standard_deviation_s": 0.40729089037215754,
+  "mean_95_percent_ci_s": [
+    4.136346100243361,
+    4.172046720848912
+  ],
+  "quantiles_s": {
+    "p05": 3.377414958200682,
+    "p25": 3.893105950668969,
+    "p50": 4.239467793884678,
+    "p75": 4.528516866618815,
+    "p95": 4.584859790824478
+  },
+  "probability_positive": 1.0,
+  "probability_at_least_80_percent_nominal": 0.874,
+  "correlation_with_duration": {
+    "heading_error_deg": -0.31420819773356545,
+    "speed_error_mps": -0.036950865786345065,
+    "release_delay_s": -0.5932877929167133,
+    "fuse_error_s": -0.6550062910486929
+  },
+  "environment": {
+    "platform": "Windows-11-10.0.22631-SP0",
+    "python": "3.12.5 (tags/v3.12.5:ff3bc82, Aug  6 2024, 20:45:27) [MSC v.1940 64 bit (AMD64)]",
+    "numpy": "2.4.3",
+    "matplotlib": "3.10.8"
+  }
+}
