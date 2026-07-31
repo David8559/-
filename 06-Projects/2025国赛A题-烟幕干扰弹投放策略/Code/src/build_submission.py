@@ -253,22 +253,22 @@ def normalized_image_path(image_path: Path) -> Path:
 
 def equation_image_path(latex: str) -> Path:
     """Render display math as a high-resolution image when OMML conversion is unavailable."""
-    import matplotlib
-
-    matplotlib.use("Agg")
-    import matplotlib.pyplot as plt
-
     source = " ".join(part.strip() for part in latex.splitlines()).strip()
-    source = source.replace(r"\boldsymbol ", "")
+    source = source.replace(r"\boldsymbol ", " ")
     source = source.replace(r"\frac12", r"\frac{1}{2}")
-    source = re.sub(r"\\le(?!q)", r"\\leq", source)
-    source = re.sub(r"\\ge(?!q)", r"\\geq", source)
+    source = re.sub(r"\\le(?![A-Za-z])", r"\\leq", source)
+    source = re.sub(r"\\ge(?![A-Za-z])", r"\\geq", source)
     source = source.replace(r"\mathsf T", r"\mathsf{T}")
     digest = hashlib.sha256(source.encode("utf-8")).hexdigest()[:16]
     target_dir = Path(tempfile.gettempdir()) / "codex-stage-g-equations"
     target_dir.mkdir(parents=True, exist_ok=True)
     target = target_dir / f"equation-{digest}.png"
     if not target.exists():
+        import matplotlib
+
+        matplotlib.use("Agg")
+        import matplotlib.pyplot as plt
+
         fig = plt.figure(figsize=(8, 0.55), dpi=300, facecolor="white")
         fig.text(
             0.5,
@@ -465,8 +465,14 @@ def build_from_markdown(
             continue
         num_match = re.match(r"^(\d+)\.\s+(.*)$", line)
         if num_match:
-            p = doc.add_paragraph(style="List Number")
-            add_inline(p, num_match.group(2))
+            # Preserve the source number explicitly. Word otherwise continues
+            # one automatic list across unrelated sections (for example 7–10
+            # instead of restarting a later four-step algorithm at 1).
+            p = doc.add_paragraph()
+            p.paragraph_format.left_indent = Cm(0.74)
+            p.paragraph_format.first_line_indent = Cm(-0.37)
+            p.paragraph_format.line_spacing = 1.15
+            add_inline(p, f"{num_match.group(1)}. {num_match.group(2)}")
             i += 1
             continue
         if line.startswith("- "):
