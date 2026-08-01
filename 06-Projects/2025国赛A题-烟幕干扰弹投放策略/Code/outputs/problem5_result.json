@@ -1,6 +1,6 @@
 {
-  "criterion": "complete-cylinder all-sampled-boundary sight lines",
-  "objective": "maximize sum of per-missile union durations, requiring positive coverage for M1/M2/M3",
+  "criterion": "for every sampled target sight line, at least one active cloud intersects the finite missile-to-target segment",
+  "objective": "primary: maximize the sum of per-missile joint-coverage durations; also report minimum and simultaneous duration",
   "method": "pair-path continuous search, fixed-path atomic candidate library, within-drone combination, exhaustive five-drone plan selection",
   "global_optimality_boundary": "feasible numerical lower bound over the generated candidate library, not an analytic global optimum",
   "bombs": [
@@ -253,78 +253,86 @@
       "arrival_time_s": 66.99917080747261,
       "union_intervals_s": [
         [
-          1.0000010463439852,
-          7.401397153109627
+          1.0000010464152873,
+          7.401397153371016
         ],
         [
-          18.678241524662212,
-          22.447948294921467
+          18.67824152502088,
+          22.447948295249514
         ],
         [
-          32.78895612259376,
-          35.61878796768225
+          32.78895612242842,
+          35.61878796792787
         ]
       ],
-      "union_duration_s": 13.000934722113389
+      "union_duration_s": 13.000934722683818
     },
     "M2": {
       "arrival_time_s": 63.75038126247647,
       "union_intervals_s": [
         [
-          8.595607824509479,
-          12.508737627881537
+          8.595607824615108,
+          12.508737627910769
         ],
         [
-          14.24462994062932,
-          18.04202314906039
+          14.24462994095466,
+          18.04202314884725
         ],
         [
-          26.54097225951444,
-          29.468152207394276
+          26.540972259869502,
+          29.46815220733413
         ]
       ],
-      "union_duration_s": 10.637702959682965
+      "union_duration_s": 10.637702958652877
     },
     "M3": {
       "arrival_time_s": 60.36647340296691,
       "union_intervals_s": [
         [
-          12.903941545006994,
-          16.65534632878208
+          12.903941544774515,
+          16.655346329012584
         ],
         [
-          23.173809478117057,
-          26.109487677917734
+          23.173809478371048,
+          26.10948767789354
         ]
       ],
-      "union_duration_s": 6.687082983575763
+      "union_duration_s": 6.687082983760561
     }
   },
-  "total_union_duration_s": 30.325720665372117,
+  "total_union_duration_s": 30.325720665097258,
   "theta_convergence_duration_s": {
     "90": {
-      "M1": 13.001015528911587,
-      "M2": 10.638362334278007,
-      "M3": 6.687626609222283,
-      "total": 30.32700447241188
+      "M1": 13.001015529586876,
+      "M2": 10.638362333873438,
+      "M3": 6.6876266087638285,
+      "total": 30.327004472224143,
+      "minimum": 6.6876266087638285,
+      "simultaneous": 0.0
     },
     "180": {
-      "M1": 13.001011345904452,
-      "M2": 10.63779905863021,
-      "M3": 6.687113547984836,
-      "total": 30.325923952519496
+      "M1": 13.00101134593613,
+      "M2": 10.637799057774526,
+      "M3": 6.687113547522433,
+      "total": 30.325923951233086,
+      "minimum": 6.687113547522433,
+      "simultaneous": 0.0
     },
     "360": {
-      "M1": 13.000938140173385,
-      "M2": 10.637728797778014,
-      "M3": 6.687084467077092,
-      "total": 30.32575140502849
+      "M1": 13.000938141385118,
+      "M2": 10.637728797025723,
+      "M3": 6.68708446710502,
+      "total": 30.32575140551586,
+      "minimum": 6.68708446710502,
+      "simultaneous": 0.0
     },
     "720": {
-      "M1": 13.000934722113389,
-      "M2": 10.637702959682965,
-      "M3": 6.687082983575763,
-      "total": 30.325720665372117
+      "M1": 13.000934722683818,
+      "M2": 10.637702958652877,
+      "M3": 6.687082983760561,
+      "total": 30.325720665097258,
+      "minimum": 6.687082983760561,
+      "simultaneous": 0.0
     }
   },
   "selected_plan_sources": {
@@ -339,5 +347,11 @@
     "python": "3.12.5 (tags/v3.12.5:ff3bc82, Aug  6 2024, 20:45:27) [MSC v.1940 64 bit (AMD64)]",
     "numpy": "2.4.3",
     "matplotlib": "3.10.8"
+  },
+  "aggregation_metrics": {
+    "sum_duration_s": 30.325720665097258,
+    "minimum_missile_duration_s": 6.687082983760561,
+    "simultaneous_intervals_s": [],
+    "simultaneous_duration_s": 0.0
   }
 }

@@ -24,6 +24,7 @@ from problem1_model import (
 from problem2_model import MAX_DRONE_SPEED, MIN_DRONE_SPEED, sampled_effective_intervals
 from problem3_model import intervals_duration, merge_intervals
 from problem4_model import coordinate_refine_unit_cube, differential_evolution_unit_cube
+from joint_coverage import exact_joint_intervals
 
 
 DRONE_IDS = ("FY1", "FY2", "FY3", "FY4", "FY5")
@@ -458,6 +459,61 @@ def coverage_durations(
     grouped = intervals_by_missile(bombs_with_intervals)
     return {
         missile_id: intervals_duration(grouped[missile_id])
+        for missile_id in MISSILE_IDS
+    }
+
+
+def intersect_interval_sets(
+    interval_sets: Sequence[Sequence[EffectiveInterval]],
+) -> list[EffectiveInterval]:
+    """Return the intersection of several unions of closed intervals."""
+
+    if not interval_sets:
+        return []
+    current = list(interval_sets[0])
+    for intervals in interval_sets[1:]:
+        next_intersection: list[EffectiveInterval] = []
+        left_index = 0
+        right_index = 0
+        left = current
+        right = list(intervals)
+        while left_index < len(left) and right_index < len(right):
+            start = max(left[left_index].start, right[right_index].start)
+            end = min(left[left_index].end, right[right_index].end)
+            if end > start:
+                next_intersection.append(EffectiveInterval(start, end))
+            if left[left_index].end <= right[right_index].end:
+                left_index += 1
+            else:
+                right_index += 1
+        current = next_intersection
+        if not current:
+            break
+    return current
+
+
+def exact_joint_intervals_by_missile(
+    bombs: Sequence[BombStrategy],
+    target_points: np.ndarray,
+    scan_step: float = 0.01,
+) -> dict[str, list[EffectiveInterval]]:
+    """Evaluate all active clouds against every incoming missile.
+
+    A bomb's ``missile_id`` is a planning label, not a physical restriction:
+    any active cloud may block a sight line from any missile.
+    """
+
+    return {
+        missile_id: exact_joint_intervals(
+            bombs,
+            target_points,
+            lambda time, mid=missile_id: missile_position_for(mid, time),
+            lambda times, mid=missile_id: missile_position_for(mid, times),
+            cloud_center_for,
+            cloud_center_for,
+            MISSILE_ARRIVAL_TIMES[missile_id],
+            scan_step=scan_step,
+        )
         for missile_id in MISSILE_IDS
     }
 

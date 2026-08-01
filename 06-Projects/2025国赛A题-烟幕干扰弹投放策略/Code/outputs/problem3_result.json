@@ -1,6 +1,6 @@
 {
-  "criterion": "complete-cylinder all-sampled-boundary sight lines",
-  "objective": "maximize the measure of the union of three effective intervals",
+  "criterion": "for every sampled target sight line, at least one active smoke cloud intersects the finite missile-to-target segment",
+  "objective": "maximize the measure of the joint three-cloud coverage set",
   "heading_deg": 9.23648438557577,
   "speed_mps": 103.59649265282755,
   "bombs": [
@@ -25,7 +25,8 @@
           7.401397165955157
         ]
       ],
-      "effective_duration_s": 2.5765619733557097
+      "effective_duration_s": 2.5765619733557097,
+      "joint_marginal_duration_s": 2.576513543353006
     },
     {
       "bomb_id": 2,
@@ -48,7 +49,8 @@
           4.82488362275064
         ]
       ],
-      "effective_duration_s": 3.8248824153840544
+      "effective_duration_s": 3.8248824153840544,
+      "joint_marginal_duration_s": 3.82483398529415
     },
     {
       "bomb_id": 3,
@@ -66,26 +68,29 @@
         1800.0
       ],
       "effective_intervals_s": [],
-      "effective_duration_s": 0.0
+      "effective_duration_s": 0.0,
+      "joint_marginal_duration_s": 1.9807266937732493e-10
     }
   ],
   "union_intervals_s": [
     [
-      1.0000012073665858,
-      7.401397165955157
+      1.0000012072952376,
+      7.401397166181309
     ]
   ],
-  "union_duration_s": 6.401395958588571,
-  "overlap_duration_s": 4.8430151192491167e-05,
-  "third_bomb_tie_break": "zero marginal contribution under the strict criterion; choose earliest feasible release and detonation",
+  "union_duration_s": 6.401395958886072,
+  "single_cloud_union_duration_s": 6.401395958588571,
+  "joint_synergy_duration_s": 2.9750069074907515e-10,
+  "single_cloud_sum_minus_joint_s": 4.842985369180042e-05,
+  "third_bomb_interpretation": "report its recomputed joint marginal contribution; do not infer zero value from its empty single-cloud interval alone",
   "theta_convergence_duration_s": {
-    "180": 6.4013961463432025,
-    "360": 6.4013961463432025,
-    "720": 6.4013961463432025,
-    "1440": 6.401395958588571
+    "180": 6.401396146794834,
+    "360": 6.401396146794834,
+    "720": 6.401396146794834,
+    "1440": 6.401395958886072
   },
   "optimization": {
-    "method": "three-seed centerline differential evolution; direct complete-cylinder differential evolution; coordinate refinement and exact boundary recomputation",
+    "method": "three-seed centerline differential evolution; direct complete-cylinder differential evolution; coordinate refinement, incumbent guard and exact joint-boundary recomputation",
     "proxy_seeds": [
       20250802,
       20250803,
@@ -97,23 +102,28 @@
       6.399179378569319,
       6.3991793786709525
     ],
-    "coarse_full_best_duration_s": 6.399058720605628,
+    "coarse_full_best_duration_s": 6.392539179359546,
     "refine_history_s": [
-      6.4007775329875365,
-      6.4007775329875365,
-      6.4007775329875365,
-      6.4007775329875365,
-      6.4007775329875365,
-      6.401032920933078,
-      6.401032920933078,
-      6.401209540445205,
-      6.401209540445205,
-      6.401209540445205,
-      6.401264572440758,
-      6.401264572440758,
-      6.401264572440758,
-      6.401264586730335,
-      6.401264586730335
+      6.343978514826608,
+      6.380071832219872,
+      6.380071832219872,
+      6.3816799628936725,
+      6.3816799628936725,
+      6.382405131066545,
+      6.382405131066545,
+      6.382720956572594,
+      6.382720956572594,
+      6.382890228885951,
+      6.382890228885951,
+      6.382890228885951,
+      6.382925462246569,
+      6.382925462246569,
+      6.382925462246569,
+      6.382932796070026,
+      6.382932796070026,
+      6.382933530991831,
+      6.382934227710212,
+      6.382934227710212
     ]
   },
   "environment": {

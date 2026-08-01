@@ -9,8 +9,10 @@ import numpy as np
 
 from problem1_model import (
     CLOUD_LIFETIME,
+    CLOUD_RADIUS,
     EffectiveInterval,
     cylinder_surface_points,
+    missile_position,
 )
 from problem2_model import (
     MAX_DRONE_SPEED,
@@ -19,10 +21,12 @@ from problem2_model import (
     MISSILE_ARRIVAL_TIME,
     Strategy,
     centerline_distances_for,
+    cloud_center_for,
     exact_full_cylinder_intervals,
     full_cylinder_distances_for,
     sampled_effective_intervals,
 )
+from joint_coverage import exact_joint_intervals, joint_sightline_margins
 
 
 MIN_DROP_GAP = 1.0
@@ -209,14 +213,21 @@ def sampled_full_union_duration(
     step: float = 0.04,
 ) -> float:
     strategy = decode_decision(decision)
-    intervals = [
-        interval
-        for bomb in strategy.bombs
-        for interval in sampled_full_intervals_for_bomb(
-            bomb, target_points, step
-        )
-    ]
-    return intervals_duration(merge_intervals(intervals))
+    start = min(bomb.burst_time_s for bomb in strategy.bombs)
+    end = min(
+        max(bomb.burst_time_s + CLOUD_LIFETIME for bomb in strategy.bombs),
+        MISSILE_ARRIVAL_TIME,
+    )
+    count = max(1, int(np.ceil((end - start) / step)))
+    times = np.linspace(start, end, count + 1)
+    margins = joint_sightline_margins(
+        times,
+        target_points,
+        strategy.bombs,
+        missile_position,
+        cloud_center_for,
+    )
+    return intervals_duration(sampled_effective_intervals(times, margins + CLOUD_RADIUS))
 
 
 def exact_multi_bomb_intervals(
@@ -229,10 +240,17 @@ def exact_multi_bomb_intervals(
         exact_full_cylinder_intervals(bomb, target_points, scan_step)
         for bomb in strategy.bombs
     ]
-    union = merge_intervals(
-        interval for bomb_intervals in individual for interval in bomb_intervals
+    joint = exact_joint_intervals(
+        strategy.bombs,
+        target_points,
+        missile_position,
+        missile_position,
+        cloud_center_for,
+        cloud_center_for,
+        MISSILE_ARRIVAL_TIME,
+        scan_step=scan_step,
     )
-    return individual, union
+    return individual, joint
 
 
 def differential_evolution_unit_cube(
@@ -342,6 +360,12 @@ def seed_strategies() -> list[np.ndarray]:
             speed_mps=140.0,
             drop_times_s=(0.0, 1.0, 2.0),
             fuse_delays_s=(0.74, 0.74, 0.74),
+        ),
+        MultiBombStrategy(
+            heading_rad=np.radians(9.23648438557577),
+            speed_mps=103.59649265282755,
+            drop_times_s=(0.0, 1.0, 2.0),
+            fuse_delays_s=(0.005101962649377057, 0.0, 0.0),
         ),
         MultiBombStrategy(
             heading_rad=np.pi,

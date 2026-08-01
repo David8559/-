@@ -59,7 +59,8 @@ python Code/src/run_problem2.py --output-dir Code/outputs --figure-dir Paper/fig
 
 ## 已实现：问题 3
 
-- `src/problem3_model.py`：三弹共同航向/速度参数化、1 s 投放间隔、逐弹有效区间、区间合并、并集/重叠时长和 8 维差分进化。
+- `src/problem3_model.py`：三弹共同航向/速度参数化、1 s 投放间隔、单烟幕诊断区间和联合覆盖目标。
+- `src/joint_coverage.py`：多烟幕 $\max_P\min_k d_k$ 联合裕度、向量化时间序列与连续有效区间恢复。
 - `src/run_problem3.py`：三组中心线代理搜索、完整圆柱直接搜索、坐标精化、离散收敛、JSON/CSV 和 5 组论文图。
 - `tests/test_problem3.py`：投放间隔、策略双向转换、非法约束、区间并集/重叠和最终策略回归测试。
 - `outputs/problem3_result.json`：共同飞行参数、逐弹点位/区间、联合时长、离散收敛和运行环境。
@@ -76,11 +77,11 @@ python -m unittest discover -s Code/tests -p 'test_*.py' -v
 python Code/src/run_problem3.py --output-dir Code/outputs --figure-dir Paper/figures
 ```
 
-问题 3 完整圆柱联合遮蔽时长为 6.401396 s；三次投放时刻为 0/1/2 s。前两枚弹在 4.8248 s 附近近乎无缝衔接，第三枚在严格判据下无有效区间。180–1440 周向点结果差异小于 $2\times10^{-7}$ s。
+问题 3 完整圆柱联合遮蔽时长为 6.401396 s；三次投放时刻为 0/1/2 s。第三枚弹的单烟幕完整区间为空，删除后联合边际约为 $2\times10^{-10}$ s。180–1440 周向点结果差异小于 $2\times10^{-7}$ s；incumbent guard 防止随机搜索退化后覆盖已验证可行解。
 
 ## 已实现：问题 4
 
-- `src/problem4_model.py`：FY1–FY3 独立四变量参数化、逐机轨迹、完整圆柱有效区间、多机区间并集、接近度目标、差分进化与坐标精化。
+- `src/problem4_model.py`：FY1–FY3 独立四变量参数化、逐机轨迹、多烟幕联合覆盖、接近度目标、差分进化与坐标精化。
 - `src/run_problem4.py`：逐机连续接近度种子、中心线代理搜索、完整圆柱精化、离散收敛、JSON/CSV 和 5 组论文图。
 - `tests/test_problem4.py`：无人机顺序、策略转换、投放/起爆点、地面约束、多机完整性和最终策略回归测试。
 - `outputs/problem4_result.json`：三机飞行参数、投放/起爆点、逐机区间、联合时长、离散收敛和运行环境。
@@ -97,11 +98,11 @@ python -m unittest discover -s Code/tests -p 'test_*.py' -v
 python Code/src/run_problem4.py --output-dir Code/outputs --figure-dir Paper/figures
 ```
 
-问题 4 三段完整圆柱有效区间互不重叠，联合遮蔽时长为 11.632853 s，等于三个单机高质量数值最优时长之和。180–1440 周向点复算差异约 $1.72\times10^{-5}$ s。
+问题 4 联合遮蔽时长为 11.632853 s。当前策略的三个单烟幕完整区间互不重叠，单烟幕并集与联合结果差约 $1.4\times10^{-10}$ s；这是当前解的诊断，不是一般可分解上界。180–1440 周向点复算差异约 $1.72\times10^{-5}$ s。
 
 ## 已实现：问题 5
 
-- `src/problem5_model.py`：五机三导弹轨迹、单弹目标分配、完整圆柱有效区间、机内投放组合、区间并集与约束校验。
+- `src/problem5_model.py`：五机三导弹轨迹、任务标签、逐导弹多烟幕联合覆盖、机内投放组合、区间并/交与约束校验。
 - `src/run_problem5.py`：15 个机—弹组合搜索、固定航迹单弹候选库、机内方案筛选、五机组合枚举、精算、JSON/CSV 和 5 组论文图。
 - `tests/test_problem5.py`：对象登记、导弹到达、参数化、投放间隔、固定航迹和最终 9 枚弹策略回归测试。
 - `outputs/problem5_result.json`：最终航迹、9 枚弹的点位/区间、三导弹并集时长、离散收敛和运行环境。
@@ -119,7 +120,7 @@ python -m unittest discover -s Code/tests -p 'test_*.py' -v
 python Code/src/run_problem5.py --output-dir Code/outputs --figure-dir Paper/figures
 ```
 
-问题 1–5 共 39 个测试全部通过。问题 5 使用 9 枚有效干扰弹，M1、M2、M3 的完整圆柱有效时长分别为 13.000935、10.637703、6.687083 s，总计 30.325721 s。该结果是所生成候选库上的可行数值下界；360–720 周向点复算差异约 $3.1\times10^{-5}$ s。
+问题 1–5 共 46 个测试全部通过。问题 5 使用 9 枚有效干扰弹，M1、M2、M3 的联合有效时长分别为 13.000935、10.637703、6.687083 s；$J_{sum}=30.325721$ s、$J_{min}=6.687083$ s、$J_{safe}=0$ s。候选库按 $J_{sum}$ 优化，该值是可行数值下界；360–720 周向点复算差异约 $3.1\times10^{-5}$ s。
 
 ## 实现顺序
 

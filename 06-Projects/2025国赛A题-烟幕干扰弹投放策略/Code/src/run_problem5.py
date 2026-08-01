@@ -44,6 +44,8 @@ from problem5_model import (
     feasible_bomb_combinations,
     full_cylinder_distances_for,
     intervals_by_missile,
+    exact_joint_intervals_by_missile,
+    intersect_interval_sets,
     missile_position_for,
     pair_centerline_duration,
     pair_proximity_score,
@@ -663,14 +665,21 @@ def exact_recompute(
             )
             for bomb in bombs
         ]
-        grouped = intervals_by_missile(pairs)
+        grouped = exact_joint_intervals_by_missile(
+            bombs, points, scan_step=0.012
+        )
         durations = {
             missile_id: intervals_duration(grouped[missile_id])
             for missile_id in MISSILE_IDS
         }
+        simultaneous = intersect_interval_sets(
+            [grouped[missile_id] for missile_id in MISSILE_IDS]
+        )
         convergence[int(theta)] = {
             **durations,
             "total": float(sum(durations.values())),
+            "minimum": float(min(durations.values())),
+            "simultaneous": intervals_duration(simultaneous),
         }
         final_pairs = pairs
         final_grouped = {
@@ -978,8 +987,15 @@ def make_result(
                 }
             )
     return {
-        "criterion": "complete-cylinder all-sampled-boundary sight lines",
-        "objective": "maximize sum of per-missile union durations, requiring positive coverage for M1/M2/M3",
+        "criterion": (
+            "for every sampled target sight line, at least one active cloud "
+            "intersects the finite missile-to-target segment"
+        ),
+        "objective": (
+            "primary: maximize the sum of per-missile joint-coverage durations; "
+            "also report the minimum per-missile duration and the simultaneous "
+            "three-missile safety duration"
+        ),
         "method": "pair-path continuous search, fixed-path atomic candidate library, within-drone combination, exhaustive five-drone plan selection",
         "global_optimality_boundary": "feasible numerical lower bound over the generated candidate library, not an analytic global optimum",
         "bombs": records,
@@ -993,6 +1009,21 @@ def make_result(
                 "union_duration_s": durations[missile_id],
             }
             for missile_id in MISSILE_IDS
+        },
+        "aggregation_metrics": {
+            "sum_duration_s": float(sum(durations.values())),
+            "minimum_missile_duration_s": float(min(durations.values())),
+            "simultaneous_intervals_s": [
+                [interval.start, interval.end]
+                for interval in intersect_interval_sets(
+                    [grouped[missile_id] for missile_id in MISSILE_IDS]
+                )
+            ],
+            "simultaneous_duration_s": intervals_duration(
+                intersect_interval_sets(
+                    [grouped[missile_id] for missile_id in MISSILE_IDS]
+                )
+            ),
         },
         "total_union_duration_s": float(sum(durations.values())),
         "theta_convergence_duration_s": {
@@ -1068,7 +1099,7 @@ def main() -> None:
                 "problem5_atomic_candidates.csv"
             )
         result = json.loads(result_path.read_text(encoding="utf-8"))
-        final_pairs = []
+        bombs = []
         for item in result["bombs"]:
             bomb = BombStrategy(
                 drone_id=item["drone_id"],
@@ -1078,32 +1109,99 @@ def main() -> None:
                 drop_time_s=float(item["drop_time_s"]),
                 fuse_delay_s=float(item["fuse_delay_s"]),
             )
-            intervals = tuple(
-                EffectiveInterval(float(start), float(end))
-                for start, end in item["effective_intervals_s"]
+            bombs.append(bomb)
+        convergence = {}
+        final_pairs = []
+        grouped = {}
+        durations = {}
+        for theta in (90, 180, 360, 720):
+            points = cylinder_surface_points(n_theta=theta, n_z=5, n_r=4)
+            pairs = [
+                (
+                    bomb,
+                    tuple(
+                        exact_full_intervals_for_bomb(
+                            bomb, points, scan_step=0.012
+                        )
+                    ),
+                )
+                for bomb in bombs
+            ]
+            current_grouped = exact_joint_intervals_by_missile(
+                bombs, points, scan_step=0.012
             )
-            final_pairs.append((bomb, intervals))
-        grouped = {
-            missile_id: tuple(
-                EffectiveInterval(float(start), float(end))
-                for start, end in result["missiles"][missile_id][
-                    "union_intervals_s"
-                ]
-            )
-            for missile_id in MISSILE_IDS
-        }
-        durations = {
-            missile_id: float(
-                result["missiles"][missile_id]["union_duration_s"]
-            )
-            for missile_id in MISSILE_IDS
-        }
-        convergence = {
-            int(theta): {
-                key: float(value) for key, value in values.items()
+            current_durations = {
+                missile_id: intervals_duration(current_grouped[missile_id])
+                for missile_id in MISSILE_IDS
             }
-            for theta, values in result["theta_convergence_duration_s"].items()
+            simultaneous = intersect_interval_sets(
+                [current_grouped[missile_id] for missile_id in MISSILE_IDS]
+            )
+            convergence[theta] = {
+                **current_durations,
+                "total": float(sum(current_durations.values())),
+                "minimum": float(min(current_durations.values())),
+                "simultaneous": intervals_duration(simultaneous),
+            }
+            final_pairs = pairs
+            grouped = {
+                missile_id: tuple(current_grouped[missile_id])
+                for missile_id in MISSILE_IDS
+            }
+            durations = current_durations
+        simultaneous = intersect_interval_sets(
+            [grouped[missile_id] for missile_id in MISSILE_IDS]
+        )
+        pair_lookup = {
+            (bomb.drone_id, round(bomb.drop_time_s, 8)): intervals
+            for bomb, intervals in final_pairs
         }
+        for item in result["bombs"]:
+            intervals = pair_lookup[(item["drone_id"], round(item["drop_time_s"], 8))]
+            item["effective_intervals_s"] = [
+                [interval.start, interval.end] for interval in intervals
+            ]
+            item["effective_duration_s"] = intervals_duration(intervals)
+        result.update(
+            {
+                "criterion": (
+                    "for every sampled target sight line, at least one active "
+                    "cloud intersects the finite missile-to-target segment"
+                ),
+                "objective": (
+                    "primary: maximize the sum of per-missile joint-coverage "
+                    "durations; also report minimum and simultaneous duration"
+                ),
+                "missiles": {
+                    missile_id: {
+                        "arrival_time_s": MISSILE_ARRIVAL_TIMES[missile_id],
+                        "union_intervals_s": [
+                            [interval.start, interval.end]
+                            for interval in grouped[missile_id]
+                        ],
+                        "union_duration_s": durations[missile_id],
+                    }
+                    for missile_id in MISSILE_IDS
+                },
+                "aggregation_metrics": {
+                    "sum_duration_s": float(sum(durations.values())),
+                    "minimum_missile_duration_s": float(min(durations.values())),
+                    "simultaneous_intervals_s": [
+                        [interval.start, interval.end]
+                        for interval in simultaneous
+                    ],
+                    "simultaneous_duration_s": intervals_duration(simultaneous),
+                },
+                "total_union_duration_s": float(sum(durations.values())),
+                "theta_convergence_duration_s": {
+                    str(theta): values for theta, values in convergence.items()
+                },
+            }
+        )
+        result_path.write_text(
+            json.dumps(result, ensure_ascii=False, indent=2) + "\n",
+            encoding="utf-8",
+        )
         with atomic_path.open(
             "r", encoding="utf-8-sig", newline=""
         ) as stream:

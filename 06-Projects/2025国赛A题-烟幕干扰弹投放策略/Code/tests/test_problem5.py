@@ -25,14 +25,29 @@ from problem5_model import (  # noqa: E402
     decode_pair_decision,
     drop_point,
     exact_full_intervals_for_bomb,
+    intersect_interval_sets,
     missile_position_for,
     plan_is_drop_feasible,
     validate_drone_plan,
     validate_fleet_strategy,
 )
+from problem1_model import EffectiveInterval  # noqa: E402
 
 
 class Problem5ModelTests(unittest.TestCase):
+    def test_interval_intersection(self) -> None:
+        result = intersect_interval_sets(
+            [
+                [EffectiveInterval(1.0, 5.0), EffectiveInterval(8.0, 9.0)],
+                [EffectiveInterval(3.0, 6.0), EffectiveInterval(8.5, 10.0)],
+                [EffectiveInterval(4.0, 7.0), EffectiveInterval(8.2, 8.8)],
+            ]
+        )
+        self.assertEqual(
+            result,
+            [EffectiveInterval(4.0, 5.0), EffectiveInterval(8.5, 8.8)],
+        )
+
     def test_all_objects_are_registered(self) -> None:
         self.assertEqual(DRONE_IDS, ("FY1", "FY2", "FY3", "FY4", "FY5"))
         self.assertEqual(MISSILE_IDS, ("M1", "M2", "M3"))

@@ -1,7 +1,7 @@
 {
-  "criterion": "complete-cylinder all-sampled-boundary sight lines",
-  "objective": "maximize the union of one interval set per drone",
-  "decomposition": "the three individual optima are disjoint, so their sum equals the union and attains the separable numerical upper bound",
+  "criterion": "for every sampled target sight line, at least one active smoke cloud intersects the finite missile-to-target segment",
+  "objective": "maximize the joint three-cloud coverage duration",
+  "decomposition": "individual optimization supplies strong seeds; under the joint criterion it is not a general upper-bound proof.  For the reported strategy the three single-cloud intervals are disjoint and the joint recomputation adds no material spatial synergy.",
   "drones": [
     {
       "drone_id": "FY1",
@@ -81,25 +81,27 @@
   ],
   "union_intervals_s": [
     [
-      0.739112534830064,
-      5.326784500637742
+      0.7391125347218124,
+      5.3267845009288575
     ],
     [
-      11.482244045231603,
-      15.40934376737114
+      11.482244045653019,
+      15.40934376729454
     ],
     [
-      23.81343230662368,
-      26.931513337059535
+      23.813432306613656,
+      26.931513337288138
     ]
   ],
-  "union_duration_s": 11.632852718383068,
-  "overlap_duration_s": 0.0,
+  "union_duration_s": 11.632852718523049,
+  "single_cloud_union_duration_s": 11.632852718383068,
+  "joint_synergy_duration_s": 1.3998047165841854e-10,
+  "single_cloud_sum_minus_joint_s": -1.3998047165841854e-10,
   "theta_convergence_duration_s": {
-    "180": 11.63286990802736,
-    "360": 11.63286990802736,
-    "720": 11.632860063016416,
-    "1440": 11.632852718383068
+    "180": 11.632869907662208,
+    "360": 11.632869907662208,
+    "720": 11.632860062995203,
+    "1440": 11.632852718523049
   },
   "optimization": {
     "method": "per-drone proximity seeding, centerline duration differential evolution, complete-cylinder ranking and coordinate refinement",

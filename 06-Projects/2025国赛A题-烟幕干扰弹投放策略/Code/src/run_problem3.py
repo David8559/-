@@ -21,12 +21,14 @@ from problem1_model import (
     missile_position,
 )
 from problem2_model import (
+    MISSILE_ARRIVAL_TIME,
     Strategy,
     burst_point,
     cloud_center_for,
     drop_point,
     full_cylinder_distances_for,
 )
+from joint_coverage import exact_joint_intervals
 from problem3_model import (
     MultiBombStrategy,
     centerline_union_duration,
@@ -36,6 +38,7 @@ from problem3_model import (
     differential_evolution_unit_cube,
     exact_multi_bomb_intervals,
     intervals_duration,
+    merge_intervals,
     overlap_duration,
     sampled_full_union_duration,
     seed_strategies,
@@ -152,26 +155,27 @@ def optimize() -> tuple[MultiBombStrategy, list, object, list[float]]:
         ),
         max_rounds=100,
     )
-    strategy = decode_decision(refined_decision)
-
-    # Under the strict complete-cylinder criterion, bomb 3 has zero marginal
-    # contribution in the optimum. Resolve the neutral family by choosing its
-    # earliest feasible release and detonation.
-    strategy = MultiBombStrategy(
-        heading_rad=strategy.heading_rad,
-        speed_mps=strategy.speed_mps,
-        drop_times_s=(
-            strategy.drop_times_s[0],
-            strategy.drop_times_s[1],
-            strategy.drop_times_s[1] + 1.0,
-        ),
-        fuse_delays_s=(
-            strategy.fuse_delays_s[0],
-            strategy.fuse_delays_s[1],
-            0.0,
+    refined_strategy = decode_decision(refined_decision)
+    incumbent = verified_incumbent_strategy()
+    check_points = cylinder_surface_points(n_theta=360, n_z=9, n_r=7)
+    strategy = max(
+        (refined_strategy, incumbent),
+        key=lambda item: intervals_duration(
+            exact_multi_bomb_intervals(item, check_points, scan_step=0.01)[1]
         ),
     )
     return strategy, proxy_runs, full_run, refine_history
+
+
+def verified_incumbent_strategy() -> MultiBombStrategy:
+    """Best independently retained feasible strategy before model revision."""
+
+    return MultiBombStrategy(
+        heading_rad=np.radians(9.23648438557577),
+        speed_mps=103.59649265282755,
+        drop_times_s=(0.0, 1.0, 2.0),
+        fuse_delays_s=(0.005101962649377057, 0.0, 0.0),
+    )
 
 
 def bomb_path(strategy: Strategy, times: np.ndarray) -> np.ndarray:
@@ -284,7 +288,7 @@ def figure_intervals(
         (3.7, 0.65),
         facecolors=OKABE_ITO["purple"],
     )
-    ax.set_yticks([1, 2, 3, 4.02], ["弹 1", "弹 2", "弹 3", "并集"])
+    ax.set_yticks([1, 2, 3, 4.02], ["弹 1", "弹 2", "弹 3", "联合"])
     ax.set_ylim(0.45, 4.55)
     ax.set_xlim(0.0, 8.0)
     ax.set_xlabel("任务下达后时间 (s)")
@@ -521,11 +525,19 @@ def load_existing_run(
         (output_dir / "problem3_result.json").read_text(encoding="utf-8")
     )
     bombs = result["bombs"]
-    strategy = MultiBombStrategy(
+    stored_strategy = MultiBombStrategy(
         heading_rad=np.radians(result["heading_deg"]),
         speed_mps=result["speed_mps"],
         drop_times_s=tuple(row["drop_time_s"] for row in bombs),
         fuse_delays_s=tuple(row["fuse_delay_s"] for row in bombs),
+    )
+    incumbent = verified_incumbent_strategy()
+    check_points = cylinder_surface_points(n_theta=360, n_z=9, n_r=7)
+    strategy = max(
+        (stored_strategy, incumbent),
+        key=lambda item: intervals_duration(
+            exact_multi_bomb_intervals(item, check_points, scan_step=0.01)[1]
+        ),
     )
     grouped: dict[tuple[str, int], list[dict[str, str]]] = {}
     with (output_dir / "problem3_optimization_history.csv").open(
@@ -617,9 +629,39 @@ def main() -> None:
         )
 
     union_duration = intervals_duration(final_union)
+    single_cloud_union = merge_intervals(
+        interval for intervals in final_individual for interval in intervals
+    )
+    single_cloud_union_duration = intervals_duration(single_cloud_union)
+    marginal_durations = []
+    final_points = cylinder_surface_points(n_theta=1440, n_z=11, n_r=8)
+    for removed in range(len(strategy.bombs)):
+        reduced_bombs = tuple(
+            bomb
+            for index, bomb in enumerate(strategy.bombs)
+            if index != removed
+        )
+        reduced_joint = exact_joint_intervals(
+            reduced_bombs,
+            final_points,
+            missile_position,
+            missile_position,
+            cloud_center_for,
+            cloud_center_for,
+            MISSILE_ARRIVAL_TIME,
+            scan_step=0.005,
+        )
+        marginal_durations.append(
+            union_duration - intervals_duration(reduced_joint)
+        )
+    for row, marginal in zip(bomb_rows, marginal_durations):
+        row["joint_marginal_duration_s"] = marginal
     result = {
-        "criterion": "complete-cylinder all-sampled-boundary sight lines",
-        "objective": "maximize the measure of the union of three effective intervals",
+        "criterion": (
+            "for every sampled target sight line, at least one active smoke "
+            "cloud intersects the finite missile-to-target segment"
+        ),
+        "objective": "maximize the measure of the joint three-cloud coverage set",
         "heading_deg": strategy.heading_deg,
         "speed_mps": strategy.speed_mps,
         "bombs": bomb_rows,
@@ -627,12 +669,16 @@ def main() -> None:
             [item.start, item.end] for item in final_union
         ],
         "union_duration_s": union_duration,
-        "overlap_duration_s": overlap_duration(
+        "single_cloud_union_duration_s": single_cloud_union_duration,
+        "joint_synergy_duration_s": max(
+            0.0, union_duration - single_cloud_union_duration
+        ),
+        "single_cloud_sum_minus_joint_s": overlap_duration(
             final_individual, final_union
         ),
-        "third_bomb_tie_break": (
-            "zero marginal contribution under the strict criterion; "
-            "choose earliest feasible release and detonation"
+        "third_bomb_interpretation": (
+            "report its recomputed joint marginal contribution; do not infer "
+            "zero value from its empty single-cloud interval alone"
         ),
         "theta_convergence_duration_s": {
             str(key): value for key, value in convergence.items()
@@ -641,7 +687,7 @@ def main() -> None:
             "method": (
                 "three-seed centerline differential evolution; "
                 "direct complete-cylinder differential evolution; "
-                "coordinate refinement and exact boundary recomputation"
+                "coordinate refinement, incumbent guard and exact joint-boundary recomputation"
             ),
             "proxy_seeds": list(PROXY_SEEDS),
             "full_seed": FULL_SEED,

@@ -26,6 +26,7 @@ from problem2_model import (
     sampled_effective_intervals,
 )
 from problem3_model import intervals_duration, merge_intervals, overlap_duration
+from joint_coverage import exact_joint_intervals, joint_sightline_margins
 
 
 DRONE_IDS = ("FY1", "FY2", "FY3")
@@ -335,14 +336,21 @@ def sampled_full_union_duration(
     step: float = 0.04,
 ) -> float:
     strategy = decode_decision(decision)
-    intervals = [
-        interval
-        for bomb in strategy.bombs
-        for interval in sampled_full_intervals_for_bomb(
-            bomb, target_points, step
-        )
-    ]
-    return intervals_duration(merge_intervals(intervals))
+    start = min(bomb.burst_time_s for bomb in strategy.bombs)
+    end = min(
+        max(bomb.burst_time_s + CLOUD_LIFETIME for bomb in strategy.bombs),
+        MISSILE_ARRIVAL_TIME,
+    )
+    count = max(1, int(np.ceil((end - start) / step)))
+    times = np.linspace(start, end, count + 1)
+    margins = joint_sightline_margins(
+        times,
+        target_points,
+        strategy.bombs,
+        missile_position,
+        cloud_center_for,
+    )
+    return intervals_duration(sampled_effective_intervals(times, margins + CLOUD_RADIUS))
 
 
 def individual_sampled_full_duration(
@@ -403,10 +411,17 @@ def exact_multi_drone_intervals(
         exact_full_intervals_for_bomb(bomb, target_points, scan_step)
         for bomb in strategy.bombs
     ]
-    union = merge_intervals(
-        interval for bomb_intervals in individual for interval in bomb_intervals
+    joint = exact_joint_intervals(
+        strategy.bombs,
+        target_points,
+        missile_position,
+        missile_position,
+        cloud_center_for,
+        cloud_center_for,
+        MISSILE_ARRIVAL_TIME,
+        scan_step=scan_step,
     )
-    return individual, union
+    return individual, joint
 
 
 def differential_evolution_unit_cube(

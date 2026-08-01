@@ -23,7 +23,7 @@ from problem1_model import (
     cylinder_surface_points,
     missile_position,
 )
-from problem3_model import intervals_duration, overlap_duration
+from problem3_model import intervals_duration, merge_intervals, overlap_duration
 from problem4_model import (
     DRONE_IDS,
     DRONE_INITIALS,
@@ -354,7 +354,7 @@ def figure_gantt(
         (3.7, 0.65),
         facecolors=OKABE_ITO["purple"],
     )
-    ax.set_yticks([1, 2, 3, 4.02], [*DRONE_IDS, "并集"])
+    ax.set_yticks([1, 2, 3, 4.02], [*DRONE_IDS, "联合"])
     ax.set_ylim(0.45, 4.55)
     ax.set_xlim(0.0, 30.0)
     ax.set_xlabel("任务下达后时间 (s)")
@@ -476,7 +476,7 @@ def figure_optimization(
     )
     axes[1].set_ylim(0.0, 5.0)
     axes[1].set_ylabel("完整圆柱有效时长 (s)")
-    axes[1].set_title("(b) 个体上界与联合分解")
+    axes[1].set_title("(b) 逐机种子与联合复算")
     axes[1].bar_label(bars, fmt="%.3f", padding=3, fontsize=8)
     axes[1].grid(axis="y", alpha=0.18)
     save_figure(fig, figure_dir / "problem4_fig4_optimization")
@@ -667,19 +667,32 @@ def main() -> None:
             }
         )
     union_duration = intervals_duration(final_union)
+    single_cloud_union = merge_intervals(
+        interval for intervals in final_individual for interval in intervals
+    )
+    single_cloud_union_duration = intervals_duration(single_cloud_union)
     result = {
-        "criterion": "complete-cylinder all-sampled-boundary sight lines",
-        "objective": "maximize the union of one interval set per drone",
+        "criterion": (
+            "for every sampled target sight line, at least one active smoke "
+            "cloud intersects the finite missile-to-target segment"
+        ),
+        "objective": "maximize the joint three-cloud coverage duration",
         "decomposition": (
-            "the three individual optima are disjoint, so their sum equals "
-            "the union and attains the separable numerical upper bound"
+            "individual optimization supplies strong seeds; under the joint "
+            "criterion it is not a general upper-bound proof.  For the reported "
+            "strategy the three single-cloud intervals are disjoint and the "
+            "joint recomputation adds no material spatial synergy."
         ),
         "drones": drone_rows,
         "union_intervals_s": [
             [item.start, item.end] for item in final_union
         ],
         "union_duration_s": union_duration,
-        "overlap_duration_s": overlap_duration(
+        "single_cloud_union_duration_s": single_cloud_union_duration,
+        "joint_synergy_duration_s": max(
+            0.0, union_duration - single_cloud_union_duration
+        ),
+        "single_cloud_sum_minus_joint_s": overlap_duration(
             final_individual, final_union
         ),
         "theta_convergence_duration_s": {
