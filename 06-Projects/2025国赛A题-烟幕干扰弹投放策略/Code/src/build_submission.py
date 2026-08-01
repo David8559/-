@@ -176,6 +176,7 @@ INLINE_PATTERN = re.compile(r"(\*\*.*?\*\*|`.*?`|\$.*?\$|\[[^\]]+\]\([^)]+\))")
 def latex_inline_to_text(source: str) -> str:
     """Convert compact inline LaTeX to readable text on the Word baseline."""
     text = source.strip()
+    text = re.sub(r"\\rm\s+([A-Za-z]+)", r"\1", text)
     text = re.sub(r"\\(?:boldsymbol|mathbf|mathrm|mathcal)\s+", "", text)
     text = re.sub(
         r"\\(?:boldsymbol|mathbf|mathrm|mathcal)\{([^{}]*)\}",
@@ -193,6 +194,14 @@ def latex_inline_to_text(source: str) -> str:
         r"\tau": "τ",
         r"\mu": "μ",
         r"\pi": "π",
+        r"\Delta": "Δ",
+        r"\forall": "∀",
+        r"\exists": "∃",
+        r"\approx": "≈",
+        r"\times": "×",
+        r"\cap": "∩",
+        r"\cup": "∪",
+        r"\subseteq": "⊆",
         r"\leq": "≤",
         r"\geq": "≥",
         r"\le": "≤",
@@ -311,6 +320,11 @@ def normalized_image_path(image_path: Path) -> Path:
 def equation_image_path(latex: str) -> Path:
     """Render display math as a high-resolution image when OMML conversion is unavailable."""
     source = " ".join(part.strip() for part in latex.splitlines()).strip()
+    # Preserve a token boundary when LaTeX uses ``\\boldsymbol P`` without
+    # braces.  Removing the command naively turns ``\\forall\\boldsymbol P``
+    # into the invalid MathText token ``\\forallP``.
+    source = re.sub(r"\\boldsymbol\s*\{([^{}]+)\}", r"{\1}", source)
+    source = re.sub(r"\\boldsymbol\s+([A-Za-z])", r"{\1}", source)
     source = re.sub(r"\\boldsymbol\s*", "", source)
     source = source.replace(r"\frac12", r"\frac{1}{2}")
     source = re.sub(r"\\le(?![A-Za-z])", r"\\leq", source)
