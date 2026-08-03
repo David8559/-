@@ -546,7 +546,7 @@ def write_family_notes(
             "---",
             "type: code-family",
             f"code_id: {yaml_string('CF-' + hashlib.sha256(title.encode('utf-8')).hexdigest()[:10])}",
-            "status: raw-unverified",
+            "status: source-traced",
             f"language: {yaml_string(', '.join(languages))}",
             f"topic: {yaml_string(', '.join(topics))}",
             f"variant_count: {len(items)}",

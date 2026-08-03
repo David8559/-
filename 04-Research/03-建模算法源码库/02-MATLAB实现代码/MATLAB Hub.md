@@ -7,6 +7,14 @@ tags: [system/topic-hub, tool/matlab]
 
 # MATLAB Hub
 
+## 运行验证状态（2026-08-03）
+
+- 环境：MATLAB `24.2.0.2712019 (R2024b)`。
+- 正式源码库 5 个统一入口共 26 个可调用分支：**26 通过、0 跳过、0 失败**。
+- 已覆盖 Optimization、Global Optimization、Econometrics、Deep Learning 工具箱分支，以及无工具箱的评价、预测、动力学、图论、排队和 ACO 分支。
+- 机器可读结果：[[04-Research/03-建模算法源码库/03-验证测试/matlab_validation_result.json|MATLAB 验证结果]]；复现入口：[run_matlab_validation.m](../03-验证测试/run_matlab_validation.m)。
+- 该结论是小规模确定性断言和数值冒烟测试，不等于 977 个 Inbox 原始 MATLAB 脚本全部运行通过，也不替代具体赛题验证。
+
 <!-- BEGIN AUTO-HUB-STUDY-GUIDE -->
 ## MATLAB 复习与调用指南
 

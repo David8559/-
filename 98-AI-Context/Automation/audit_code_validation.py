@@ -7,6 +7,7 @@ import ast
 import csv
 import datetime as dt
 import importlib.util
+import json
 import os
 import py_compile
 import subprocess
@@ -21,6 +22,7 @@ PUBLIC_TESTS = PUBLIC_PYTHON / "tests"
 CURATED_TESTS = LIBRARY / "03-验证测试"
 STATUS_CSV = LIBRARY / "代码验证状态.csv"
 REPORT = LIBRARY / "代码验证报告.md"
+MATLAB_RESULT = CURATED_TESTS / "matlab_validation_result.json"
 
 CURATED_FILES = [
     LIBRARY / "01-Python实现代码" / "模型完整代码" / "evaluation_models.py",
@@ -121,6 +123,30 @@ def main() -> int:
         f"{name}={'可用' if available else '缺失'}（{OPTIONAL_BRANCHES[name]} 分支）"
         for name, available in available_optional.items()
     )
+    matlab_result = None
+    matlab_error = ""
+    if MATLAB_RESULT.exists():
+        try:
+            matlab_result = json.loads(MATLAB_RESULT.read_text(encoding="utf-8"))
+        except (json.JSONDecodeError, OSError) as error:
+            matlab_error = f"结果文件无法读取：{error}"
+    if matlab_result:
+        if int(matlab_result.get("failed", 0)) > 0:
+            failures.append(f"MATLAB 精选模型库失败 {matlab_result['failed']} 个分支")
+        matlab_summary = (
+            f"MATLAB {matlab_result['matlab_version']}（{matlab_result['release']}）："
+            f"精选模型库 {matlab_result['total_branches']} 个分支中，"
+            f"通过 {matlab_result['passed']}、工具箱阻塞 {matlab_result['skipped']}、"
+            f"失败 {matlab_result['failed']}"
+        )
+        matlab_boundary = (
+            "MATLAB 原始 977 个脚本仍只做来源追踪；运行结论仅适用于正式源码库的统一入口和小规模基准输入。"
+        )
+    else:
+        if matlab_error:
+            failures.append(matlab_error)
+        matlab_summary = f"MATLAB 精选模型库：未完成批处理验证{('；' + matlab_error) if matlab_error else ''}"
+        matlab_boundary = "MATLAB 精选模型库尚无可读取的批处理结果；原始代码仅证明来源可追溯。"
     report = f"""---
 type: validation-report
 status: {'pass-with-dependency-gaps' if not failures and public_result.returncode == 0 and curated_result.returncode == 0 and not curated_compile_failures else 'failed'}
@@ -138,6 +164,7 @@ tags: [area/数学建模, workflow/代码验证, system/audit]
 - 精选 Python 模型库：5 个文件语法检查 {'通过' if not curated_compile_failures else '失败'}；25 个可调用分支中，本环境执行 {executed_branches} 个、依赖阻塞 {blocked_branches} 个
 - 可选依赖：{optional_text}
 - Keras/LSTM：未安装、未执行，只保留语法检查
+- {matlab_summary}
 
 ## 状态解释
 
@@ -156,13 +183,14 @@ tags: [area/数学建模, workflow/代码验证, system/audit]
 $env:PYTHONPATH='04-Research/03-建模算法源码库/00-公共复用模块/Python'
 python -m unittest discover -s '04-Research/03-建模算法源码库/00-公共复用模块/Python/tests' -p 'test_*.py' -v
 python -m unittest discover -s '04-Research/03-建模算法源码库/03-验证测试' -p 'test_*.py' -v
+matlab -batch "cd('04-Research/03-建模算法源码库/03-验证测试'); run_matlab_validation"
 python '98-AI-Context/Automation/validate_integrated_code_hubs.py'
 python '98-AI-Context/Automation/audit_code_validation.py'
 ```
 
 ## 当前边界
 
-- MATLAB 原始代码尚无可用 MATLAB/Octave 运行环境，本报告只证明来源可追溯。
+- {matlab_boundary}
 - 原始资料中的脚本常含绝对路径、工作区变量或数据依赖；禁止因静态检查通过而直接复制进比赛项目。
 - 精选模型库缺失的 SciPy、NetworkX、statsmodels 与 Keras 依赖未自行安装，等待用户环境准备后补测。
 
@@ -179,7 +207,8 @@ python '98-AI-Context/Automation/audit_code_validation.py'
         f"raw_variants={len(variants)} python_ast={python_passed}/{python_checked} "
         f"public_tests={'PASS' if public_result.returncode == 0 else 'FAIL'} "
         f"curated_tests={'PASS' if curated_result.returncode == 0 else 'FAIL'} "
-        f"executed_branches={executed_branches} blocked_branches={blocked_branches}"
+        f"executed_branches={executed_branches} blocked_branches={blocked_branches} "
+        f"matlab={'RECORDED' if matlab_result else 'NOT_RECORDED'}"
     )
     return 0 if not failures else 1
 
