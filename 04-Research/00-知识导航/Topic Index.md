@@ -10,6 +10,7 @@ tags: [system/topic-index, topic/knowledge-graph]
 ## 总览
 
 - [[数学建模 Hub]] — #topic/数学建模
+- [[赛中建模任务导航]] — 按题面信号、竞赛流程和验证要求快速调用模型
 
 ## 经典模型
 
@@ -23,12 +24,14 @@ tags: [system/topic-index, topic/knowledge-graph]
 - [[博弈论 Hub]] — #topic/博弈论
 - [[马尔可夫决策过程 Hub]] — #topic/马尔可夫决策
 - [[蒙特卡洛 Hub]] — #topic/蒙特卡洛
+- [[统计学习 Hub]] — #topic/统计学习
 
 ## 研究流程
 
 - [[数据处理 Hub]] — #topic/数据处理
 - [[可视化 Hub]] — #topic/可视化
 - [[模型检验 Hub]] — #topic/模型检验
+- [[模型检验实战清单]] — 从解析、数值、经验三层建立证据链
 - [[论文写作 Hub]] — #topic/论文写作
 
 ## 编程工具

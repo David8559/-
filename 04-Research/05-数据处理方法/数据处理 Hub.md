@@ -7,6 +7,9 @@ tags: [system/topic-hub, topic/数据处理]
 
 # 数据处理 Hub
 
+> [!tip] 独立理论卡
+> 赛中优先从 [[04-Research/02-经典建模模型库/08-统计学习与数据分析/统计学习 Hub|统计学习 Hub]] 进入：[[04-Research/02-经典建模模型库/08-统计学习与数据分析/KMeans聚类/Readme|KMeans]]、[[04-Research/02-经典建模模型库/08-统计学习与数据分析/PCA主成分分析/Readme|PCA]]、[[04-Research/02-经典建模模型库/08-统计学习与数据分析/插值与拟合/Readme|插值与拟合]]、[[04-Research/02-经典建模模型库/08-统计学习与数据分析/支持向量机SVM/Readme|SVM]]、[[04-Research/02-经典建模模型库/08-统计学习与数据分析/BP神经网络/Readme|BP 神经网络]]。这些卡片负责“为什么用、如何检验”，下方自动区负责源码检索。
+
 <!-- BEGIN AUTO-HUB-STUDY-GUIDE -->
 ## 复习与调用指南
 

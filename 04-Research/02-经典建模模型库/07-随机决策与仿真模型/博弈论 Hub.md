@@ -7,6 +7,9 @@ tags: [system/topic-hub, topic/博弈论]
 
 # 博弈论 Hub
 
+> [!tip] 独立理论卡
+> 先读 [[04-Research/02-经典建模模型库/07-随机决策与仿真模型/博弈论基础/Readme|博弈论基础]]，确认参与者、策略、支付、信息结构与均衡概念，再选择下方计算例程。
+
 <!-- BEGIN AUTO-HUB-STUDY-GUIDE -->
 ## 复习与调用指南
 

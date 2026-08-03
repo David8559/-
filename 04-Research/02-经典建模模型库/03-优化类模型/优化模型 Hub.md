@@ -7,6 +7,9 @@ tags: [system/topic-hub, topic/优化模型]
 
 # 优化模型 Hub
 
+> [!tip] 独立理论卡
+> 非线性目标、非线性等式或不等式约束优先查看 [[04-Research/02-经典建模模型库/03-优化类模型/非线性规划/Readme|非线性规划]]；卡片补充了 KKT 思路、局部最优风险、可行性审计和多初值验证要求。
+
 <!-- BEGIN AUTO-HUB-STUDY-GUIDE -->
 ## 复习与调用指南
 

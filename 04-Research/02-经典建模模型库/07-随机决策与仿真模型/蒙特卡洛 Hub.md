@@ -7,6 +7,9 @@ tags: [system/topic-hub, topic/蒙特卡洛]
 
 # 蒙特卡洛 Hub
 
+> [!tip] 独立理论卡
+> 先读 [[04-Research/02-经典建模模型库/07-随机决策与仿真模型/蒙特卡洛方法/Readme|蒙特卡洛方法]]，明确随机变量、估计量、置信区间与收敛证据，再到下方源码区选实现。
+
 <!-- BEGIN AUTO-HUB-STUDY-GUIDE -->
 ## 复习与调用指南
 
