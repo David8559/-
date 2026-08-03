@@ -1,0 +1,141 @@
+{
+  "generated_at": "2026-08-03T23:32:37+08:00",
+  "matlab_version": "24.2.0.2712019 (R2024b)",
+  "release": "2024b",
+  "total_branches": 26,
+  "passed": 26,
+  "skipped": 0,
+  "failed": 0,
+  "entries": [
+    {
+      "branch": "evaluation/ahp",
+      "status": "passed",
+      "detail": "小规模确定性断言通过"
+    },
+    {
+      "branch": "evaluation/entropy",
+      "status": "passed",
+      "detail": "小规模确定性断言通过"
+    },
+    {
+      "branch": "evaluation/topsis",
+      "status": "passed",
+      "detail": "小规模确定性断言通过"
+    },
+    {
+      "branch": "evaluation/gra",
+      "status": "passed",
+      "detail": "小规模确定性断言通过"
+    },
+    {
+      "branch": "evaluation/fuzzy",
+      "status": "passed",
+      "detail": "小规模确定性断言通过"
+    },
+    {
+      "branch": "forecast/ols",
+      "status": "passed",
+      "detail": "小规模确定性断言通过"
+    },
+    {
+      "branch": "forecast/ses",
+      "status": "passed",
+      "detail": "小规模确定性断言通过"
+    },
+    {
+      "branch": "forecast/gm11",
+      "status": "passed",
+      "detail": "小规模确定性断言通过"
+    },
+    {
+      "branch": "dynamics/sir",
+      "status": "passed",
+      "detail": "小规模确定性断言通过"
+    },
+    {
+      "branch": "dynamics/logistic",
+      "status": "passed",
+      "detail": "小规模确定性断言通过"
+    },
+    {
+      "branch": "dynamics/diffusion",
+      "status": "passed",
+      "detail": "小规模确定性断言通过"
+    },
+    {
+      "branch": "optimization/weighted-sum",
+      "status": "passed",
+      "detail": "小规模确定性断言通过"
+    },
+    {
+      "branch": "optimization/knapsack",
+      "status": "passed",
+      "detail": "小规模确定性断言通过"
+    },
+    {
+      "branch": "optimization/interval",
+      "status": "passed",
+      "detail": "小规模确定性断言通过"
+    },
+    {
+      "branch": "network/shortest",
+      "status": "passed",
+      "detail": "小规模确定性断言通过"
+    },
+    {
+      "branch": "network/mst",
+      "status": "passed",
+      "detail": "小规模确定性断言通过"
+    },
+    {
+      "branch": "network/maxflow",
+      "status": "passed",
+      "detail": "小规模确定性断言通过"
+    },
+    {
+      "branch": "queue/mm1",
+      "status": "passed",
+      "detail": "小规模确定性断言通过"
+    },
+    {
+      "branch": "metaheuristic/aco-tsp",
+      "status": "passed",
+      "detail": "小规模确定性断言通过"
+    },
+    {
+      "branch": "optimization/lp",
+      "status": "passed",
+      "detail": "小规模确定性断言通过"
+    },
+    {
+      "branch": "optimization/milp",
+      "status": "passed",
+      "detail": "小规模确定性断言通过"
+    },
+    {
+      "branch": "metaheuristic/ga",
+      "status": "passed",
+      "detail": "小规模确定性断言通过"
+    },
+    {
+      "branch": "metaheuristic/pso",
+      "status": "passed",
+      "detail": "小规模确定性断言通过"
+    },
+    {
+      "branch": "metaheuristic/sa",
+      "status": "passed",
+      "detail": "小规模确定性断言通过"
+    },
+    {
+      "branch": "forecast/arima",
+      "status": "passed",
+      "detail": "小规模确定性断言通过"
+    },
+    {
+      "branch": "forecast/lstm-layers",
+      "status": "passed",
+      "detail": "小规模确定性断言通过"
+    }
+  ]
+}
