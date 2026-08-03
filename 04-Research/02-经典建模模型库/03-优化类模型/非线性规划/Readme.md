@@ -31,7 +31,7 @@ topic_hubs: [优化模型 Hub]
 
 ## 代码与写作
 
-Python 可用 `scipy.optimize.minimize` / `least_squares`，MATLAB 可用 `fmincon`；本库自动 Hub 中已有多个 MATLAB 原始实现，但仍标记 `raw-unverified`，调用前按 [[模型检验实战清单]] 做最小样例。论文需解释为何非线性、为何选该算法、如何给初值与约束，以及“局部最优/可行下界”的结论边界。
+Python 可用 `scipy.optimize.minimize` / `least_squares`，MATLAB 可用 `fmincon`；本库自动源码分片中已有多个 MATLAB 原始实现，目前状态为 `source-traced`、尚未运行，调用前按 [[模型检验实战清单]] 做最小样例。论文需解释为何非线性、为何选该算法、如何给初值与约束，以及“局部最优/可行下界”的结论边界。
 
 ## 来源与链接
 

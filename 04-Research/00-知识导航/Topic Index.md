@@ -28,6 +28,8 @@ tags: [system/topic-index, topic/knowledge-graph]
 
 ## 研究流程
 
+- [[04-Research/04-竞赛真题研究/05-官方规则与评阅/官方评阅资料索引|国赛官方评阅资料索引]] — 规则、格式、评阅流程与证据边界
+- [[04-Research/04-竞赛真题研究/02-美国大学生数学建模竞赛/MCM-ICM官方资料入口|MCM/ICM 官方资料入口]] — COMAP 真题、结果与优秀论文入口
 - [[数据处理 Hub]] — #topic/数据处理
 - [[可视化 Hub]] — #topic/可视化
 - [[模型检验 Hub]] — #topic/模型检验
@@ -36,5 +38,7 @@ tags: [system/topic-index, topic/knowledge-graph]
 
 ## 编程工具
 
+- [[04-Research/03-建模算法源码库/00-公共复用模块/Readme|公共复用模块]] — 已测试的跨项目基础函数
+- [[04-Research/03-建模算法源码库/代码验证报告|代码验证报告]] — 源追踪、静态检查、运行测试和依赖缺口
 - [[Python Hub]] — #tool/python
 - [[MATLAB Hub]] — #tool/matlab

@@ -5,3 +5,4 @@
 *.sh text eol=lf
 *.ps1 text eol=crlf
 *.pdf filter=lfs diff=lfs merge=lfs -text
+04-Research/03-建模算法源码库/04-原始源码分片/** whitespace=-trailing-space

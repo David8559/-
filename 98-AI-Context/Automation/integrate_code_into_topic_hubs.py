@@ -8,9 +8,11 @@ kept as variants under one heading. Every original path remains traceable.
 
 from __future__ import annotations
 
+import ast
 import hashlib
 import json
 import re
+import warnings
 from collections import Counter, defaultdict
 from pathlib import Path
 
@@ -24,6 +26,8 @@ LANG_END = "<!-- END AUTO-LANGUAGE-CODE-INDEX -->"
 STUDY_BEGIN = "<!-- BEGIN AUTO-HUB-STUDY-GUIDE -->"
 STUDY_END = "<!-- END AUTO-HUB-STUDY-GUIDE -->"
 RESEARCH = core.VAULT / "04-Research"
+SHARD_ROOT = core.LIBRARY / "04-原始源码分片"
+SHARD_MARKER = "<!-- GENERATED-CODE-SHARD: DO NOT EDIT BY HAND -->"
 HUB_PATHS = {
     "数学建模 Hub": RESEARCH / "01-建模基础理论" / "数学建模 Hub.md",
     "评价模型 Hub": RESEARCH / "02-经典建模模型库" / "01-评价类模型" / "评价模型 Hub.md",
@@ -415,6 +419,42 @@ def group_heading(group: list[int], variants: list[core.SourceVariant]) -> str:
     return f"{clean_heading(Path(items[0].canonical_path).stem)} · {language} · {digest}"
 
 
+def safe_filename(value: str) -> str:
+    """Return a stable Windows-safe filename for a generated shard."""
+    cleaned = re.sub(r'[<>:"/\\|?*\r\n]', "-", value).strip(" .-")
+    return (cleaned[:100] or "未命名") + ".md"
+
+
+def shard_path(hub: str, label: str) -> Path:
+    return SHARD_ROOT / hub / safe_filename(label)
+
+
+def vault_target(path: Path) -> str:
+    return path.relative_to(core.VAULT).with_suffix("").as_posix()
+
+
+def validation_status(items: list[core.SourceVariant]) -> str:
+    """Describe only evidence actually established by the local audit."""
+    python_count = 0
+    python_passed = 0
+    for item in items:
+        if item.language != "Python":
+            continue
+        python_count += 1
+        try:
+            with warnings.catch_warnings():
+                warnings.simplefilter("ignore", SyntaxWarning)
+                ast.parse(item.code)
+        except SyntaxError:
+            continue
+        python_passed += 1
+    if python_count == len(items) and python_passed == python_count:
+        return "`python-ast-pass` + `source-traced`；尚未运行"
+    if python_count:
+        return f"`source-traced`；Python AST {python_passed}/{python_count} 通过；尚未运行"
+    return "`source-traced`；尚未运行"
+
+
 REPRESENTATIVE_SIGNALS: dict[str, tuple[str, ...]] = {
     "线性规划": ("linprog", "scipy.optimize.linprog"),
     "整数规划": ("intlinprog", "bintprog", "@bin(", "@gin(", "milp("),
@@ -554,7 +594,9 @@ def render_study_guide(
     return "\n".join(lines)
 
 
-def render_group(group: list[int], variants: list[core.SourceVariant]) -> list[str]:
+def render_group(
+    group: list[int], variants: list[core.SourceVariant], *, study_hub: str
+) -> list[str]:
     items = [variants[index] for index in group]
     label = primary_label(items)
     heading = group_heading(group, variants)
@@ -564,8 +606,8 @@ def render_group(group: list[int], variants: list[core.SourceVariant]) -> list[s
         f"- 用途：{purpose(items[0])}",
         f"- 独立实现变体：{len(items)}",
         f"- 原始来源文件：{sum(len(item.paths) for item in items)}",
-        f"- 复习入口：[[#{label} · 复习]]",
-        "- 验证状态：`raw-unverified`；自动归类不代表算法或结果已经验证。",
+        f"- 复习入口：[[{vault_target(hub_path(study_hub))}#{label} · 复习|{label} · 复习]]",
+        f"- 验证状态：{validation_status(items)}；自动归类不代表算法或结果正确。",
         "",
     ]
     for number, item in enumerate(items, 1):
@@ -599,6 +641,44 @@ def render_group(group: list[int], variants: list[core.SourceVariant]) -> list[s
             ]
         )
     return lines
+
+
+def render_shard(
+    hub: str,
+    label: str,
+    label_groups: list[list[int]],
+    variants: list[core.SourceVariant],
+) -> str:
+    source_count = sum(len(variants[index].paths) for group in label_groups for index in group)
+    variant_count = sum(len(group) for group in label_groups)
+    lines = [
+        "---",
+        "type: generated-code-shard",
+        "status: generated",
+        f"topic_hub: {hub}",
+        f"algorithm: {label}",
+        "tags: [area/数学建模, workflow/源码索引, status/待运行验证]",
+        "---",
+        "",
+        SHARD_MARKER,
+        "",
+        f"# {label} · 原始源码实现",
+        "",
+        "> [!warning] 使用边界",
+        "> 本页由本地目录自动生成，保留源码、SHA-256 与原始路径。静态检查不等于运行正确；正式调用前必须补齐依赖、最小样例和结果检验。",
+        "",
+        f"- 领域入口：[[{vault_target(hub_path(hub))}|{hub}]]",
+        f"- 独立实现：{variant_count}",
+        f"- 原始来源：{source_count}",
+        f"- 逐文件状态：[[04-Research/03-建模算法源码库/代码验证报告|代码验证报告]]",
+        "",
+    ]
+    summary = core.MODEL_SUMMARIES.get(label)
+    if summary:
+        lines.extend([summary, ""])
+    for group in sorted(label_groups, key=lambda value: variants[value[0]].canonical_path):
+        lines.extend(render_group(group, variants, study_hub=hub))
+    return "\n".join(lines).rstrip() + "\n"
 
 
 def replace_section(path: Path, generated: str) -> None:
@@ -675,7 +755,7 @@ def write_language_indexes(variants: list[core.SourceVariant], groups: list[list
         lines = [
             LANG_BEGIN,
             "## 本地源码主题分布", "",
-            "> 本页只提供跨主题导航，不重复嵌入源码；完整代码保存在对应领域 Hub 的折叠标题下。", "",
+            "> 本页只提供跨主题导航，不重复嵌入源码；领域 Hub 提供学习指南，完整代码保存在建模算法源码库的自动分片中。", "",
             f"- 原始源码：{total_sources}",
             f"- 精确去重后的实现：{total_variants}", "",
             "| 领域 Hub | 独立实现 | 原始源码 |",
@@ -702,6 +782,7 @@ def main() -> int:
 
     written_sources = 0
     embedded_variants = 0
+    written_shards: list[Path] = []
     for hub, hub_groups in sorted(routed.items()):
         model_groups: defaultdict[str, list[list[int]]] = defaultdict(list)
         for group in hub_groups:
@@ -711,28 +792,27 @@ def main() -> int:
         replace_study_guide(hub_path(hub), render_study_guide(hub, model_groups, variants))
         lines = [
             BEGIN,
-            "## 源码实现库（按需调用）", "",
+            "## 源码实现索引（按需调用）", "",
             "> [!warning] 使用边界", 
-            "> 以下源码保留全文与来源，但默认均未运行验证。数据依赖明细已从阅读页省略；调用时按代码理解卡完成参数化、最小样例和结果检验。来源显示为可复制路径，不直接调用 Windows 打开未知扩展名。", "",
+            "> 原始源码已移出 Hub，按算法保存在自动生成分片中。状态分为来源追踪、静态解析和运行测试；不得把语法通过写成数值正确。", "",
             f"- 本 Hub 收录原始源码文件：{source_count}",
             f"- 精确去重后的独立实现：{variant_count}",
             f"- 合并后的实现组：{len(hub_groups)}", "",
             "### 实现索引", "",
-            "| 算法或用途 | 独立实现 | 原始源码 |",
-            "|---|---:|---:|",
+            "| 算法或用途 | 独立实现 | 原始源码 | 验证入口 |",
+            "|---|---:|---:|---|",
         ]
         for label, label_groups in sorted(model_groups.items()):
             label_variants = sum(len(group) for group in label_groups)
             label_sources = sum(len(variants[index].paths) for group in label_groups for index in group)
-            lines.append(f"| [[#{label} · 实现|{label}]] | {label_variants} | {label_sources} |")
-        lines.append("")
-        for label, label_groups in sorted(model_groups.items()):
-            lines.extend([f"### {label} · 实现", ""])
-            summary = core.MODEL_SUMMARIES.get(label)
-            if summary:
-                lines.extend([summary, ""])
-            for group in sorted(label_groups, key=lambda value: variants[value[0]].canonical_path):
-                lines.extend(render_group(group, variants))
+            output = shard_path(hub, label)
+            output.parent.mkdir(parents=True, exist_ok=True)
+            output.write_text(render_shard(hub, label, label_groups, variants), encoding="utf-8")
+            written_shards.append(output)
+            lines.append(
+                f"| [[{vault_target(output)}|{label}]] | {label_variants} | {label_sources} | [[04-Research/03-建模算法源码库/代码验证报告|状态]] |"
+            )
+        lines.extend(["", "完整逐文件清单见 [[04-Research/03-建模算法源码库/代码验证状态.csv|代码验证状态.csv]]。", ""])
         lines.extend([END, ""])
         replace_section(hub_path(hub), "\n".join(lines))
         written_sources += source_count
@@ -742,11 +822,12 @@ def main() -> int:
 
     # Validate coverage after writing.  Every catalog row must appear exactly in
     # at least one destination section; exact duplicates intentionally share code.
-    hub_text = "\n".join(hub_path(hub).read_text(encoding="utf-8") for hub in routed)
-    missing = [row["relative_path"] for row in code_rows if f"源文件：`00-Inbox/Downloaded/{row['relative_path']}" not in hub_text]
+    shard_text = "\n".join(path.read_text(encoding="utf-8") for path in written_shards)
+    missing = [row["relative_path"] for row in code_rows if f"源文件：`00-Inbox/Downloaded/{row['relative_path']}" not in shard_text]
     result = {
         "status": "PASS" if not missing and written_sources == len(code_rows) and embedded_variants == len(variants) else "FAIL",
-        "topic_hubs_with_full_source": len(routed),
+        "topic_hubs_with_compact_index": len(routed),
+        "generated_source_shards": len(written_shards),
         "language_hubs_with_navigation": 2,
         "source_files_integrated": written_sources,
         "exact_unique_implementations": embedded_variants,

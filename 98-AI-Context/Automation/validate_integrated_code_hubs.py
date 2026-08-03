@@ -36,6 +36,24 @@ def main() -> int:
         hub: integration.hub_path(hub).read_text(encoding="utf-8")
         for hub in hubs
     }
+    expected_shards = {
+        integration.shard_path(
+            integration.destination([variants[index] for index in group]),
+            integration.primary_label([variants[index] for index in group]),
+        )
+        for group in groups
+    }
+    shard_text: dict[object, str] = {}
+    for path in expected_shards:
+        if not path.exists():
+            failures.append(f"missing source shard: {path}")
+            continue
+        text = path.read_text(encoding="utf-8")
+        shard_text[path] = text
+        if integration.SHARD_MARKER not in text:
+            failures.append(f"missing generated shard marker: {path}")
+        if not balanced_fences(text):
+            failures.append(f"unbalanced code fence: {path}")
 
     for hub, text in hub_text.items():
         if integration.BEGIN not in text or integration.END not in text:
@@ -46,6 +64,8 @@ def main() -> int:
             failures.append(f"unbalanced code fence: {hub}")
         if "Source Package Hub" in text or "Code Families" in text:
             failures.append(f"obsolete node reference: {hub}")
+        if "<summary>展开原始代码</summary>" in text:
+            failures.append(f"full source remains in compact hub: {hub}")
 
     expected_study_cards = 0
     for hub in hubs:
@@ -72,7 +92,9 @@ def main() -> int:
     for group in groups:
         items = [variants[index] for index in group]
         hub = integration.destination(items)
-        text = hub_text[hub]
+        label = integration.primary_label(items)
+        path = integration.shard_path(hub, label)
+        text = shard_text.get(path, "")
         for item in items:
             embedded_variants += 1
             if "\n" + item.code.rstrip("\n") + "\n" not in text:
@@ -84,8 +106,9 @@ def main() -> int:
                     failures.append(f"source trace count != 1: {path}")
 
     combined_hub_text = "\n".join(hub_text.values())
-    understanding_cards = combined_hub_text.count("##### 代码理解与调用")
-    collapsed_sources = combined_hub_text.count("<summary>展开原始代码</summary>")
+    combined_shard_text = "\n".join(shard_text.values())
+    understanding_cards = combined_shard_text.count("##### 代码理解与调用")
+    collapsed_sources = combined_shard_text.count("<summary>展开原始代码</summary>")
     study_cards = len(re.findall(r"(?m)^#### .+ · 复习$", combined_hub_text))
     if study_cards != expected_study_cards:
         failures.append(f"study cards: generated={study_cards} expected={expected_study_cards}")
@@ -95,6 +118,8 @@ def main() -> int:
         failures.append(f"collapsed source blocks: generated={collapsed_sources} expected={len(variants)}")
     if any(token in combined_hub_text for token in ("本地数据依赖：", "数据文件：", "尚未解析的数据字面量：")):
         failures.append("data dependency detail remains in reading hubs")
+    if "raw-unverified" in combined_hub_text or "raw-unverified" in combined_shard_text:
+        failures.append("legacy raw-unverified label remains")
 
     python_checked = 0
     for item in variants:
@@ -114,11 +139,12 @@ def main() -> int:
 
     result = {
         "status": "PASS" if not failures else "FAIL",
-        "existing_topic_hubs_with_source_checked": len(hubs),
+        "compact_topic_hubs_checked": len(hubs),
+        "generated_source_shards_checked": len(shard_text),
         "existing_language_hubs_checked": 2,
         "new_graph_nodes": 0,
         "source_files_traced": source_traces,
-        "exact_unique_implementations_embedded": embedded_variants,
+        "exact_unique_implementations_in_shards": embedded_variants,
         "implementation_groups": len(groups),
         "algorithm_study_cards": study_cards,
         "code_understanding_cards": understanding_cards,
