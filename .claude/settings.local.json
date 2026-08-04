@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python -m unittest *)",
+      "Bash(python *build_cli.py *)",
+      "Bash(python *paper_qa.py *)"
+    ]
+  }
+}

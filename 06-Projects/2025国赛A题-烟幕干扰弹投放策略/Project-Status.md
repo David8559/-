@@ -68,6 +68,8 @@ next_stage: G-human-final-review
 - [x] 将题目总览、本地复现、A196 对照和项目复盘沉淀到 Research 与 AI Memory。
 - [x] 对论文 24 页和 AI 详情 4 页逐页视觉检查，确认页码、公式、图表和表格无越界或截断。
 - [x] 检查 DOCX/PDF 元数据与支撑包路径，不含用户目录编号、承诺书或空白 AI 记录模板。
+- [x] 2026-08-04 修复悬空链接：36 项审查逐项明细落库为 `04-Research/08-论文写作与复现/Paper-Expert-36项审查明细.md`（含达标率、查法、判定标准、证据锚点与 34过/2不适用/0阻断 适配结论），本页 `Paper-Expert-36项审查.md` 与复现稿附录 D（新增精简版结论汇总）均改指新明细；配套新建 `论文交付审计清单.md`。
+- [x] 2026-08-04 通用排版管线落库并验证：`mm_common/paper_build/`（constants_2026 + build_core/build_cli + paper_qa + 12 项测试），以复现稿为输入输出 `Paper/validation-2026-pipeline/参赛论文.docx`，14 项机器 QA 全 PASS；`submission/` 原提交包未动。QA 检出并修复 5 条装饰性文献（[1]-[4][12] 正文未引用，已补引用于问题重述/AI 声明/附录 B），2025A 审计清单两行记录见 [[04-Research/08-论文写作与复现/论文交付审计清单#完成记录表]]。
 
 ## 当前未完成
 

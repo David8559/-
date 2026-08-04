@@ -15,3 +15,7 @@ tags: [system/ai-memory]
 | 2026-07-27 | Topic Hub 从集中平铺改为归入对应知识父目录 | 集中式 `00-Topic-Hubs` 与模型分类重复，父子语义不一致 | `00-知识导航` 只保留 Topic Index；模型、工具、数据、可视化、检验和写作 Hub 分别放入对应目录 |
 | 2026-07-27 | 排队论归入“随机决策与仿真模型” | 排队论以随机到达、随机服务、稳态分析和离散事件仿真为核心，不属于图论算法 | 笔记、标签、代码路由和知识图谱关键词统一指向随机仿真主题 |
 | 2026-07-30 | 后续数学建模论文写作、改写和审查默认以 [[论文写作 Hub]] 为权威流程 | 将外部 `paper-expert` 的五层表达、问题递进和审查优点纳入现有可复现规范，同时过滤不可比的 OCR 统计和刚性数量门槛 | Agent 开始论文任务时先读取该 Hub 与项目状态；官方规则、赛题证据和已验证结果始终优先 |
+| 2026-08-04 | 论文排版采用通用管线 `mm_common/paper_build/`（python-docx 程序化生成+14 项机器 QA），公式维持 matplotlib 图片，不引入 pandoc/LaTeX | 复用 2025 项目 Stage G 已验证版式并参数化；用户偏好不装新软件 | 新论文产出 docx 走 `build_cli.py`；`submission/` 已签收产物不切换 |
+| 2026-08-04 | 论文写作 Skill 形态为"知识库为源+Claude Code 薄封装"：vault 落内容（明细/清单/样例库/改写指南/3 个 Prompt），`~/.claude/skills/paper-writing/` 只引路径 | 内容可被 Codex 与 Claude Code 共用；薄封装避免双份维护 | Codex 用 89-Prompts 资产；Claude Code 用 skill 触发 |
+| 2026-08-04 | 2025A 复现稿按机器 QA 结果补 5 条文献正文引用（[1]-[4][12]），submission/ 原提交包不动 | 36 项 #23 要求正文引用与文献列表一一对应；QA 检出装饰性引用 | 复现稿与 validation 产物更新；已签收提交包保持原状 |
+| 2026-08-04 | `89-Prompts` 的 36 项审查资产命名为 `36项审查 Agent.md`（非 `Paper-Expert-36项审查.md`） | 与 2025 项目同名文件冲突导致 Obsidian 链接歧义；与另两个 Agent 命名风格统一 | kb_audit 命名冲突清零 |

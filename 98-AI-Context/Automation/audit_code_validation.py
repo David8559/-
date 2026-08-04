@@ -10,6 +10,7 @@ import importlib.util
 import json
 import os
 import py_compile
+import re
 import subprocess
 import sys
 from pathlib import Path
@@ -147,6 +148,9 @@ def main() -> int:
             failures.append(matlab_error)
         matlab_summary = f"MATLAB 精选模型库：未完成批处理验证{('；' + matlab_error) if matlab_error else ''}"
         matlab_boundary = "MATLAB 精选模型库尚无可读取的批处理结果；原始代码仅证明来源可追溯。"
+    # 从 unittest 输出解析实际运行的测试数（"Ran N tests" 输出在 stderr）
+    _ran = re.search(r"Ran (\d+) tests", (public_result.stdout or "") + (public_result.stderr or ""))
+    public_test_count = int(_ran.group(1)) if _ran else 0
     report = f"""---
 type: validation-report
 status: {'pass-with-dependency-gaps' if not failures and public_result.returncode == 0 and curated_result.returncode == 0 and not curated_compile_failures else 'failed'}
@@ -160,7 +164,7 @@ tags: [area/数学建模, workflow/代码验证, system/audit]
 - Python：`{sys.version.split()[0]}`
 - 原始源码独立实现：{len(variants)}；原始路径：{sum(len(item.paths) for item in variants)}
 - Python 原始实现 AST：{python_passed}/{python_checked} 通过
-- 公共复用模块：12 项单元测试，{'通过' if public_result.returncode == 0 else '失败'}
+- 公共复用模块：{public_test_count} 项单元测试，{'通过' if public_result.returncode == 0 else '失败'}
 - 精选 Python 模型库：5 个文件语法检查 {'通过' if not curated_compile_failures else '失败'}；25 个可调用分支中，本环境执行 {executed_branches} 个、依赖阻塞 {blocked_branches} 个
 - 可选依赖：{optional_text}
 - Keras/LSTM：未安装、未执行，只保留语法检查
