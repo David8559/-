@@ -1,8 +1,8 @@
 ---
 type: project-status
 status: active
-updated: 2026-08-01
-current_stage: G-revised-after-A196-audit-awaiting-human-review
+updated: 2026-08-06
+current_stage: G-template-preview-awaiting-human-visual-review
 next_stage: G-human-final-review
 ---
 
@@ -10,7 +10,7 @@ next_stage: G-human-final-review
 
 ## 一句话状态
 
-阶段 G 已完成 A196 优秀论文对照后的模型与论文返工：问题 3—5 统一改为 $\forall P\exists k$ 多烟幕联合判据，问题五同时报告总收益、公平性和同时安全三种口径；46 项测试通过，论文补入推导理由、失败搜索、删除边际、外部基准与结论边界，等待用户终审修订版 DOCX/PDF。
+阶段 G 已完成 A196 优秀论文对照后的模型与论文返工，并于 2026-08-06 用用户提供的国赛母版生成独立模板试排稿；模型、公式、图表和引用结构检查通过，等待用户在 Word 中终审分页与视觉效果。
 
 ## 已完成
 
@@ -70,6 +70,7 @@ next_stage: G-human-final-review
 - [x] 检查 DOCX/PDF 元数据与支撑包路径，不含用户目录编号、承诺书或空白 AI 记录模板。
 - [x] 2026-08-04 修复悬空链接：36 项审查逐项明细落库为 `04-Research/08-论文写作与复现/Paper-Expert-36项审查明细.md`（含达标率、查法、判定标准、证据锚点与 34过/2不适用/0阻断 适配结论），本页 `Paper-Expert-36项审查.md` 与复现稿附录 D（新增精简版结论汇总）均改指新明细；配套新建 `论文交付审计清单.md`。
 - [x] 2026-08-04 通用排版管线落库并验证：`mm_common/paper_build/`（constants_2026 + build_core/build_cli + paper_qa + 12 项测试），以复现稿为输入输出 `Paper/validation-2026-pipeline/参赛论文.docx`，14 项机器 QA 全 PASS；`submission/` 原提交包未动。QA 检出并修复 5 条装饰性文献（[1]-[4][12] 正文未引用，已补引用于问题重述/AI 声明/附录 B），2025A 审计清单两行记录见 [[04-Research/08-论文写作与复现/论文交付审计清单#完成记录表]]。
+- [x] 2026-08-06 从 [[90-Templates/1.国赛论文模版.docx]] 的副本生成 `Paper/template-preview-20260806/2025国赛A题-模板试排.docx`；保留 39 个公式编号、17 个连续图题、56 个嵌入对象、13 张表和 13 条文献，匿名元数据已清空，母版及 `submission/` 均未修改。当前环境无法自动逐页渲染，视觉终审待用户在 Word 中完成。
 
 ## 当前未完成
 
@@ -86,6 +87,7 @@ next_stage: G-human-final-review
 - [x] 人工逐项复核 [[Paper/问题5-多目标联合优化]] 的公式、代码、图 20–24、候选库下界解释和 `result3.xlsx`，完成阶段 F 签收。
 - [x] 启动并完成阶段 G 技术制作：全文、格式、AI 详情和支撑包均已生成。
 - [ ] 用户终审论文版面、工具实际模型/版本标识和外部编号流程，完成阶段 G 人工签收。
+- [ ] 用户打开模板试排稿，比较 12 pt 母版与原 10.5 pt 版本的页数、分页、图表和公式效果，决定是否将该母版纳入正式论文生成流程。
 
 ## 已知风险
 
@@ -134,4 +136,4 @@ next_stage: G-human-final-review
 
 ## 下一次明确任务
 
-> 人工终审修订版：打开 `Paper/submission/参赛论文.docx` 与 PDF，重点核对联合遮蔽量词、问题三与 A196 的差距说明、问题五三种目标口径、图表和实际工具模型/版本标识；确认无误后回复“修订版复核完毕”。
+> 打开 `Paper/template-preview-20260806/2025国赛A题-模板试排.docx`，重点检查总页数、分页、跨页表格、图片位置、公式断行和页码；比较效果后决定是否把该母版固化为正式论文 Skill 的排版底座。

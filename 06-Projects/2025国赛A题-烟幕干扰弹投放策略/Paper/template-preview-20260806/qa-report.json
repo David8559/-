@@ -1,0 +1,86 @@
+{
+  "docx": "C:\\Users\\17888\\Documents\\0.数学建模知识库\\0.数学建模\\06-Projects\\2025国赛A题-烟幕干扰弹投放策略\\Paper\\template-preview-20260806\\2025国赛A题-模板试排.docx",
+  "results": [
+    {
+      "check": "page-size",
+      "status": "PASS",
+      "evidence": "页面 21.00×29.70 cm（要求 21.0×29.7）"
+    },
+    {
+      "check": "margins",
+      "status": "PASS",
+      "evidence": "边距 (2.54, 2.54, 2.700513888888889, 2.700513888888889) cm（要求 ≥2.5）"
+    },
+    {
+      "check": "page-number-field",
+      "status": "PASS",
+      "evidence": "页脚包含 PAGE 域"
+    },
+    {
+      "check": "no-toc",
+      "status": "PASS",
+      "evidence": "无 TOC 域；无目录标题"
+    },
+    {
+      "check": "residual-latex",
+      "status": "PASS",
+      "evidence": "无残余 LaTeX 命令"
+    },
+    {
+      "check": "caption-sequence",
+      "status": "PASS",
+      "evidence": "图题编号连续（图 0 张，编号 []…）"
+    },
+    {
+      "check": "equation-numbering",
+      "status": "PASS",
+      "evidence": "公式编号连续（39 个）"
+    },
+    {
+      "check": "image-count",
+      "status": "PASS",
+      "evidence": "嵌入图片 56 张（期望 56）"
+    },
+    {
+      "check": "anonymous-core",
+      "status": "PASS",
+      "evidence": "author='' last_modified_by=''（要求均为空）"
+    },
+    {
+      "check": "file-size",
+      "status": "PASS",
+      "evidence": "文件 2.86 MB（要求 ≤20）"
+    },
+    {
+      "check": "body-font",
+      "status": "FAIL",
+      "evidence": "Normal 样式 eastAsia=宋体 字号=12.0pt（要求 宋体 10.5pt）"
+    },
+    {
+      "check": "table-header-repeat",
+      "status": "PASS",
+      "evidence": "表 1 首行设置跨页重复表头"
+    },
+    {
+      "check": "reference-bidirection",
+      "status": "PASS",
+      "evidence": "文献 13 条全部被正文引用，无悬挂引用"
+    },
+    {
+      "check": "summary-first-page",
+      "status": "FAIL",
+      "evidence": "前 12 段未见'摘要'（检查标题与摘要是否同页）"
+    }
+  ],
+  "pass": 12,
+  "total": 14,
+  "fail": [
+    "body-font",
+    "summary-first-page"
+  ],
+  "manual_items": [
+    "page-count(≤30页)",
+    "layout-render",
+    "actual-tool-version"
+  ]
+}
