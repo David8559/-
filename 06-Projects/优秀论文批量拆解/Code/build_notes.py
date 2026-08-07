@@ -131,13 +131,11 @@ def unique_pdfs():
 
 def strip_impl(x):
     x=re.sub(r"(?:并|再|然后)?(?:利用|运用|采用|通过)?(?:MATLAB|LINGO|SPSS|PYTHON|EXCEL|R语言|SAS)(?:软件|程序|函数|工具|平台)?(?:编程)?(?:进行)?(?:求解|计算|实现)?","经数学求解",x,flags=re.I)
-    x=x.replace("用经数学求解","经数学求解")
     return re.sub(r"(?:代码|程序)(?:见|详见)附录[^。；]*[。；]?","",x)
 def sents(t):
     out=[]
     for x in re.split(r"(?<=[。！？；])",t):
         x=strip_impl(re.sub(r"\s+","",x))
-        x=re.sub(r"\*{2,}","〔显著性星号〕",x)
         if len(x)>12 and not re.search(r"承诺书|参赛报名号|参赛队员|所属学校|指导教师|从A/B/C/D中选择",x): out.append(x)
     return out
 def select(t,pats,n=5):
@@ -234,11 +232,11 @@ def build():
     expected=VAULT/"04-Research"/"04-竞赛真题研究"/"03-优秀获奖论文拆解"/"批量标准化拆解"
     if OUT.resolve()!=expected.resolve(): raise RuntimeError("Refusing to clean unexpected output directory")
     for old in OUT.rglob("G-*.md"): old.unlink()
-    [ (OUT/f"{c}类-{n}").mkdir(exist_ok=True) for c,n in CATS.items() ]; recs=[]; used_stems=set()
+    [ (OUT/f"{c}类-{n}").mkdir(exist_ok=True) for c,n in CATS.items() ]; recs=[]; used=set()
     for f in sorted(CACHE.glob("*.json")):
         note,r=make_note(json.loads(f.read_text(encoding="utf-8"))); short={"国家一等奖":"国一","国家二等奖":"国二"}.get(r["award"],"奖项待核"); out=OUT/f"{r['primary']}类-{CATS[r['primary']]}"/f"G-{r['year']}-{r['problem']}-{short}-{safe(r['title'])}.md"
-        if out.stem.lower() in used_stems:out=out.with_stem(out.stem+"-"+r["paper_id"])
-        used_stems.add(out.stem.lower())
+        if out in used:out=out.with_stem(out.stem+"-"+r["paper_id"])
+        used.add(out)
         out.write_text(note,encoding="utf-8"); r["note"]=str(out); recs.append(r)
     recs.sort(key=lambda r:(r["primary"],r["year"],r["problem"],r["title"])); counts=Counter(r["primary"] for r in recs)
     idx=["# 优秀论文模型分类索引","","分类依据是主要模型机制，不等同于赛题字母；次类别记录在单篇元数据中。",""]
@@ -253,29 +251,8 @@ def build():
         for r in [x for x in recs if x["primary"]==c]:
             rel=Path(r["note"]).relative_to(VAULT).with_suffix("").as_posix(); hub.append(f"- [[{rel}|{r['title']}]]：{'、'.join(r['models'][:5])}")
         (OUT/f"论文模型分类-{c}类{n}.md").write_text("\n".join(hub)+"\n",encoding="utf-8")
-    nodes=OUT/"知识节点"; model_dir=nodes/"模型"; problem_dir=nodes/"赛题"; model_dir.mkdir(parents=True,exist_ok=True); problem_dir.mkdir(parents=True,exist_ok=True)
-    for old in nodes.rglob("*.md"): old.unlink()
-    existing={p.stem for p in VAULT.rglob("*.md") if nodes not in p.parents}
-    target_for={name:target for name,_,_,target in MODELS}; by_model={}
-    for r in recs:
-        for name in r["models"]:
-            target=target_for.get(name,"模型-待人工补全"); by_model.setdefault(target,[]).append(r)
-    for target,items in by_model.items():
-        if target in existing:continue
-        lines=[f"# {target}","","- 节点类型：模型/算法","- 说明：由优秀论文批量拆解自动建立的反向索引；具体定义、公式与适用条件需进入单篇笔记和原 PDF 复核。","","## 相关论文",""]
-        for r in items:
-            rel=Path(r["note"]).relative_to(VAULT).with_suffix("").as_posix(); lines.append(f"- [[{rel}|{r['title']}]]")
-        (model_dir/f"{target}.md").write_text("\n".join(lines)+"\n",encoding="utf-8")
-    by_problem={}
-    for r in recs:by_problem.setdefault(f"赛题-国赛{r['year']}第{r['problem']}题",[]).append(r)
-    for target,items in by_problem.items():
-        if target in existing:continue
-        lines=[f"# {target}","","- 节点类型：竞赛赛题","- 说明：按论文元数据自动汇集；题号待核节点必须回到原文件名或赛题资料核实。","","## 相关优秀论文",""]
-        for r in items:
-            rel=Path(r["note"]).relative_to(VAULT).with_suffix("").as_posix(); lines.append(f"- [[{rel}|{r['title']}]]")
-        (problem_dir/f"{target}.md").write_text("\n".join(lines)+"\n",encoding="utf-8")
-    dup=json.loads((PROJECT/"Data"/"duplicates.json").read_text(encoding="utf-8")); ocr=sum(r["mode"]=="selected-page-ocr" for r in recs); pending=sum(r["award"]=="奖项待核" for r in recs); qpending=sum(r["problem"]=="题号待核" for r in recs); mpending=sum(r["models"][0].startswith("【") for r in recs)
-    rep=["# 优秀论文批量处理汇总报告","",f"- 原始 PDF：{len(recs)+len(dup)} 份",f"- 去重后论文：{len(recs)} 篇",f"- 重复文件：{len(dup)} 份",f"- 扫描版代表页 OCR：{ocr} 篇",f"- 奖项待核：{pending} 篇","- 公式与符号：全部需对照原 PDF 人工复核","- 未处理：RAR 32 份、ZIP 4 份、DOC 6 份、DOCX 3 份","","## 分类统计","","| 类别 | 篇数 |","|---|---:|"]+[f"| {c}类 {n} | {counts[c]} |" for c,n in CATS.items()]+["","## 输出文件",""]+[f"- {Path(r['note']).name}" for r in recs]+["","## 缺失内容统计","",f"- 公式与符号需人工复核：{len(recs)} 篇。",f"- 扫描版中间页未逐页 OCR：{ocr} 篇。",f"- 奖项待核：{pending} 篇。",f"- 题号待核：{qpending} 篇。",f"- 未稳定识别具体模型名称：{mpending} 篇。","- 所有缺失项均已保留原始来源路径和人工补全标记。",""]
+    dup=json.loads((PROJECT/"Data"/"duplicates.json").read_text(encoding="utf-8")); ocr=sum(r["mode"]=="selected-page-ocr" for r in recs); pending=sum(r["award"]=="奖项待核" for r in recs)
+    rep=["# 优秀论文批量处理汇总报告","",f"- 原始 PDF：{len(recs)+len(dup)} 份",f"- 去重后论文：{len(recs)} 篇",f"- 重复文件：{len(dup)} 份",f"- 扫描版代表页 OCR：{ocr} 篇",f"- 奖项待核：{pending} 篇","- 公式与符号：全部需对照原 PDF 人工复核","- 未处理：RAR、ZIP、DOC、DOCX","","## 分类统计","","| 类别 | 篇数 |","|---|---:|"]+[f"| {c}类 {n} | {counts[c]} |" for c,n in CATS.items()]+["","## 输出文件",""]+[f"- {Path(r['note']).name}" for r in recs]+["","## 缺失内容统计","","- PDF 文本层通常不能可靠保留公式版式，统一标记人工补全。","- 扫描版只 OCR 代表页，中间页图表和公式需人工复核。","- 未明确写出国一/国二时标记奖项待核。",""]
     (OUT/"处理汇总报告.md").write_text("\n".join(rep),encoding="utf-8"); (PROJECT/"Data"/"manifest.json").write_text(json.dumps(recs,ensure_ascii=False,indent=2),encoding="utf-8"); print(json.dumps({"notes":len(recs),"counts":dict(counts),"out":str(OUT)},ensure_ascii=False))
 def main():
     a=argparse.ArgumentParser(); a.add_argument("action",choices=["extract","build","all"]); a.add_argument("--workers",type=int,default=4); x=a.parse_args()
