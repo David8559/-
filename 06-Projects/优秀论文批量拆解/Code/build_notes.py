@@ -12,7 +12,10 @@ OUT=VAULT/"04-Research"/"04-竞赛真题研究"/"03-优秀获奖论文拆解"/"�
 CATS={"A":"连续型模型","B":"离散型模型","C":"数据分析与数据挖掘","D":"综合决策与评价","E":"社会环境政策与系统仿真","F":"博弈与对策"}
 TITLE_OVERRIDES={
 "2012国赛国家一等奖A题优秀论文5_20220719111558.pdf":"葡萄酒的评价",
-"2010B：上海世博会影响力的定量评估.pdf":"上海世博会影响力的定量评估"}
+"2010B：上海世博会影响力的定量评估.pdf":"上海世博会影响力的定量评估",
+"[2011年国赛MATLAB创新奖B题]第三军医大学交巡警平台设置与调度模型.pdf":"交巡警平台设置与调度模型",
+"[2011年国赛高教杯奖A题]南京信息工程大学城市表层土壤重金属污染.pdf":"城市表层土壤重金属污染分析",
+"[2011年国赛MATLAB创新奖C题]九江学院-企业退休职工养老金模型.pdf":"企业退休职工养老金模型"}
 
 # 名称、匹配式、类别、已有知识节点
 RAW=r"""偏微分方程|偏微分方程|(?<![A-Za-z])PDE(?![A-Za-z])|A|偏微分方程
@@ -82,6 +85,26 @@ GUIDE={
 "E":["问题机制处绘制因果回路、利益相关者或系统边界图","情景设定处制基准/乐观/悲观参数表","结果阶段绘制多情景演化曲线、空间分布图或政策权衡图"],
 "F":["模型建立处制参与者—策略—收益表或支付矩阵","均衡分析处绘制最优反应或策略演化图","检验部分制不同参数与信息结构下的均衡对比表"]}
 
+# 竞赛语境中的“创新”候选：只记录可从摘要或提取页定位的增量，不声明学术首创。
+INNOVATION_RULES=[
+    ("模型融合",r"耦合|融合|组合模型|联合模型|混合模型|将[^。；]{1,50}(?:模型|方法)[^。；]{0,30}(?:结合|融合)","把两类以上机理或方法组织为同一条建模链"),
+    ("模型改进与推广",r"改进(?:了|的)?(?:模型|算法|方法)|在[^。；]{0,40}基础上[^。；]{0,30}改进|一般化|推广至|扩展到|统一模型|引入时变参数|重新构建","对基线模型的结构、参数或适用范围作了明确扩展"),
+    ("分阶段与分类讨论",r"两阶段|多阶段|分阶段|分步骤|分步求解|分类讨论|分情况|不同情形|逐层|分层建模","按情形、阶段或层次拆分复杂任务并保持分问递进"),
+    ("多目标与权衡",r"多目标|Pareto|帕累托|权衡|兼顾[^。；]{0,30}(?:成本|效益|风险|公平|环境|效率)","显式处理相互冲突的目标或评价维度"),
+    ("数据处理与特征构造",r"数据清洗|异常值|缺失值|标准化|归一化|特征选择|特征筛选|指标筛选|主成分|降维|聚类分析|相关系数矩阵","对原始数据、指标或特征进行有目的的筛选和变换"),
+    ("专用求解策略",r"遗传算法|粒子群|模拟退火|蚁群|动态规划|启发式|邻域搜索|迭代算法|分解算法|搜索算法|枚举法","根据问题结构选择或设计求解策略"),
+    ("不确定性与情景分析",r"不确定性|随机模型|鲁棒|区间参数|蒙特卡洛|情景分析|多情景|风险分析|置信区间","把随机性、风险或情景差异纳入结论"),
+    ("检验与稳健性",r"灵敏度分析|敏感性分析|稳健性分析|鲁棒性分析|误差分析|残差分析|交叉验证|模型检验|结果验证","使用误差、检验或扰动分析评估结果可信度"),
+    ("政策与机制设计",r"激励机制|惩罚机制|政策组合|利益相关者|可持续|因果回路|反馈机制|均衡分析|纳什均衡","从主体互动、反馈或政策工具角度设计决策机制"),
+    ("时空动态刻画",r"时空|空间分布|动态演化|时间序列|滚动预测|实时更新|在线优化|轨迹优化","刻画对象随时间、空间或事件更新的变化")]
+INNOVATION_PRIORITY={
+    "A":["模型改进与推广","模型融合","时空动态刻画","检验与稳健性","专用求解策略","不确定性与情景分析"],
+    "B":["分阶段与分类讨论","专用求解策略","多目标与权衡","不确定性与情景分析","模型改进与推广","检验与稳健性"],
+    "C":["数据处理与特征构造","模型融合","时空动态刻画","检验与稳健性","不确定性与情景分析","模型改进与推广"],
+    "D":["数据处理与特征构造","多目标与权衡","不确定性与情景分析","检验与稳健性","模型融合","模型改进与推广"],
+    "E":["政策与机制设计","不确定性与情景分析","时空动态刻画","模型融合","多目标与权衡","检验与稳健性"],
+    "F":["政策与机制设计","模型改进与推广","不确定性与情景分析","时空动态刻画","检验与稳健性","模型融合"]}
+
 def digest(p):
     h=hashlib.sha256()
     with p.open("rb") as f:
@@ -131,11 +154,13 @@ def unique_pdfs():
 
 def strip_impl(x):
     x=re.sub(r"(?:并|再|然后)?(?:利用|运用|采用|通过)?(?:MATLAB|LINGO|SPSS|PYTHON|EXCEL|R语言|SAS)(?:软件|程序|函数|工具|平台)?(?:编程)?(?:进行)?(?:求解|计算|实现)?","经数学求解",x,flags=re.I)
+    x=x.replace("用经数学求解","经数学求解")
     return re.sub(r"(?:代码|程序)(?:见|详见)附录[^。；]*[。；]?","",x)
 def sents(t):
     out=[]
     for x in re.split(r"(?<=[。！？；])",t):
         x=strip_impl(re.sub(r"\s+","",x))
+        x=re.sub(r"\*{2,}","〔显著性星号〕",x)
         if len(x)>12 and not re.search(r"承诺书|参赛报名号|参赛队员|所属学校|指导教师|从A/B/C/D中选择",x): out.append(x)
     return out
 def select(t,pats,n=5):
@@ -146,6 +171,23 @@ def select(t,pats,n=5):
             if s not in z:z.append(s)
             if len(z)>=n:break
     return z
+def innovation_points(t,primary,mode,probs):
+    hits=[]
+    for kind,pat,delta in INNOVATION_RULES:
+        evidence=select(t,[pat],1)
+        if evidence:hits.append({"type":kind,"delta":delta,"evidence":evidence[0],"basis":"原文线索"})
+    order={name:i for i,name in enumerate(INNOVATION_PRIORITY[primary])}
+    hits.sort(key=lambda x:(order.get(x["type"],99),x["type"]))
+    chosen=[]; seen=set()
+    for hit in hits:
+        if hit["type"] not in seen:chosen.append(hit); seen.add(hit["type"])
+        if len(chosen)>=3:break
+    if not chosen:
+        clue=probs[0][1] if probs else "提取文本不足，未稳定定位明确的模型增量"
+        chosen=[{"type":"结构化建模亮点（待核实）","delta":f"围绕{CATS[primary]}组织分问、模型与结果，但尚不能据此声明方法创新","evidence":clue[:180],"basis":"结构推断"}]
+    level="中" if mode=="embedded-text" else "中-低"
+    if all(x["basis"]=="结构推断" for x in chosen):level="低"
+    return chosen,level
 def abstract(t):
     m=re.search(r"摘\s*要\s*(.*?)(?:关\s*键\s*词|关键词|\n\s*1[\.、 ])",t,re.S); return (m.group(1) if m else t[:3500])[:5000]
 def models(t):
@@ -186,7 +228,12 @@ def problems(t):
     return z[:9]
 def metadata(p,t):
     y=(re.search(r"20\d{2}",str(p)) or ["年份待核"])[0]; stem=p.stem.upper().replace("Ｅ","E")
-    q=next((m.group(1) for pat in [r"20\d{2}.*?([A-F])题?",r"^([A-F])\d{2,3}",r"([A-F])题"] if (m:=re.search(pat,stem))),"题号待核")
+    q=next((m.group(1) for pat in [
+        r"([A-F])题",
+        r"(?:20\d{2}|\d{2})([A-F])(?=[：:_\-\s\d])",
+        r"^([A-F])\d{2,3}",
+        r"20\d{2}[^\]\[（）()]{0,30}?([A-F])(?:题|\d)",
+    ] if (m:=re.search(pat,stem))),"题号待核")
     probe=p.name+t[:2000]; award="国家一等奖" if re.search("国家?一等|国赛一等|国一",probe) else "国家二等奖" if re.search("国家?二等|国赛二等|国二",probe) else "奖项待核"
     pid=(re.search(r"([A-F]\d{2,3})",stem) or [f"{y}-{q}-{hashlib.md5(p.name.encode()).hexdigest()[:5]}"])[0]
     return y,q,award,pid
@@ -199,7 +246,7 @@ def make_note(d):
     p=Path(d["source"]); pages=d["pages"]; full="\n".join(f'[PDF第{x["page"]}页]\n{x["text"]}' for x in pages); ti=title_of(p,pages); y,q,award,pid=metadata(p,full)
     ms=models(full); primary,secondary=classify(ti,full,ms); names=[x["name"] for x in ms[:8]] or ["【模型名称解析缺失，人工补全】"]; probs=problems(full)
     solve=select(full,["采用|利用|通过|求解|迭代|优化|拟合|检验"],6); res=select(abstract(full)+full[-5000:],["结果表明|结果显示|得出|求得|最优|最少|结论"],6); ana=select(full,["灵敏度|敏感性|稳健|鲁棒|误差|残差|检验|验证"],5); assumptions=select(full,["模型假设|假设|忽略|不考虑"],4)
-    figs=select(full,[r"图\s*\d+|如图"],4); tabs=select(full,[r"表\s*\d+|如下表"],4); miss="【解析缺失，人工补全】"; cat=f"{primary}类 {CATS[primary]}"
+    figs=select(full,[r"图\s*\d+|如图"],4); tabs=select(full,[r"表\s*\d+|如下表"],4); innovations,innovation_level=innovation_points(full,primary,d["mode"],probs); miss="【解析缺失，人工补全】"; cat=f"{primary}类 {CATS[primary]}"
     L=["---","type: award-paper-review",f'paper_id: "{pid}"',f'year: "{y}"',f'problem: "{q}"',f'award: "{award}"',f'primary_category: "{cat}"',f'extraction_mode: "{d["mode"]}"',f'source_sha256: "{d["sha256"]}"',"status: machine-reviewed-needs-human-formula-check","tags: [competition/国赛, workflow/优秀论文拆解, area/数学建模]","---",f"# 论文标题：{ti}","## 基础元数据","- 竞赛：全国大学生数学建模竞赛",f"- 年份：{y}",f"- 题号：{q}",f"- 奖项：{award}",f"- 选题归类：{cat}"+(f"；次类别：{'、'.join(c+'类 '+CATS[c] for c in secondary)}" if secondary else ""),f"- 核心关键词：{'、'.join(names[:6])}",f"- 原始来源：{p}",f"- 解析说明：{d['mode']}；总页数 {d['pages_total']}；提取页 {','.join(str(x['page']) for x in pages)}","","## 1 赛题问题提炼"]
     L += [f"- 子问题{i}：{x}" for i,(_,x) in enumerate(probs,1)] or [f"- {miss}未稳定识别子问题边界。"]
     L += ["","## 2 模型整体框架",f"- 模型链：{' → '.join(names)}","- 逻辑递进：题意与数据/机理抽象 → 分问建模 → 求解 → 结果检验 → 回答题目。","- 有效模型假设："]
@@ -212,11 +259,14 @@ def make_note(d):
     L += ["","## 6 模型评价","- 模型优点：",("  - 摘要按子问题交代方法与结果，模型链与任务对应较清楚。" if len(probs)>=2 else "  - 当前抽取范围不足以可靠归纳全部优点。"),f"  - 组合使用{'、'.join(names[:4])}处理题目。","- 模型存在不足与改进方向："]
     if d["mode"]=="selected-page-ocr":L.append("  - 扫描版仅对代表页 OCR，公式、符号和中间论证链需人工逐页复核。")
     if not ana:L.append("  - 建议补充参数扰动、样本外验证或误差分解。")
-    L += ["  - 检查假设、变量、目标、约束、输出和结论是否逐项闭环。","","## 7 论文复用&写作亮点（知识库专用）",f"- 适用场景：以{CATS[primary]}为主的问题；数据结构、变量类型或机制不同不得直接套用。","- 结构亮点：摘要宜按“子问题—模型—求解—关键结果”，正文宜按“问题分析—假设与符号—建模—求解—检验—评价”闭环。","- 原文图表线索："]
+    L += ["  - 检查假设、变量、目标、约束、输出和结论是否逐项闭环。","","## 7 论文复用&写作亮点（知识库专用）",f"- 适用场景：以{CATS[primary]}为主的问题；数据结构、变量类型或机制不同不得直接套用。","- 结构亮点：摘要宜按“子问题—模型—求解—关键结果”，正文宜按“问题分析—假设与符号—建模—求解—检验—评价”闭环。","- 创新点提炼（竞赛语境，不构成学术首创声明）：",f"  - 总体证据等级：{innovation_level}。"]
+    for item in innovations:
+        L += [f"  - {item['type']}：{item['delta']}。",f"    - 证据依据：{item['basis']}。",f"    - 原文线索：{item['evidence']}"]
+    L += ["  - 使用限制：创新结论只相对本题常规解法成立；若要声称学术新颖性，必须另做文献检索与人工复核。","- 原文图表线索："]
     L += ([f"  - {x}" for x in figs] if figs else ["  - 提取页未稳定识别图题，需核对原文。"])+["- 原文表格线索："]+([f"  - {x}" for x in tabs] if tabs else ["  - 提取页未稳定识别表题，需核对原文。"])+["- 建议的图表落点："]+[f"  - {x}" for x in GUIDE[primary]]+["- 客观缺口：所有“解析缺失”项必须回到原 PDF 补全，严禁反推或编造。","","## 8 双向链接标签"]
     L += [f"[[{m['target']}|模型-{m['name']}]]" for m in ms[:8]] or ["[[模型-待人工补全]]"]
     L += [f"[[论文模型分类-{primary}类{CATS[primary]}]]",f"[[赛题-国赛{y}第{q}题]]","[[论文写作 Hub|写作-数模论文模板]]",""]
-    return "\n".join(L),{"title":ti,"year":y,"problem":q,"award":award,"paper_id":pid,"primary":primary,"secondary":secondary,"models":names,"source":str(p),"mode":d["mode"],"sha256":d["sha256"]}
+    return "\n".join(L),{"title":ti,"year":y,"problem":q,"award":award,"paper_id":pid,"primary":primary,"secondary":secondary,"models":names,"source":str(p),"mode":d["mode"],"sha256":d["sha256"],"innovations":innovations,"innovation_types":[x["type"] for x in innovations],"innovation_level":innovation_level}
 
 def extract(workers):
     chosen,dup=unique_pdfs(); CACHE.mkdir(parents=True,exist_ok=True); counts=Counter()
@@ -232,11 +282,11 @@ def build():
     expected=VAULT/"04-Research"/"04-竞赛真题研究"/"03-优秀获奖论文拆解"/"批量标准化拆解"
     if OUT.resolve()!=expected.resolve(): raise RuntimeError("Refusing to clean unexpected output directory")
     for old in OUT.rglob("G-*.md"): old.unlink()
-    [ (OUT/f"{c}类-{n}").mkdir(exist_ok=True) for c,n in CATS.items() ]; recs=[]; used=set()
+    [ (OUT/f"{c}类-{n}").mkdir(exist_ok=True) for c,n in CATS.items() ]; recs=[]; used_stems=set()
     for f in sorted(CACHE.glob("*.json")):
         note,r=make_note(json.loads(f.read_text(encoding="utf-8"))); short={"国家一等奖":"国一","国家二等奖":"国二"}.get(r["award"],"奖项待核"); out=OUT/f"{r['primary']}类-{CATS[r['primary']]}"/f"G-{r['year']}-{r['problem']}-{short}-{safe(r['title'])}.md"
-        if out in used:out=out.with_stem(out.stem+"-"+r["paper_id"])
-        used.add(out)
+        if out.stem.lower() in used_stems:out=out.with_stem(out.stem+"-"+r["paper_id"])
+        used_stems.add(out.stem.lower())
         out.write_text(note,encoding="utf-8"); r["note"]=str(out); recs.append(r)
     recs.sort(key=lambda r:(r["primary"],r["year"],r["problem"],r["title"])); counts=Counter(r["primary"] for r in recs)
     idx=["# 优秀论文模型分类索引","","分类依据是主要模型机制，不等同于赛题字母；次类别记录在单篇元数据中。",""]
@@ -247,10 +297,42 @@ def build():
         idx.append("")
     (OUT/"优秀论文模型分类索引.md").write_text("\n".join(idx),encoding="utf-8")
     for c,n in CATS.items():
-        hub=[f"# 论文模型分类-{c}类{n}","",f"- 分类定义：以{n}为论文主要建模机制。","- 分类原则：按主导数学机制归类，赛题字母仅作元数据，不直接决定类别。",f"- 总篇数：{counts[c]}","",f"## {c}类论文","",f"完整表格见 [[04-Research/04-竞赛真题研究/03-优秀获奖论文拆解/批量标准化拆解/优秀论文模型分类索引#{c}类 {n}（{counts[c]}篇）|分类索引]]。",""]
+        hub=[f"# 论文模型分类-{c}类{n}","",f"- 分类定义：以{n}为论文主要建模机制。","- 分类原则：按主导数学机制归类，赛题字母仅作元数据，不直接决定类别。",f"- 总篇数：{counts[c]}",f"- 可创新方向：[[04-Research/04-竞赛真题研究/03-优秀获奖论文拆解/批量标准化拆解/优秀论文结构与模型分析指南#{c}类可创新点|{c}类可创新点]]。",f"- 逐篇统计：[[04-Research/04-竞赛真题研究/03-优秀获奖论文拆解/批量标准化拆解/逐篇论文创新点统计与分类总结#{c}类 {n}|{c}类创新统计]]。","",f"## {c}类论文","",f"完整表格见 [[04-Research/04-竞赛真题研究/03-优秀获奖论文拆解/批量标准化拆解/优秀论文模型分类索引#{c}类 {n}（{counts[c]}篇）|分类索引]]。",""]
         for r in [x for x in recs if x["primary"]==c]:
             rel=Path(r["note"]).relative_to(VAULT).with_suffix("").as_posix(); hub.append(f"- [[{rel}|{r['title']}]]：{'、'.join(r['models'][:5])}")
         (OUT/f"论文模型分类-{c}类{n}.md").write_text("\n".join(hub)+"\n",encoding="utf-8")
+    nodes=OUT/"知识节点"; model_dir=nodes/"模型"; problem_dir=nodes/"赛题"; model_dir.mkdir(parents=True,exist_ok=True); problem_dir.mkdir(parents=True,exist_ok=True)
+    for old in nodes.rglob("*.md"):old.unlink()
+    existing={p.stem for p in VAULT.rglob("*.md") if nodes not in p.parents}; target_for={name:target for name,_,_,target in MODELS}; by_model={}
+    for r in recs:
+        for name in r["models"]:
+            target=target_for.get(name,"模型-待人工补全"); by_model.setdefault(target,[]).append(r)
+    for target,items in by_model.items():
+        if target in existing:continue
+        lines=[f"# {target}","","- 节点类型：模型/算法","- 说明：由优秀论文批量拆解自动建立的反向索引；具体定义、公式、创新性与适用条件需进入单篇笔记和原 PDF 复核。","","## 相关论文",""]
+        for r in items:
+            rel=Path(r["note"]).relative_to(VAULT).with_suffix("").as_posix(); lines.append(f"- [[{rel}|{r['title']}]]")
+        (model_dir/f"{target}.md").write_text("\n".join(lines)+"\n",encoding="utf-8")
+    by_problem={}
+    for r in recs:by_problem.setdefault(f"赛题-国赛{r['year']}第{r['problem']}题",[]).append(r)
+    for target,items in by_problem.items():
+        if target in existing:continue
+        lines=[f"# {target}","","- 节点类型：竞赛赛题","- 说明：按论文元数据自动汇集；题号待核节点必须回到原文件名或赛题资料核实。","","## 相关优秀论文",""]
+        for r in items:
+            rel=Path(r["note"]).relative_to(VAULT).with_suffix("").as_posix(); lines.append(f"- [[{rel}|{r['title']}]]")
+        (problem_dir/f"{target}.md").write_text("\n".join(lines)+"\n",encoding="utf-8")
+    type_counts=Counter(t for r in recs for t in r["innovation_types"]); level_counts=Counter(r["innovation_level"] for r in recs)
+    inov=["# 逐篇论文创新点统计与分类总结","","## 统计口径","","- 创新点指相对本题常规解法可见的模型、数据、求解、检验或表达增量，不等同于经过文献检索证明的学术首创。",f"- 统计论文：{len(recs)} 篇；每篇提取 1–3 个创新候选。","- 原生文本证据等级通常为中，代表页 OCR 为中-低；仅能从结构推断时标为低。","- 单篇完整证据见各论文 `## 7 论文复用&写作亮点`。","","## 创新类型统计","","| 创新类型 | 论文数 | 占比 |","|---|---:|---:|"]
+    inov += [f"| {k} | {v} | {v/len(recs):.1%} |" for k,v in type_counts.most_common()]
+    inov += ["","## 证据等级统计","","| 证据等级 | 论文数 |","|---|---:|"]+[f"| {k} | {v} |" for k,v in sorted(level_counts.items())]+[""]
+    for c,n in CATS.items():
+        subset=[r for r in recs if r["primary"]==c]; tc=Counter(t for r in subset for t in r["innovation_types"])
+        inov += [f"## {c}类 {n}","",f"- 论文数：{len(subset)}。",f"- 高频创新：{'、'.join(f'{k}（{v}篇）' for k,v in tc.most_common(5))}。",f"- 方法指南：[[04-Research/04-竞赛真题研究/03-优秀获奖论文拆解/批量标准化拆解/优秀论文结构与模型分析指南#{c}类可创新点|{c}类可创新点]]。","","| 年份 | 题号 | 论文 | 创新候选 | 证据等级 |","|---|---|---|---|---|"]
+        for r in subset:
+            rel=Path(r["note"]).relative_to(VAULT).with_suffix("").as_posix(); inov.append(f"| {r['year']} | {r['problem']} | [[{rel}|{r['title']}]] | {'、'.join(r['innovation_types'])} | {r['innovation_level']} |")
+        inov.append("")
+    inov += ["## 综合结论","",f"- 出现频率最高的创新类型为：{'、'.join(f'{k}（{v}篇）' for k,v in type_counts.most_common(5))}。","- 竞赛论文最常见的有效创新不是发明全新算法，而是问题结构化、模型适配、数据处理、约束扩展和可信度检验。","- 低证据等级条目只能作为复核线索，必须回到原 PDF 查找明确的模型差异、数据处理或验证证据。","- 写作时建议突出一个主创新和一至两个支撑创新，并用基线对比、消融、误差、稳定性或可行性证据证明增量。",""]
+    (OUT/"逐篇论文创新点统计与分类总结.md").write_text("\n".join(inov),encoding="utf-8")
     dup=json.loads((PROJECT/"Data"/"duplicates.json").read_text(encoding="utf-8")); ocr=sum(r["mode"]=="selected-page-ocr" for r in recs); pending=sum(r["award"]=="奖项待核" for r in recs)
     rep=["# 优秀论文批量处理汇总报告","",f"- 原始 PDF：{len(recs)+len(dup)} 份",f"- 去重后论文：{len(recs)} 篇",f"- 重复文件：{len(dup)} 份",f"- 扫描版代表页 OCR：{ocr} 篇",f"- 奖项待核：{pending} 篇","- 公式与符号：全部需对照原 PDF 人工复核","- 未处理：RAR、ZIP、DOC、DOCX","","## 分类统计","","| 类别 | 篇数 |","|---|---:|"]+[f"| {c}类 {n} | {counts[c]} |" for c,n in CATS.items()]+["","## 输出文件",""]+[f"- {Path(r['note']).name}" for r in recs]+["","## 缺失内容统计","","- PDF 文本层通常不能可靠保留公式版式，统一标记人工补全。","- 扫描版只 OCR 代表页，中间页图表和公式需人工复核。","- 未明确写出国一/国二时标记奖项待核。",""]
     (OUT/"处理汇总报告.md").write_text("\n".join(rep),encoding="utf-8"); (PROJECT/"Data"/"manifest.json").write_text(json.dumps(recs,ensure_ascii=False,indent=2),encoding="utf-8"); print(json.dumps({"notes":len(recs),"counts":dict(counts),"out":str(OUT)},ensure_ascii=False))
