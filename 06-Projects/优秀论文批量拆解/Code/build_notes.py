@@ -105,6 +105,129 @@ INNOVATION_PRIORITY={
     "E":["政策与机制设计","不确定性与情景分析","时空动态刻画","模型融合","多目标与权衡","检验与稳健性"],
     "F":["政策与机制设计","模型改进与推广","不确定性与情景分析","时空动态刻画","检验与稳健性","模型融合"]}
 
+# “怎么创新”不是再列一个算法名，而是把基线、改动、数学落点和验证证据连成闭环。
+# 下列内容是面向复用的 Agent 分析，不冒充原论文已经实施的步骤。
+CATEGORY_BASELINE={
+    "A":"先建立固定参数、单一主导机理的连续模型，并给定完整初值和边界条件",
+    "B":"先建立静态、确定性、单目标的离散优化基线，并逐条审计约束可行性",
+    "C":"先固定数据清洗和训练/验证/测试划分，建立一个简单且可解释的统计或机器学习基线",
+    "D":"先用方向一致的标准化指标、固定权重和一种聚合方法得到基准排序",
+    "E":"先明确系统边界和基准情景，用最少反馈关系得到无政策或现行政策下的演化结果",
+    "F":"先建立完全信息、同质理性主体和固定收益下的基准博弈并求出均衡"}
+CATEGORY_VALIDATION={
+    "A":"同时检查量纲、守恒或物理边界、步长/网格收敛和参数敏感性",
+    "B":"同时检查约束满足、解质量、上下界或最优间隙、计算时间和规模扩展性",
+    "C":"同时固定数据划分、防止数据泄漏，并报告样本外性能、稳定性和错误分群",
+    "D":"同时检查指标冗余、权重依据、排序一致性、名次翻转阈值和外部效度",
+    "E":"同时检查参数来源、历史回测、多情景压力、利益相关者分配影响和政策失效边界",
+    "F":"同时检查收益函数依据、均衡存在性/唯一性/稳定性、参数阈值和替代收益设定"}
+INNOVATION_PLAYBOOK={
+    "模型融合":{
+        "gap":"单一模型只能解释一个局部机制，子问题之间的变量传递或相互反馈被割裂",
+        "action":"先拆出各子模型的输入、输出和时间/空间尺度，再用共享变量、耦合项或顺序传递把它们接成闭环",
+        "math":"在方程、目标或约束中增加耦合项与接口变量，统一量纲、索引和参数来源",
+        "validation":"在相同输入下比较各子模型单独运行与融合模型的误差、解释增益和计算代价",
+        "figure":"模型耦合流程图、基线/融合结果对比图、耦合参数敏感性图",
+        "table":"子模型输入—输出—接口变量表、基线与融合模型指标表",
+        "risk":"只把多个模型首尾罗列、没有接口变量或没有对照实验，不能算模型融合创新"},
+    "模型改进与推广":{
+        "gap":"基线依赖过强假设、固定参数或狭窄边界，无法覆盖题目中的非线性、异质性或新情形",
+        "action":"先定位限制结论的那条假设，再把常数改为可解释函数、增加状态/决策变量，或放宽原约束与适用边界",
+        "math":"明确写出改进前后方程或约束的差分，并给新增参数的估计方式和取值范围",
+        "validation":"用同一数据和评价指标比较原模型与改进模型，并做新增部件消融、参数扰动和边界情形检验",
+        "figure":"改进前后结构图、结果误差对比图、新参数响应曲线",
+        "table":"原假设—改进假设—数学变化表、原模型与改进模型对照表",
+        "risk":"只把常数写成函数或换一个模型名称，却没有现实理由、重新标定和增量验证，属于形式创新"},
+    "分阶段与分类讨论":{
+        "gap":"一步式模型混合了不同状态、群体或事件阶段，导致规则冲突、参数失真或结论不可执行",
+        "action":"按可观测触发条件划分阶段或类别，为每段定义状态、规则和输出，并用转移条件连接相邻阶段",
+        "math":"增加阶段/类别索引、分段函数、状态转移方程或阶段间衔接约束",
+        "validation":"比较整体模型与分阶段模型的拟合或方案质量，并检查转移点附近连续性、可行性和稳定性",
+        "figure":"阶段流程图、状态转移图、分段结果曲线或分群差异图",
+        "table":"阶段定义—触发条件—变量—输出表、整体与分阶段结果表",
+        "risk":"按题目小问机械分段、各阶段没有不同机制或衔接条件，不构成有效创新"},
+    "多目标与权衡":{
+        "gap":"单一目标掩盖成本、效率、公平、风险或环境代价之间的冲突",
+        "action":"分别定义冲突目标，统一方向与尺度，再选择加权、分层、约束化或 Pareto 方法展示权衡",
+        "math":"写出目标向量、归一化方式、权重/优先级或 ε 约束，并保留可行域不变",
+        "validation":"与单目标基线比较各目标损失和综合收益，改变权重或阈值检查方案是否稳定",
+        "figure":"Pareto 前沿、权重—目标响应图、方案雷达图",
+        "table":"目标定义与单位表、代表性 Pareto 方案对比表、权重敏感性表",
+        "risk":"把多个指标简单相加、权重无依据且不展示权衡曲线，只是目标堆叠"},
+    "数据处理与特征构造":{
+        "gap":"原始字段不能直接表达题目机制，缺失、异常、尺度差异或样本偏差会掩盖真实关系",
+        "action":"先审计数据质量，再依据机理构造交互、滞后、周期、空间或聚合特征，并仅在训练数据上拟合预处理器",
+        "math":"给出清洗阈值、特征定义、变换公式、时间窗口和数据划分规则",
+        "validation":"在统一数据划分下进行原始特征基线、逐类特征消融和样本外验证，报告提升与方差",
+        "figure":"缺失/异常分布图、特征相关或重要性图、消融结果图",
+        "table":"字段口径与清洗规则表、特征定义表、消融与模型指标表",
+        "risk":"在全量数据上预处理、只凭相关性造特征或只报告最高精度，会造成泄漏和伪提升"},
+    "专用求解策略":{
+        "gap":"通用求解器或直接枚举在规模、离散结构、非凸性或实时要求下难以得到可行且高质量的解",
+        "action":"利用题目的图结构、可分解性、对称性或局部变动设计编码、邻域、剪枝、分解或混合精确—启发式流程",
+        "math":"明确解的表示、可行性修复、转移/邻域算子、终止条件和复杂度来源",
+        "validation":"在相同算例、停止条件和硬件口径下比较基线算法的目标值、可行率、时间、最优间隙和规模表现",
+        "figure":"算法流程图、收敛曲线、规模—时间曲线、代表性方案图",
+        "table":"算法设置表、同算例性能对比表、约束满足审计表",
+        "risk":"只把遗传算法换成粒子群或增加迭代次数，没有结构适配和公平基线，不能证明算法创新"},
+    "不确定性与情景分析":{
+        "gap":"点估计默认未来与观测完全一致，无法反映需求、参数、测量或政策环境的波动风险",
+        "action":"识别最影响结论的不确定量，用分布、区间或有来源的情景表示，并将风险显式传入模型",
+        "math":"把点参数改写为随机变量/区间参数，采用期望、最坏情形、CVaR、机会约束或情景约束",
+        "validation":"校准分布或情景范围，比较确定性与稳健/随机方案的平均表现、尾部风险和保守代价",
+        "figure":"情景演化带、输出分布图、风险—收益前沿、压力测试曲线",
+        "table":"不确定量来源与范围表、情景参数表、平均/最坏结果对比表",
+        "risk":"随意调几个参数并称为情景分析，或只报告均值而忽略尾部风险，不足以支撑创新"},
+    "检验与稳健性":{
+        "gap":"单次求解只能说明模型能运行，不能说明结论正确、稳定或可推广",
+        "action":"围绕核心结论选择残差、守恒、交叉验证、参数扰动、极端情形或外部数据，建立独立验证链",
+        "math":"定义误差指标、扰动范围、重复抽样方案、置信区间或稳健性判据",
+        "validation":"报告基线结果在多种检验下是否保持，并定位结论翻转点、失败样本和误差来源",
+        "figure":"残差图、敏感性曲线、不确定性带、预测—真实值图",
+        "table":"误差分解表、扰动前后结果表、外部验证或失败情形表",
+        "risk":"只写“模型稳定”或展示一条拟合曲线，没有判据、扰动范围和对照数据，不构成检验创新"},
+    "政策与机制设计":{
+        "gap":"只预测现状不能回答如何干预，多主体利益、反馈和副作用没有进入决策",
+        "action":"先列参与者、可操作政策变量和行为响应，再设计奖励、惩罚、信息或资源配置机制",
+        "math":"把政策写成控制/决策变量，将主体收益、反馈、预算、公平和执行约束纳入模型",
+        "validation":"比较无政策、现行政策和候选政策的效率、公平、风险、副作用与失效边界",
+        "figure":"利益相关者图、因果回路图、政策情景曲线、权衡前沿",
+        "table":"主体—目标—行为表、政策参数表、政策组合与影响对比表",
+        "risk":"由相关性直接推出政策结论、忽略执行约束和受损群体，属于过度推断"},
+    "时空动态刻画":{
+        "gap":"静态总体平均会掩盖时间滞后、空间异质、路径依赖或实时事件带来的变化",
+        "action":"加入时间/空间索引、状态转移、邻接关系或滚动窗口，使模型随观测或事件更新",
+        "math":"建立差分/微分转移、时空权重、动态参数或滚动优化约束，并明确更新频率",
+        "validation":"与静态模型比较不同时段/区域的误差和决策质量，进行滚动回测和漂移压力测试",
+        "figure":"时间轨迹、空间热图、时空演化图、滚动误差图",
+        "table":"时空索引与更新规则表、分区域/分时段指标表、静态与动态对比表",
+        "risk":"只增加时间变量却不更新参数或只画地图没有空间机制，不能称为时空创新"},
+    "结构化建模亮点（待核实）":{
+        "gap":"题目任务较多但缺少清晰的输入—模型—输出链，容易出现分问割裂和结论漏答",
+        "action":"先建立最简单可运行基线，再把子问题按共享变量和依赖关系组织为递进链，随后选择一个真实缺口做实质改进",
+        "math":"列出各子问题的变量、方程/目标、约束、输出和接口；证据不足处回原 PDF 补全",
+        "validation":"逐问做闭环审计，并至少增加一个基线对比、误差、敏感性或可行性检验后再声明创新",
+        "figure":"总流程图、子模型依赖图、结果—问题对应图",
+        "table":"分问输入—模型—输出表、基线与候选改进对比表",
+        "risk":"当前只有结构推断证据，不能把整理清楚直接写成方法创新，必须回原文核实"}}
+
+def add_innovation_routes(items,primary,model_names):
+    model_chain=" → ".join(model_names[:4])
+    for item in items:
+        play=INNOVATION_PLAYBOOK[item["type"]]
+        clue=item["evidence"][:100]
+        item["route"]={
+            "baseline":CATEGORY_BASELINE[primary],
+            "gap":play["gap"],
+            "paper_focus":f"本篇识别到的模型链为“{model_chain}”。围绕原文线索“{clue}”，先定位该线索对应的变量、方程、目标、约束、特征或检验，再撤去这一变化构造论文内生基线",
+            "action":play["action"],
+            "math":play["math"],
+            "validation":play["validation"]+"；"+CATEGORY_VALIDATION[primary],
+            "figure":play["figure"],
+            "table":play["table"],
+            "risk":play["risk"]}
+    return items
+
 def digest(p):
     h=hashlib.sha256()
     with p.open("rb") as f:
@@ -171,7 +294,7 @@ def select(t,pats,n=5):
             if s not in z:z.append(s)
             if len(z)>=n:break
     return z
-def innovation_points(t,primary,mode,probs):
+def innovation_points(t,primary,mode,probs,model_names):
     hits=[]
     for kind,pat,delta in INNOVATION_RULES:
         evidence=select(t,[pat],1)
@@ -187,7 +310,7 @@ def innovation_points(t,primary,mode,probs):
         chosen=[{"type":"结构化建模亮点（待核实）","delta":f"围绕{CATS[primary]}组织分问、模型与结果，但尚不能据此声明方法创新","evidence":clue[:180],"basis":"结构推断"}]
     level="中" if mode=="embedded-text" else "中-低"
     if all(x["basis"]=="结构推断" for x in chosen):level="低"
-    return chosen,level
+    return add_innovation_routes(chosen,primary,model_names),level
 def abstract(t):
     m=re.search(r"摘\s*要\s*(.*?)(?:关\s*键\s*词|关键词|\n\s*1[\.、 ])",t,re.S); return (m.group(1) if m else t[:3500])[:5000]
 def models(t):
@@ -246,7 +369,7 @@ def make_note(d):
     p=Path(d["source"]); pages=d["pages"]; full="\n".join(f'[PDF第{x["page"]}页]\n{x["text"]}' for x in pages); ti=title_of(p,pages); y,q,award,pid=metadata(p,full)
     ms=models(full); primary,secondary=classify(ti,full,ms); names=[x["name"] for x in ms[:8]] or ["【模型名称解析缺失，人工补全】"]; probs=problems(full)
     solve=select(full,["采用|利用|通过|求解|迭代|优化|拟合|检验"],6); res=select(abstract(full)+full[-5000:],["结果表明|结果显示|得出|求得|最优|最少|结论"],6); ana=select(full,["灵敏度|敏感性|稳健|鲁棒|误差|残差|检验|验证"],5); assumptions=select(full,["模型假设|假设|忽略|不考虑"],4)
-    figs=select(full,[r"图\s*\d+|如图"],4); tabs=select(full,[r"表\s*\d+|如下表"],4); innovations,innovation_level=innovation_points(full,primary,d["mode"],probs); miss="【解析缺失，人工补全】"; cat=f"{primary}类 {CATS[primary]}"
+    figs=select(full,[r"图\s*\d+|如图"],4); tabs=select(full,[r"表\s*\d+|如下表"],4); innovations,innovation_level=innovation_points(full,primary,d["mode"],probs,names); miss="【解析缺失，人工补全】"; cat=f"{primary}类 {CATS[primary]}"
     L=["---","type: award-paper-review",f'paper_id: "{pid}"',f'year: "{y}"',f'problem: "{q}"',f'award: "{award}"',f'primary_category: "{cat}"',f'extraction_mode: "{d["mode"]}"',f'source_sha256: "{d["sha256"]}"',"status: machine-reviewed-needs-human-formula-check","tags: [competition/国赛, workflow/优秀论文拆解, area/数学建模]","---",f"# 论文标题：{ti}","## 基础元数据","- 竞赛：全国大学生数学建模竞赛",f"- 年份：{y}",f"- 题号：{q}",f"- 奖项：{award}",f"- 选题归类：{cat}"+(f"；次类别：{'、'.join(c+'类 '+CATS[c] for c in secondary)}" if secondary else ""),f"- 核心关键词：{'、'.join(names[:6])}",f"- 原始来源：{p}",f"- 解析说明：{d['mode']}；总页数 {d['pages_total']}；提取页 {','.join(str(x['page']) for x in pages)}","","## 1 赛题问题提炼"]
     L += [f"- 子问题{i}：{x}" for i,(_,x) in enumerate(probs,1)] or [f"- {miss}未稳定识别子问题边界。"]
     L += ["","## 2 模型整体框架",f"- 模型链：{' → '.join(names)}","- 逻辑递进：题意与数据/机理抽象 → 分问建模 → 求解 → 结果检验 → 回答题目。","- 有效模型假设："]
@@ -262,7 +385,11 @@ def make_note(d):
     L += ["  - 检查假设、变量、目标、约束、输出和结论是否逐项闭环。","","## 7 论文复用&写作亮点（知识库专用）",f"- 适用场景：以{CATS[primary]}为主的问题；数据结构、变量类型或机制不同不得直接套用。","- 结构亮点：摘要宜按“子问题—模型—求解—关键结果”，正文宜按“问题分析—假设与符号—建模—求解—检验—评价”闭环。","- 创新点提炼（竞赛语境，不构成学术首创声明）：",f"  - 总体证据等级：{innovation_level}。"]
     for item in innovations:
         L += [f"  - {item['type']}：{item['delta']}。",f"    - 证据依据：{item['basis']}。",f"    - 原文线索：{item['evidence']}"]
-    L += ["  - 使用限制：创新结论只相对本题常规解法成立；若要声称学术新颖性，必须另做文献检索与人工复核。","- 原文图表线索："]
+    L += ["  - 使用限制：创新结论只相对本题常规解法成立；若要声称学术新颖性，必须另做文献检索与人工复核。","- 创新如何实现（Agent 复用分析，非论文原文声明）："]
+    for i,item in enumerate(innovations,1):
+        route=item["route"]
+        L += [f"  - 路径{i}：{item['type']}",f"    - 第一步·建立基线：{route['baseline']}。",f"    - 第二步·定位缺口：{route['gap']}。",f"    - 本篇切入点：{route['paper_focus']}。",f"    - 第三步·实施改进：{route['action']}。",f"    - 第四步·数学落点：{route['math']}。",f"    - 第五步·验证增量：{route['validation']}。",f"    - 第六步·图表证据：图用{route['figure']}；表用{route['table']}。",f"    - 失败判据：{route['risk']}。",f"    - 写作句式：相较于上述基线，本文针对“{route['gap']}”实施“{route['action']}”，并通过“{route['validation']}”证明该改动的增量价值。"]
+    L += ["- 原文图表线索："]
     L += ([f"  - {x}" for x in figs] if figs else ["  - 提取页未稳定识别图题，需核对原文。"])+["- 原文表格线索："]+([f"  - {x}" for x in tabs] if tabs else ["  - 提取页未稳定识别表题，需核对原文。"])+["- 建议的图表落点："]+[f"  - {x}" for x in GUIDE[primary]]+["- 客观缺口：所有“解析缺失”项必须回到原 PDF 补全，严禁反推或编造。","","## 8 双向链接标签"]
     L += [f"[[{m['target']}|模型-{m['name']}]]" for m in ms[:8]] or ["[[模型-待人工补全]]"]
     L += [f"[[论文模型分类-{primary}类{CATS[primary]}]]",f"[[赛题-国赛{y}第{q}题]]","[[论文写作 Hub|写作-数模论文模板]]",""]
@@ -297,7 +424,7 @@ def build():
         idx.append("")
     (OUT/"优秀论文模型分类索引.md").write_text("\n".join(idx),encoding="utf-8")
     for c,n in CATS.items():
-        hub=[f"# 论文模型分类-{c}类{n}","",f"- 分类定义：以{n}为论文主要建模机制。","- 分类原则：按主导数学机制归类，赛题字母仅作元数据，不直接决定类别。",f"- 总篇数：{counts[c]}",f"- 可创新方向：[[04-Research/04-竞赛真题研究/03-优秀获奖论文拆解/批量标准化拆解/优秀论文结构与模型分析指南#{c}类可创新点|{c}类可创新点]]。",f"- 逐篇统计：[[04-Research/04-竞赛真题研究/03-优秀获奖论文拆解/批量标准化拆解/逐篇论文创新点统计与分类总结#{c}类 {n}|{c}类创新统计]]。","",f"## {c}类论文","",f"完整表格见 [[04-Research/04-竞赛真题研究/03-优秀获奖论文拆解/批量标准化拆解/优秀论文模型分类索引#{c}类 {n}（{counts[c]}篇）|分类索引]]。",""]
+        hub=[f"# 论文模型分类-{c}类{n}","",f"- 分类定义：以{n}为论文主要建模机制。","- 分类原则：按主导数学机制归类，赛题字母仅作元数据，不直接决定类别。",f"- 总篇数：{counts[c]}",f"- 可创新方向：[[04-Research/04-竞赛真题研究/03-优秀获奖论文拆解/批量标准化拆解/优秀论文结构与模型分析指南#{c}类可创新点|{c}类可创新点]]。",f"- 创新生成法：[[04-Research/04-竞赛真题研究/03-优秀获奖论文拆解/批量标准化拆解/优秀论文结构与模型分析指南#12 如何从零形成可验证的创新|如何从零形成可验证的创新]]。",f"- 逐篇统计：[[04-Research/04-竞赛真题研究/03-优秀获奖论文拆解/批量标准化拆解/逐篇论文创新点统计与分类总结#{c}类 {n}|{c}类创新统计]]。","",f"## {c}类论文","",f"完整表格见 [[04-Research/04-竞赛真题研究/03-优秀获奖论文拆解/批量标准化拆解/优秀论文模型分类索引#{c}类 {n}（{counts[c]}篇）|分类索引]]。",""]
         for r in [x for x in recs if x["primary"]==c]:
             rel=Path(r["note"]).relative_to(VAULT).with_suffix("").as_posix(); hub.append(f"- [[{rel}|{r['title']}]]：{'、'.join(r['models'][:5])}")
         (OUT/f"论文模型分类-{c}类{n}.md").write_text("\n".join(hub)+"\n",encoding="utf-8")
@@ -327,9 +454,13 @@ def build():
     inov += ["","## 证据等级统计","","| 证据等级 | 论文数 |","|---|---:|"]+[f"| {k} | {v} |" for k,v in sorted(level_counts.items())]+[""]
     for c,n in CATS.items():
         subset=[r for r in recs if r["primary"]==c]; tc=Counter(t for r in subset for t in r["innovation_types"])
-        inov += [f"## {c}类 {n}","",f"- 论文数：{len(subset)}。",f"- 高频创新：{'、'.join(f'{k}（{v}篇）' for k,v in tc.most_common(5))}。",f"- 方法指南：[[04-Research/04-竞赛真题研究/03-优秀获奖论文拆解/批量标准化拆解/优秀论文结构与模型分析指南#{c}类可创新点|{c}类可创新点]]。","","| 年份 | 题号 | 论文 | 创新候选 | 证据等级 |","|---|---|---|---|---|"]
+        inov += [f"## {c}类 {n}","",f"- 论文数：{len(subset)}。",f"- 高频创新：{'、'.join(f'{k}（{v}篇）' for k,v in tc.most_common(5))}。",f"- 方法指南：[[04-Research/04-竞赛真题研究/03-优秀获奖论文拆解/批量标准化拆解/优秀论文结构与模型分析指南#{c}类可创新点|{c}类可创新点]]。",f"- 使用方法：先读表中实施动作，再进入单篇笔记查看完整的“基线—缺口—数学落点—验证—图表—失败判据”。","","| 年份 | 题号 | 论文 | 创新候选 | 怎么做 | 怎么证明 | 图表证据 | 证据等级 |","|---|---|---|---|---|---|---|---|"]
         for r in subset:
-            rel=Path(r["note"]).relative_to(VAULT).with_suffix("").as_posix(); inov.append(f"| {r['year']} | {r['problem']} | [[{rel}|{r['title']}]] | {'、'.join(r['innovation_types'])} | {r['innovation_level']} |")
+            rel=Path(r["note"]).relative_to(VAULT).with_suffix("").as_posix()
+            actions="；".join(f"{x['type']}：{x['route']['paper_focus']}；实施{x['route']['action']}" for x in r["innovations"]).replace("|","／")
+            checks="；".join(f"{x['type']}：{x['route']['validation']}" for x in r["innovations"])
+            visuals="；".join(f"{x['type']}：图用{x['route']['figure']}，表用{x['route']['table']}" for x in r["innovations"])
+            inov.append(f"| {r['year']} | {r['problem']} | [[{rel}|{r['title']}]] | {'、'.join(r['innovation_types'])} | {actions} | {checks} | {visuals} | {r['innovation_level']} |")
         inov.append("")
     inov += ["## 综合结论","",f"- 出现频率最高的创新类型为：{'、'.join(f'{k}（{v}篇）' for k,v in type_counts.most_common(5))}。","- 竞赛论文最常见的有效创新不是发明全新算法，而是问题结构化、模型适配、数据处理、约束扩展和可信度检验。","- 低证据等级条目只能作为复核线索，必须回到原 PDF 查找明确的模型差异、数据处理或验证证据。","- 写作时建议突出一个主创新和一至两个支撑创新，并用基线对比、消融、误差、稳定性或可行性证据证明增量。",""]
     (OUT/"逐篇论文创新点统计与分类总结.md").write_text("\n".join(inov),encoding="utf-8")
