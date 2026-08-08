@@ -1,0 +1,215 @@
+{
+  "note": "C:\\Users\\17888\\Documents\\0.数学建模知识库\\0.数学建模\\04-Research\\04-竞赛真题研究\\03-优秀获奖论文拆解\\批量标准化拆解\\A类-连续型模型\\G-2022-B-奖项待核-基于计算几何与带阈值启发式搜索的无人机无源定位模型.md",
+  "title": "基于计算几何与带阈值启发式搜索的无人机无源定位模型",
+  "source": "D:\\数学建模优秀论文分析\\高教社杯全国大学生数学建模竞赛优秀论文\\2022年高教社杯全国大学生数学建模竞赛优秀论文\\B035.pdf",
+  "sha256": "826bd8a874513236a7ac18c4ecb5dc71e2ec0b4a767243b9738462fc6e4b9d4e",
+  "pages_total": 41,
+  "extraction_method": "full-page-ocr",
+  "pages": [
+    {
+      "page": 1,
+      "text": "基于计算几何与带國值启发式搜索的无人机无源定位模型\n摘要\n针对无人机遂行编队飞行中的纯方位无源定位问题，本文从相关理论入手，分析了问\n题的几何特征，给出了在一定误差下具有实践价值的纯方位无源定位方式，并根据编队的\n形状，给出了两种调整编队的模型，其中一种有较高的效率，另一种对各种编队形状有良\n好的普适性。\n对于第一题第一小问，我们给出了两种解法。一种是在极坐标系下分类讨论位置关系，\n通过正弦定理列出三角方程，用代数方法进行求解：另一种深入发掘几何性质，将问题转\n化为两圆轨迹求交点，利用计算几何的知识结合计算机精确求解。其中，在求解两圆轨迹\n时，通过旋转变换和向量叉积确定圆心坐标。在轨迹求交时，利用几何对称性避开了联立\n方程，降低了求解难度。\n对于第一题第二小问，我们根据具体量化的误差范围展开分类讨论。讨论得出，在极\n径误差不超过15m，极角误差不超过1°的情况下，除FY00和FY01外，只需1架无人机\n发射信号即可实现无人机有效定位。此外，我们还进行了严格的误差分析，严谨论证了信\n号接收与解码的可行性。\n对于第一题第三小问，考虑到深度优先搜索的效率问题与贪心算法的短视性，我们在\nIDA*算法的启发下设计了一种带阈值的启发式搜索算法，并使用L2loss函数作为启发式\n搜索的估价函数。这种算法在具有高效率的同时，更不容易陷人局部最优决策。对于题目\n所给数据，求解出一个通过5轮调整、共16架次信号发射可以将所有无人机位置精度调整\n至6位有效数字的方案。\n对于第二题，由于多架无人机出现三点共线或四点共圆的情况，造成发射信号无人机\n的编号难以判断。于是我们改变策略，采取了预先设定信号发射顺序的方案。无人机只需\n通过当前是第几次信号传输就可以推出发射信号的无人机编号，消除了位置误差导致的定\n位因难。这种调整方案具有一定的随机性，但在所有飞机与标准位置误差不超过5m的情\n况下，该算法可以在60轮信号发射后将所有无人机位置精度调整至6位有效数字。同时，\n由于不依赖于编队的几何特征，该算法对绝大多数形状的编队调整具有普适性。\n关键词：无源定位启发式搜索L2loss计算几何",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 2,
+      "text": "基于计算几何与带值启发式搜索的无人机无源定位模型\n一问题的背景与重述\n1.1问题的背景\n随着无人机的普及，无人机的定位技术就显得尤为重要。对无人机进行定位有两大手\n段。其一是有源定位，有源定位主要基于姿态测量或激光测距定位模型[1]I2]；其二则是通\n过无源定位，被动接收环境的电磁信号来确定位置。[3]\n“考虑到传统有源雷达不适用于城市复杂电磁环境，加上无人机雷达散射截面积较小难\n以捕捉以及成本问题，无源定位技术成为对无人机定位的首选。”[4在该定位的过程中，被\n定位的无人机不向外发射电磁信号，而是被动接收外界的无线电信号，进行数据分析得到\n自己的坐标。当一架无人机在一个无人机的队列中，可以通过其他无人机发送的电磁信号\n计算出自己的相对位置，从而找出自己的调整策略，使无人机队列趋向于整齐化。\n1.2问题重述\n在该问题中，某架无人机可以接收到其余多架无人机的电磁信号，可以得到两架无人\n机发射的信号之间的夹角，应用这一个条件求解以下问题。\n问题一：十架无人机组成的队列呈现圆形，其中一架（FY00）在中央，剩余九架（FY01-\nFY09）均匀分布在圆周上。无人机处于同一个高度上。该问题分成三个小问，下面一一闸\n述题意。\n1.处于圆心处的无人机（FY0O）和另外两架编号已知且位置准确（FYON和FYON2）的\n无人机对某架位置待定的无人机（FYOX）发射电磁信号，位置待定的无人机接收信号\n并分析得到自己的位置坐标。\n2.已知处于圆心处的无人机（FY00）和第一架位置准确的无人机（FY01）会对某架位置\n待定的无人机（FYOX）发射电磁信号，若需要确定该无人机（FYOX）的坐标，需要在\n剩余的位置准确的无人机中选择若干架无人机，确定额外发射信号的无人机的数量。\n3.编队要求九架无人机均匀排列在以无人机FY00为圆心，直径为100m的圆上。实际上\n对于准确位置，排列在圆上的无人机有位置偏移，某架无人机（FYOX）需要接收来自\n圆心处无人机（FY00）和其余至多三架无人机的电磁信号，分析并调整无人机（FY0X）\n的位置。不断重复操作直到无人机到达准确位置，利用表格中的已知数据得到具体的\n操作方案。\n问题二：当无人机的编排队列为锥形编队队形时，队列中的相邻无人机距离相等，每\n架无人机对于准确位置有一定的偏移。通过无人机的无源定位得到无人机的调整方案。",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 3,
+      "text": "基于计算几何与带阔值启发式搜索的无人机无源定位模型\n二问题分析\n2.1问题一分析\n2.1.1三架无人机无源定位\n第一问要求给出在发射信号的无人机位置准确且编号已知条件下的接收信号无人机的\n定位模型。这里我们认为编号已知指接收信号的无人机可以确定方向信息中某一角对应的\n两个无人机编号。假设出接收信号无人机的极坐标，由于无人机只能接收到方向信息，即\n三个角的大小，可以通过角的关系和正弦定理解出两个解，排除掉其中为FY00位置（圆\n心）的解，可以得到接收信号无人机的坐标。另外由于弦对应的圆心角是圆周角的二倍，利\n用计算几何得到两个由两架发射信号的无人机对应的圆的方程，进而求解两圆交点得到两\n个解，同样排除掉其中为FY00位置（圆心）的解，容易得到接收信号无人机坐标的数值\n解。\n2.1.2无源定位的无人机最小需求\n第二问要求给出实现有效定位的最小发射信号无人机架数，在本问题中，规定已知无\n人机FY00与无人机FY01发射信号对应的角度，未知其他发射信号的无人机编号以及对\n应的方向信息。事实上，在一定的偏差范围内，接收信号的无人机根据对应了无人机FY00\n与无人机FY01发射信号的角度，以及自已的偏差范围，可以根据此时接收到的方向信息\n在这段圆弧上由FY00与其他任意一架无人机发射的电磁波信号形成的夹角误差区间和除\nFY00以外的两架无人机形成的夹角误差区间之间交集是否为空，以此确定接收信号的无\n定编号后问题就与第一问完全相同，于是可以进行精确定位。\n2.1.3圆周上无人机调整方案\n第三问要求给出在FY00和FY01位置准确，其他无人机位置略有偏差的条件下给出\n无人机的调整方案。我们假定，每一次无人机进行定位后，都可以根据其假定无偏的发射\n信号无人机坐标对自身坐标进行定位，可以得到一个由计算所得位置指向无偏位置的向量，\n并在当前位置移动该向量。故而本问题的关键依然是无人机的定位问题。通过前两问的分\n析可以知道，至少需要三架无人机（非特殊情况）才能实现定位。题目要求至多四架无人\n机发射信号。因此每一次发射信号的无人机数量为3或4。根据表中数据，只有FY00和\nFY01的位置无偏，不难发现利用位置无偏的无人机发射的电磁波信号进行定位更为准确，\n因此可以规定每一轮调整发射信号的无人机都包含FY01。题目指出无人机应尽量少地向\n外发射电磁波信号。因此优化目标即为：在保证一定的精度前提下，减少发射电磁波的总",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 4,
+      "text": "基于计算几何与带阔值启发式搜索的无人机无源定位模型\n次数。一个朴素的想法是做深度优先搜索（DFS），但由于本题DFS层数无限，无法在有限\n时间内完成。于是有了贪心策略的想法，但是贪心策略过于短视，无法保证全局最优。因\n此我们采取了带值的启发式搜索算法，在每次决策之前对以后若干层搜索，找出局面最\n优的叶子结点。同时，在确定估价函数时采用了L21oss函数提高精确度。这种方法极大地\n改进了短视的缺点。\n2.2问题二分析\n问题二改变了问题一的圆形编队，要求给出锥形编队下的无人机调整方案。本质上是\n对问题一模型的重新应用。区别在于问题一中在大多数情况下可以通过角度判断发射信号\n无人机的编号，但在问题二中是很难实现的。于是我们预先设定好发射信号的无人机的顺\n序，这样接收信号无人机只需通过当前是第几次信号传输就可以推出发射信号的无人机编\n号，进而用与问题一相同的方法来实现精确定位以及调整。\n三模型假设\n为了建立更精确的数学模型，本文根据实际情况建立了一些合理的假设以及条件约束。\n具体的假设如下所示。\n假设一：待测位置的无人机只是相对于预期位置有微小的偏移量。即在极坐标表示下，\n对于极角来说，实际角度α和预期位置对应角度αexp的差值la-αexpl≤1°；对于极径来\n15%.\nPexp\n假设二：每架无人机知道自己的编号，可以通过自己的编号进行分析计算。\n假设三：假设地面完全掌握每一架无人机的任意时刻的位置信息，并可以向无人机发\n送指令来指定发射电磁波信号的无人机编号。\n假设四：无人机对自身位置进行定位时，总是假定发射信号的无人机位置是无偏的。\n假设五：无人机总能按照自己计算出来的行进矢量进行运动，不会有机械层面的误差。\n四符号申明\n本文中涉及到的符号如下表所示。",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 5,
+      "text": "基于计算几何与带阔值启发式搜索的无人机无源定位模型\n表1：本文主要涉及的符号说明\n符号\n符号含义及说明\nFYOX\n位于圆周上第X架无人机的编号\nIsE\n起点为S终点为E的线段长度\nrx\n位于圆周上第X架无人机对应的极径\n0x\n位于圆周上第X架无人机对应的极角\nd\n位置待测的无人机对应的极径\n位置待测的无人机对应的极角\naxY\n位置待测的无人机接收到来自于无人机X和Y发射的信号的夹角（其中X，Y∈{0，1.99）\nRax\n以rx对应线段为弦，以αxo对应角为圆周角组成的圆的半径\n(xox.yox)\n以rx对应线段为弦，以αxo对应角为圆周角组成的圆的圆心坐标\n五模型的建立与求解\n5.1问题一三架无人机无源定位\n5.1.1定位模型的建立\n在该问题中，我们不妨假设发射的无人机编号为FYOR，圆周上发射信号的两架无人\n机编号分别是FYOS和FYOS2。由于发射端位置准确，可以得到FYOS和FYOS到中心\n的无人机FY00的距离相等，不妨设为r。\nlos=los=r\n(1)\n图1中取圆周上发射信号的无人机为FY01和FY04，接收信号的无人机为FY07。\nFY63\nFY04\nFY02\nFYoS\n10L\nFYO\n109\nFYOS\n图1三架无人机无源定位示意图",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 6,
+      "text": "基于计算几何与带阔值启发式搜索的无人机无源定位模型\n对于该坐标的求解，我们采用了两种策略，分别从极坐标系和直角坐标系下考虑。下\n文对这两种方法进行一一介绍。\nMethod1.基于正弦定理的极坐标求解\n对于该间题的分析，我们首先应用了正弦定理。具体形状示意如图2所示。\n(r.0dro\no(d0)\n(r.0)0\nr02 (r,0\n02(r,0)\nField;\nField:\nField,\nField,\n209\nFT99\nOL\n图2:正弦定理求解坐标\n图3:正弦定理求解坐标的局限性\n在极坐标下，FYOS对应的极坐标可以写成（los，9s）=（r，0s），同理FYOS可以写成\n（r.θs），同时假设待测无人机FYOR对应的极坐标为（d.θ）。分别在△OSR和△0SR中列\n正弦定理的表达式。\nd\n(2)\nsin xos\nsin（aros+θ-θs）\nd\n(3)\nsin cos:\nsin（ros+0s-0)\n将上述两式相比并且约分，可以计算得到待测无人机FYOR对应的极角。\nsin αros, sin（aros.+θs）-sinαros, sin（aros-θs）\ntanθ=\n(4)\nsin oscos（aos-0s）+sin aros,cos（aos+θs）\n回带到原表达式中我们可以计算出FYOR对应的极坐标表达式（d0）是如下所示的解\n析表达式。\nd=\nsin（αos+θ-θs)\n(5)\nsinaros\nsin aos,sin（aes,+0s)-sin αos,sin（αos,-0s)\n0=arctan（\n(6)\nsin αoscos（xos-0s）+sin αoscos（aos+0s)",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 7,
+      "text": "基于计算几何与带阔值启发式搜索的无人机无源定位模型\n对该方法进行分析时，我们发现0S和0S对应的直线会把整个圆分成四个部分，正\n弦定理在这四个部分中的表达方式不相同，所以需要进行分类讨论。如图3所示时，两架发\n射信号的无人机可以把整个平面分成四个部分，分别为Field，Field，Field和Fielda，\n我们前面的求解只适用于Field。当我们考虑在Field中的无人机时，正弦表达式可以写\n成如下形式。\nd\n(7)\nsin oros,\nsin（cos,+θ-θs.)\n(8)\nsin aos:\nsin(αos:+0-0s)\n通过计算得到的极角的正切值。可以发现两者表达不同，不可以统一成一类。\nsin αros sin（aos-θs）-sin aros,sin（aos,-0s,)\ntanθ=\n(9)\nsinaroscos（aos-θs）-sinαros,cos（aos-0s.)\n这种分类讨论求解方程的做法过于麻烦，我们实际使用的是下面一种更为巧妙的方法。\nMethod2.基于儿何性质的坐标求解\n由于第一个方法在计算上涉及多个分类讨论的过程，我们选择了图中的几何性质，即\n等角对等边这个模型来求解待测无人机的坐标。\n考虑由FYOO，FYOR和FYOS组成的三角形中，已知I的条件是FY00和FYOS连接的\n线段为los的长度保持不变，且角度aso已知，由几何知识可得无人机FYOR会位于圆心\n为Oas，半径为RoR的一段优弧上，即优弧SRO。同理可得无人机FYOR会位于优弧SRO\n上，我们即可通过计算两段优弧的交点，得到无人机FYOR的准确位置。注意到这两个圆\n弧最多只有两个交点，且其中一个交点必然是原点，所以我们可以通过原点和两个圆心坐\n标快速求解剩下一个交点的坐标，即无人机FYOR的位置。\nFY03\nF104\nFFOS\nRos\nFY06\n图4等角对等边示意图",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 8,
+      "text": "基于计算几何与带阔值启发式搜索的无人机无源定位模型\n5.1.2模型的计算几何方法\n在对两圆求交点的计算过程中，我们采用了一些巧解方法，简化了计算的复杂度，具\n体步骤如下所示。\nStep1.圆心坐标的确定\n在该模型中，我们需要寻找两个圆心Oas和Oos，这里我们以Os为例。\n圆周角SR0大小恒定为aes，则对应的圆周角大小恒为SOs0=2aas，记M为\n，同时\n可以求出h=|OesM|=\nr\n一。同时这个圆心在线段0S的中垂线上，满足这样的点一\n2tancos:\n共有两个，分别记作Oes和Os\nFY03\nFY04\nFY02\nFYOS\n10\nFYOS\n图5:圆心坐标的求解\n我们在直角坐标系下写出向量oS的表达式，即os=rcosαesi+rsinαosj.则其中垂\n线对应的向量即在0S左乘一个对应转动角度为90°的旋转矩阵。由于旋转方向未知，会\n计算出两个不同的圆心。下面的公式中分别给出了顺时针和逆时针的旋转矩阵。加上上文\n中得出的圆的半径的计算，我们可以得到圆心的坐标。\ncos90°-sin90°\nPin=\n(10）\nsin90°cos90°\nsin90°\ncos90°\nOS\nOS\nOos.M\n=P\nx1OosM1=P\nie{in,out)\n2tanαes\n(11)",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 9,
+      "text": "基于计算几何与带阔值启发式搜索的无人机无源定位模型\n最后我们需要在Oes和Os中确定准确的圆心。注意到如果待测飞机在准确位置处，\nαos最大为80°，由假设一可知，在实际测量中αos=80°±10°，此时R和Oes必然在线\n段OS的同侧。故我们用叉积的方法排除另一个点。\n我们假设Oes和R位于线段OS的同侧，Os和R位于线段OS的异侧。我们已知\n以下几个向量，即0S，0Os，0Os，对于OR。由于我们不知道R点坐标，无法求出准\n确值。但由于待测无人机位置和其所在的精确位置只有较小的偏差，所以我们采用R代替\nR，可以得到OR。\n我们分别计算三个叉积OS×0Os，OSx00s和0Sx0R。Os和R位于线段OS的\n同侧，所以OS×0Os和OSxOR同号。反之，Os和R位于线段OS的异侧，OSx0Os\n和OSxOR异号。通过判断叉积结果我们即可找到正确的圆心坐标，即Oos（xos，yos）。同\n理可以得到另一个圆心坐标为Oos（xes，yos）。\n下面展示这个步骤对应的伪代码。\nAlgorithm1：圆心坐标的确定\nResult:圆心坐标\n1v-Pin2tancos:\n2Oos←\n4if gn（OSx0Oos)=sgn(OS×0R）then\n5returnOos\n6else\n7return Os\n8end\nStep2.确定待测无人机坐标\n对于这两个圆弧相交的计算，我们已知两个圆的圆心坐标及其对应的半径，可以通过\n写出圆的方程，联立求解。但这里我们应用一个相对更简单的求解方法，即我们现在已知\n这两个圆都会经过原点FY00，则另一个交点R和原点必然关于两个圆心的连线对称。我\n们利用对称性求解R点坐标。\n首先我们需要找出FY00在直线OosOes的投影坐标H（xn.yn）。H在直线OesOes\n上，所以可以写成0H=20S+（1-x)0S。同时满足0B1OsOs。故我们有以下表达式。",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 10,
+      "text": "基于计算几何与带阔值启发式搜索的无人机无源定位模型\nOI\nOH.OosOos=0\n(12)\n（axos+（1-）xos）（xos-xos）+（xyos+(1-x)yos）（yos-yos）=0\n(13)\nxos(xos-xos:）+yos(yos-yos)\n==\n(14)\n（xos-xos）²+（yos-yos）²\n此时对称点坐标R（xR，yR）=（2xH，2yn）。\n（yos-yos）（xosyos-xasyos)\nXR=2\n(15)\n（xos-xos）²+（yos-yos）²\n（xos:-xos）（xosyos-xosyos1)\nyR=2\n(9D)\n（xos-xos）²+（yos:-yos）²\n(17)\n5.2问题一—无源定位的无人机最小需求\n5.2.1模型的简要介绍\n相比于上一小问，本题的难点在于发射信号的无人机编号未知，需要接收信号的无人\n机自行判断。事实上，如果能确定发射信号的无人机的编号，就可以转入上一问的模型进\n行求解。\n下面根据误差大小分类，讨论如何确定信号的来源，进而求解无人机的位置。\n5.2.2接收无人机位置误差极小\n本方法适用于极角误差在0.5°以内，极径误差在1m以内的情形。这种情况下，除了\n0号和1号无人机外还要使用1架无人机。\n我们确定信号来源的方法基于一个性质：在没有误差的情况下，0号无人机、待测无\n人机与另一架位置准确的无人机所成夹角（以待测无人机为顶点）只会取在10，30，50°，\n70°这些形如（20k+10）°的角内；面两个圆周上的位置准确的无人机与待测无人机所成夹\n角（以待测无人机为顶点）只会取在20°，40°，60°，80°这些形如（20k）°的角内。因此，我\n们可以很容易地把角分成两类。",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 11,
+      "text": "基于计算几何与带阔值启发式搜索的无人机无源定位模型\nFY03\nFYO4\n10\n500\nF302\n30\n1400\n1200\n100\nFYOS\nFY0S\n图6:标准位置角度（1）\n图7:标准位置角度（2）\n对于0号无人机、待测无人机与另一架位置准确的无人机所成夹角，我们可以通过角\n度推算出另一架无人机与待测无人机相差的圆心角。例如，若待测无人机是2号机，0号\n无人机、待测无人机与另一架位置准确的无人机所成夹角约为50°，可以推算相差的圆心\n角为80°，即另一架无人机为4号或9号。\n因此，可以对于另一架飞机可能的两个位置，分别计算出如果飞机在这里，待测无人\n机收到信号的大致范围。再与实际收到的信号比对、就可以确定另一架飞机的位置。下面\n的例子可以更好的帮助理解这个算法\nFYO4\n实际位置\n标准位量\nFY02\n50.6°\nFY05\n00L1\nFY06\nYO\n图8定位示例\n如图8，若待测无人机是2号机，收到的三个角度是50.6°、70.5°、121.2°，其中70.5°",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 12,
+      "text": "基于计算几何与带阔值启发式搜索的无人机无源定位模型\n12\n是0号机，待测机和1号机所成角。\n可以看出，50.6°是0号机，待测机和未知编号的无人机所成角，由此另一架无人机的\n编号为4号或9号。\n·若另一架无人机编号为9号，他收到的三个角度大致范围应该是2021=70°，2024=\n50°，2129=20°，与实际收到的信号误差较大，排除这种情况。\n·若另一架无人机编号为4号，他收到的三个角度大致范围应该是z021=70°，2029=\n50°，z124=120°，与实际收到的信号误差较小，相符较好。\n可以发现，只要待测无人机位置误差带来的张角改变不超过5°，就能通过上述方式判\n断信号来源。极角误差在0.5°以内，极径误差在1m以内的情形下这个条件是始终成立的。\n5.2.3接收无人机位置略有偏差\n本方法适用于极角误差在0.5°以内，极径误差在15m以内的情形。这种情况下，除了\n0号和1号无人机外还要使用1架无人机。\n此时，无人机位置误差带来的张角改变会超过5°，如下图，若待测无人机是FY02，极\n角误差0.5°，极径误差15m，那么FY00，FY02，FY01的夹角为59.3°。如果沿用之前的做\n法，会将这个角误判为圆周上两架无人机与待测无人机所成角。\n59.3°\nSOLA\nFTM\n图9误差过大示意图\n图10误差示意\n为了解决这个问题，我们可以利用FY00，FY01和待测机的成角先粗略给出待测机的\n位置范围，减小角度误差。\n仍旧以FY02为待测机，FY00，FY01，FY09发射信号为例。不妨设此时FY02的真实\n位置为（115m，40）。",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 13,
+      "text": "基于计算几何与带阔值启发式搜索的无人机无源定位模型\n13\n如图11（为了使图能够看清，我们在作图时将R0R）适当放大了，FY02收到信息\n显示FY00，FY02，FY01所成角为59.1°，这确定了FY02真实位置在一个圆O上；又由于\n极角误差在1°以内，所以FY02又位于以坐标原点为圆心，圆心角为2°的扇形内。因此，\n我们可以将FY02的可能位置缩小到两者的交\n一段小圆弧。记小圆弧的起点和终点为\nR和R2。\nFY03\nFY04\nT,\nT,\nYO1\nFY06\nFYO\n图11：角度误差证明示意图\n当FY02在圆弧RR上运动时，我们通过测量X20的角度变化（其中X指第三架参\n与定位的无人机的编号），发现（X20）max-（X20）min≤2°。这里我们给出详细的数学证\n明过程。\n如图11所示，当我们连接5R和5R和5R时与圆O相交于T和T。考虑5R0和\n5R0的角度大小差别。下面用圆中的几何知识进行计算\n15R0-5R0=1T0-T01=TT=TRT\n(18)\n从△5RT来看，TRT＜RTR=R0R。故（X20）max-（X20）min≤R0R=2°\n最后我们需要证明X20组成的角度集合和P2Q形成的角度范围无交集，这样无人\n机就可通过接收到的角度来判断另一架发射信号的无人机FYOX的编号。其中X，P，Q都\n是圆周上除FY02以外的无人机对应的编号，这些无人机都处于预期位置，没有偏移。下\n面我们通过穷举所有情况来进行说明角度无交集，这里我们取的角度误差为0.5°。由于图\n形存在对称性，结果十分简洁。",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 14,
+      "text": "基于计算几何与带阔值启发式搜索的无人机无源定位模型\n14\n表2:X20对应的角度变化范围\nX\nX20最小值\nX20最大值\n1\n59.1°\n59.1°\n7\n9.1°\n9.5°\n8\n27.5°\n27.9°\n6\n45.1°\n45.4°\n表3:P2Q对应的角度变化范围\nP2Q最小值\nP2Q最大值\nP\nQ\nP2Q最小值\nP2Q最大值\n3\n118.39\n118.5°\n9\n3\n104.3°\n104.5°\n104.1°\n104.70\n4\n90.4°\n90.5°\n86.6°\n87.1°\n9\n5\n72.9°\n73.0°\n68.2°\n68.70\n6\n54.59\n54.6°\n50.1°\n49.6°\n35.9°\n36.0°\n31.7°\n31.3°\n17.0°\n17.5°\n13.7°\n14.1°\n86.8°\n86.9°\n68.4°\n68.5°\n72.99\n73.0°\n54.59\n54.6°\n55.39\n55.4°\n37.0°\n37.0°\n37.0°\n37.0°\n18.6°\n18.6°\n18.4°\n18.49\n5.3问题\n圆周上无人机调整方案\n在该问中，在队列中十架无人机，只有FY00和FY01这两架无人机的位置是正确的，\n调整。这里涉及到了两个主要问题。首先是发射信号的无人机的选择策略，第二个问题是\n在接收到电磁信号，转换成角度关系后，无人机需要如何移动，即无人机的移动策略。在\n下面两个小节中我们给出详细过程。\n假设：在无人机发射信号时，不参与发射信号的无人机都可以接收到电磁信号并进入\n位置调整状态。\n为了判断无人机是否运行到准确位置，我们设定了阈值e，即无人机现在的位置和预\n期位置的欧几里得距离小于阔值时，该无人机调整完毕。当所有的无人机到预期位置的距\n离都小于阈值时，过程结束。在本题中，我们设定阈值c=10m。\n5.3.1无人机位置调整策略\n对于无人机的移动策略，我们会定义一个位置变化矢量x，无人机会按照这个矢量\n进行调整。对于这个矢量，我们需要定义其起始点和终止点。位置需要变动的无人机FYOX",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 15,
+      "text": "基于计算几何与带阔值启发式搜索的无人机无源定位模型\n15\n不知道自己在坐标系中对应的坐标，只能通过其他几架无人机传输的电磁信号来进行定位，\n故位置变化矢量的起始点和无人机的起始位置坐标不同，我们在下面主要分析两个不同情\n况下的位置变化矢量的起始点和终止点。\n三架无人机定位时的调整策略\n在选择无人机时，我们选择了FY00,FY01和其余一架无人机，记为FYOS。位置需要\n调整的无人机记为FYOR。在该题中，FY00和FY01位置准确，但是FYOS位置不一定到\n达预期点位。\nStep1FYOR对角度的解码算法。\n由于我们在选择发射信号的无人机上，FY00和FY01作为基准机，待测的无人机可以\n接收到这两架无人机传输的信号并且可以识别由FY00和FY01发射信号的夹角。对\n于剩余的未知编号的无人机，我们采用的是类似5.2中的做法，即可通过接收到的角\n度大小判断无人机的编号。\nFY03\nFY04\nFYOS\nFYOI\nFY06\n60L\nFY07\nFYM\n图12：角度解码中的误差分析\n如图12所示，只需证明当观测点位置不再预期位置时（ZER0）max-（ZER0）min≤5°，其\n中R在RR上运动。通过运算和数值求解，我们发现当E在径向方向误差不超过5m\n的情况下，都可以满足（zERO）max-（LER0）in≤5°。所以我们在选择发射信号的无\n人机时，没有使用距离误差超过5m的无人机。\n在这个过程中，无人机FYOR已经分析出了FYOS飞机的信号。FYOS位置可能相对于\n预期位置有一定偏差，但在无人机执行程序中，无人机会认为FYOS在预期位置。此",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 16,
+      "text": "基于计算几何与带阔值启发式搜索的无人机无源定位模型\n16\n时我们依旧应用（5.1.2）中的方法，如图13所示，无人机信号的发射点为S，其预期位\n置为FY09，在无人机FY0R的视角来看，无人机接收到的αo9是从FY09发射出来的，\n而不是从S发射出来的，所以我们做圆时会产生一定的偏差，此时无人机判断出来的\n自己所在位置为T（xr，yr）。\nFY03\nFY04\nFYOZ\n(L01\nFYOS\nOs\n2ual\nFY00\n0\n2a09\nFYOL\nFY06\nFY09\nFY08\n图13:确定初始点坐标\nStep3FY0R建立位置变化矢量并朝矢量方向移动\n无人机FYOR可以根据自已的编号，确定自已的预期坐标，将这个点设置成位置变化\n矢量x的终止点，即Rexp（rcosθR、rsinθR）。我们可以构建以T为起点，以Rexp为终点\n的位置变化矢量x=ORxp-0T。则无人机最终位置为ORina=OR+x=OR+ORex-07\n四架无人机定位时的调整策略\n四架无人机在定位调整上和三架无人机的策略基本一致，同样也分成三个步骤。第一\n步即FYOR角度分析得到信号来源，方法相同，这里不再赞述。第二步是利用电磁信号得到\n自己的坐标，在这个定位方式中和三架的略有差异，第三是建立位置变化矢量并移动，这\n个步骤也和三架无人机的操作相同。\n对于Step2的改变主要包括以下几点。\n1.在取点时，我们选择的无人机一定包括FY00和FY01。其余两架分别记为FY0S和\nFYOS2.\n2.在确定位置坐标的时候，我们分成两个步骤，第一步是取FY00，FY01和FY0S这三\n个点，用（5.3.2）中三架无人机定位中的Step2，确定出FY0R的第一个位置坐标，记\n为T。然后我们再取FY00，FY01和FY0S这三个点，采用相同的操作，得到第二个\n位置坐标，记为T2。",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 17,
+      "text": "基于计算几何与带阔值启发式搜索的无人机无源定位模型\n17\n3.分析可知T和T两点并不重合，且T和T是两种取点得到的，我们取T和T的\n中点，记为T。把T点设置成无人机通过接收到的角度计算得到的位置。即无人机认\n为的出发点。和三架无人机的定位模型中的T等价。\n5.3.2发射信号无人机的策略\n对于圆周上任意一个点FYOR到其预期点的欧几里得距离可以定义为dR=|RRexpecrl。\n我们可以定义L2loss函数作为估价函数。[7]\nL=\n(19)\nFY00和FY01是基准点，是必选的两架无人机，然后在圆周上剩余的无人机中选择至多两\n架无人机作为信号发射点，确定发射信号的飞机的过程称为一次决策过程。图14中展现的\n是一个决策树，每个箭头方向表示一种决策方案，箭头上的数字代表了决策中的选择的飞\n机的编号，圆圈中的数对应的是在该决策条件下的估价函数的计算结果，方框对应的是最\n大搜索层数。\n在图14中，我们设定了闽值，即最大的搜索层数N，在遍历N层的计算后，程序会找\n出估价函数最小的决策方案，再以可以通向该方案的子节点为决策树的根，如此循环。不\n难发现，贪心算法是阈值为1的特殊情形。使用该方法，我们避免了贪心算法带来的局域\n最小化的结果，更有利于找到收敛最快的决策方案。例如，在图14中，最左边的决策是贪心\n算法的结果，最右边的决策是带阈值的启发式搜索的结果，可以发现在第一次决策后，贪\n心算法得到的估价函数明显小于启发式搜索算法。但是在第二次决策后，启发式搜索算法\n对应的估价函数快速收敛，这是由于在第一次决策中启发式中将一个误差很大的点调整到\n精确点。这个情况是无法通过贪心算法和人脑决策出来的。\n494.8\n0次决策后的估价函数\nD1\n0,1,5\n0,1,8\n1次决策后的估价函数\n6`99\n2次决策后的估价函数\nD2\n0,1,8\n0,1,3\n3次决策后的估价函数\n12.5\n0.14\n决策\nD3\n图14:决策树示意图",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 18,
+      "text": "基于计算几何与带阔值启发式搜索的无人机无源定位模型\n18\n5.3.3结论分析\n通过程序计算，我们得到了不同算法，不同决策方案下的收敛速度。在下面的部分我\n们列举几个结论并对其进行分析。\nResult1.几种算法收敛速度的对比\n在建模过程中，对于无人机的选择方案，我们主要采用的了随机选取，贪心算法选择\n和带阔值的启发式搜索算法。其中在带阈值的启发式搜索算法中，我们先只考虑三架无人\n机的定位情况，随后我们还做了三架和四架的结合的定位情况，结果如图15所示，其中横\n坐标为决策次数，纵坐标为估价函数的值。\n0.001\n1E-6\nSSO\n1E-9\n1E-12\n1E-15\nIE-18\n随机选点\n贪心算法\nIE-21\n固定三架发射的启发式算法\n三架或四架发射的启发式算法\nIE-24\n2\n3\n决策次数\n图15：不同决策方案下决策次数与收敛速度的关系\n不难发现，对于随机选择的情况，收敛速度较慢，但在实际情况中，决策次数达到20\n到30次时，随机选择无人机的估价函数也收敛到了10-㎡²的量级。贪心算法和带阔值的\n启发式搜索算法收敛速度相近，在局域上可能贪心算法占优势，但从全局上看带阈值的启\n发式搜索算法可以收敛到较高的精度。使用两种算法计算时，可以发现在第四次决策时，估\n价函数已经收敛到了10m²的量级，对于无人机R的和预期位置的偏差在1mm的量级，\n在实际应用中可以视为精确解。\n对比固定三架无人机发射信号的情况和结合了三架无人机和四架无人机发射信号的情\n况，即图15中的蓝线和绿线，在决策次数较多的情况下，后者收敛速度极快。",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 19,
+      "text": "基于计算几何与带阔值启发式搜索的无人机无源定位模型\n19\nResult2.最优策略的结果展示\n我们采用了带阈值的启发式算法，在三架无人机和四架无人机都可以发射信号的情况\n下，计算得到了一种快速收敛到预期位置的解，其调整策略和收敛结果如下所示。\nFY01\nFY02\nFY03\n(）0601\n()0601\n-5\n-5\n-10\n-10\n2\n4\n2\n调整次数\n4\n调整次数\n调整次数\nFY04\nFY05\nFY06\n0\n10g10(d)\n10(dg)\n5\n910(de)\n-5\n10\n-10\n-10\n-15\n2\n4\n6\n2\n调签次数\n调签次数\n鉴次数\nFY07\nFY08\nFY09\n(8)060\n10g10(d)\n-5\n-5\n-10\n-10\n-10\n2\n2\n6\n2\n调整次数\n调整次数\n调整次数\n图16：不同无人机与标准位置的距离随调整次数的变化\n首先我们给出了无人机的规划策略，一共用了六轮信号发射，我们定义的估价函数L2\nlossfunction的量级为10-m²，精度已经达到了很高的水平。我们选择每一轮发射电磁波\n信号的无人机编号如下所示。\n1.FY00,FY01,FY02,FY07\n2.FY00,FY01,FY05\n3.FY00,FY01,FY09\n4.FY00,FY01,FY08\n5.FY00,FY01,FY06",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 20,
+      "text": "基于计算几何与带阔值启发式搜索的无人机无源定位模型\n20\n6.FY00,FY01,FY02\n实际应用中，我们无需这么高的精度，所以我们只需要前5轮的无人机信号发射策略，\n一共发射了16次电磁信号，极大降低了外界的干扰。\n通过这个决策方案，我们在每次决策结束后的每架无人机的极坐标呈现在附录A中。\n图16展现的是九架无人机分别到预期位置的距离，随调整次数的增加而变化的曲线图。其\n中第一幅图是FY01，我们取的是无人机到其预期点的距离作为了纵坐标，其余八张图的\n纵坐标均为对应无人机到其预期点的位置的对数值。在图中很容易发现该策略收敛速度极\n快，到达实际精度范围只需要3轮，很有推广意义。\n5.4问题二\n5.4.1基本假设\n·由于题目并未给出无人机的偏差程度，参照问题一的偏差范围，在本问题中我们假设\n无人机的偏差范围为以标准位置为圆心，半径5m的圆内。\n·不失一般性地，我们不妨以FY01为基准无人机，即FY01的位置是时刻准确的，每\n一次发射信号的无人机都包含FY01。\n·由于接收信号的无人机只能获取方向信息，无法判断距离，如果只有一架基准无人\n机，若于轮调整后可能会出现所有无人机距离相同但对非我们预先设定的距离（比如\n50m），因此需要第二架基准机，参照问题一的条件，类似地选取FY05为第二架基准\n机，即FY05与FY01的距离始终保持在50√3m，相对位置保持不变，每次发射信号\n的无人机都包含FY05.\n5.4.2问题一模型不适用之处\n本质上来看，问题二是对问题一模型的重新运用，但是在实际的实现过程中会出现种\n种问题，这里一一列出。\n·三点共线\n问题一在接收信号的无人机接收到方向信息后，需要进行预处理，即对方向信息进行\n解码得到发射信号的无人机编号。但是在锥形编队中，由于存在多架标准位置共线的\n无人机，判断编号在大多数情况下是难以实现的。\n·四点共圆\n在接收信号的无人机进行定位的过程中，利用问题一中作圆求交的方法可能会出现四\n点共圆的情况。如图17所示，在FY03，FY04和FY10发射信号，FY13进行定位时，由于",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 21,
+      "text": "基于计算几何与带值启发式搜索的无人机无源定位模型\n21\n四架无人机的标准位置四点共圆，在前若于次决策中可以通过两圆求交进行定位。但\n经过若于次调整后，随着FY13与标准位置的距离缩短，所作出的两圆逐渐靠近，所\n得交点的精度会变得非常差，从而导致FY13定位的精度变差，调整就无法进行。\nFYII.\nFY07\nFY04\nFY12\nFY02\nFY08\nFY13\nFY05\nFY01\n定位所得坐标\n与实际相差很大\nPY09\nFY03\nFYI4\nFY06\nFYI0\nFY15\n图17：四点共圆情况示意\n5.4.3解决方案\n针对无法判断发射电磁波信号的无人机编号的问题，我们可以预先设定无人机发射信\n号的序（一种可能的实现方式是，给所有无人机的随机数发生器设定相同的随机种子，这\n样所有无人机可以产生相同的随机数序列），于是在每一次接收信号时，无人机都可以通\n过接收信号的次数判断当前发射信号的无人机编号，并基于此利用与问题一相同的作圆求\n交方法实现定位并通过5.3.1的策略进行调整。\n针对四点共圆定位精度过差的问题，由于上述选点策略，无人机可以预先知道本轮发\n射信号的无人机编号。我们设定：当接收信号的无人机判断发射信号的无人机标准位置与\n自身标准位置四点共圆，判定为无法定位，不进行调整。\n另外，由于选定FY01和FY05作为基准无人机，每次选择的发射信号的无人机都包含\nFY01和FY05，与FY13共线，因此FY13的定位误差会很大。我们的策略为：在10次调\n整中，前9次由FY01和FY05与一架未知编号的无人机发射电磁波信号，FY13不做调整；\n第10次由FY01，FY02与FY03发射电磁波，只有FY13做调整，其余无人机不做调整。\n关于选点策略的合理性，我们用上述策略进行测试，在10000次代码运行后发现每一\n次无人机的位置都可以很快地收敛到标准位置，因此可以认为这样的选点策略是合理的。",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 22,
+      "text": "基于计算几何与带阈值启发式搜索的无人机无源定位模型\n5.4.4结果展示\n图15显示了初始时位置误差分别为0.5m，1m，3m，5m时，调整次数与L2loss函数\n的关系。\n10'0\n1E-6\nlos\nIE-10\nE-14\n1E-18\n误差范围为0.5m\n误差范围为lm\n1E-22\n误差范围为3m\n误差范围为5m\nIE-26\n40\n60\n80\n100\n决策次数\n图18：不同误差范围内决策次数与收敛速度的关系\n可以看出，初始误差越小，L2loss收敛速度越快。（事实上，这个模型的收敛速度具\n有一定的随机性，但总体趋势符合）在约60次调整之后，5m以内的初始误差均可以收敛\n到较高的精度。\n六模型优缺点\n6.1模型的优点\n·首先对于无人机的位置调节，要具有时效性，我们的模型可以快速解出无人机需要移\n动的方向和距离，程序可以实现在1s内给出结果，具有很好的现实意义。\n·我们的模型相比于贪心算法，可以做到更加远视，可以找到更优的解。\n·选择L2loss作为估价函数，使得启发式算法更倾向于优化当前离标准位置较远的点，\n加快了收敛速度。",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 23,
+      "text": "基于计算几何与带满值启发式瘦索的无人机无源定位模型\n23\n·我们的模型更具有普适性。在误差范围内对误差较小的情况和误差较大的情况都一一\n讨论；且第二问中的随机算法具有推广的意义，理论上可以用于除“二”字型队列的\n所有队列编排调整。\n·给出了细致的误差分析，有较强的严谨性。\n6.2模型的缺点\n·我们的模型只在误差范围之内进行了讨论，没有考虑误差范围以外的情况，对更为极\n端的情况适应性比较差。\n·问题二采取的随机选点发射电磁波信号的策略会导致无人机的位置收敛到标准位置\n的速度比较慢。\n·问题二只考虑了一种基准点选择的方法，存在局限性，无法全面地找出调整方案的最\n优解。\n参考文献\n[1]徐诚，黄大庆，“无人机光电侦测平台目标定位误差分析”仪器仪表学报\n34.10(2013):2265-2270.doi:10.19650/j.cnki.cjsi.2013.10.016.\n[2]张琬琳，胡正良，朱建军、林小娟，尹剑，杨萌.单兵综合观瞄仪中的一种目标位置解算方\n法[].电子测量技术，2014.37（11）:1-3.D0I:10.19651/j.cnki.emt.2014.11.001.\n[3]徐诚，黄大庆，孔繁锵、“一种小型无人机无源自标定位方法及精度分析”仪器仪表学报\n36.05(2015):1115-1122.doi:10.19650/j.cnki.cjsi.2015.05.019.\n[4]秦顾正.对无人机的无源定位关键技术研究.2019.东南大学，MAthesis.\n[5]屈小媚，刘韬，谈文蓉”基于多无人机协作的多目标无源定位算法”中国科学：信息科学\n49.05(2019):570-584.\n[7] Spanos,JohnT.,Mark H.Milman,andD.Lewis Mingori.A new algorithm for L2opimal\nmodelreduction.Automatica 28.5(1992):897-909.",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 24,
+      "text": "基于计算几何与带阔值启发式搜索的无人机无源定位模型\n24\nA坐标展示\n我们在这个表格中展现的是三架无人机和四架无人机发射信号的最优策略下，无人机\n在每次调整后极坐标的变化。其中每架无人机对应两行数据，上面一行对应的是极径长度，\n下面一行对应的是极角的大小。\n表4:Caption\n极坐标\n次数\n1\n2\n3\n4\n5\n6\n编号\n100.0000\n100.0000\n100.0000\n100.0000\n100.0000\n100.0000\nFY01\n0000'0\n0.0000\n0.0000\n0.0000\n0.0000\n0000'0\nFY02\n98.4000\n100.0000\n100.0000\n100.0000\n100.0000\n100.0000\n40.1000\n39.7539\n39.9998\n40.0000\n00000\n40.0000\n98.8899\n100.4340\n100.0000\nFY03\n0000001\n100.0000\n0000001\n80.9727\n79.7268\n79.9998\n80.0000\n000008\n80.0000\n99.3532\n100.6480\n100.0000\n100.0000\n100.0000\n0000001\n120.2710\n119.7940\n120.0000\n120.0000\n120.0000\n120.0000\n100.7520\n100.7520\n100.0010\n100.0000\n100.0000\n100.0000\nFY05\n159.9350\n159.9350\n160.0000\n160.0000\n160.0000\n160.0000\n102.4780\n100.6830\n100.0000\n100.0000\n100.0000\n100.0000\nFY06\n200.2420\n200.0720\n200.0000\n200.0000\n200.0000\n200.0000\n105.0000\n100.4690\n100.0000\n100.0000\n100.0000\n100.0000\nFY07\n240.0700\n240.1590\n240.0000\n240.0000\n240.0000\n240.0000\n102.7630\n100.1680\n100.0000\n100.0000\nFY08\n100.0000\n100.0000\n281.6670\n280.1290\n280.0000\n280.0000\n280.0000\n280.0000\n101.3530\n100.0000\n100.0000\n100.0000\n100.0000\n100.0000\nFY09\n322.9100\n320.0000\n320.0000\n320.0000\n320.0000\n320.0000\nB\n3计算几何函数库\n#include<bits/stdc++.h>\nusing namespace std;\nconst-int N=20;\nconst double pi=acos（-1.0）;\ndoubled[N],theta[N];",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 25,
+      "text": "基于计算几何与带阔值启发式搜索的无人机无源定位模型\n25\nstruct Point\ndoublex,y;\nOT\n11\nPoint（double_x=0,double_y=0）:x（_x），y（-y）{}\n12\ndoublenorm(）{return sqrt（x*x+y*y）;}\n13\ndoublenorm2（）{returnx*x+y*y;}\n14\nPoint operator +（Point const &b）{\n15\nreturn Point（x+b.x,y+b.y);\n16\n17\nPoint operator -（Point const &b）{\n18\nreturn Point(x -b.x,y-b.y);\n19\n20\nPoint operator *（double a）{\n21\nreturn Point（a *x,a*y);\n22\n23\nPointoperator/（double a）{\n24\nreturn Point(x /a,y/a）;\n25\n26\np[N],ass[N];\nusing\nVector=Point;\n28\n29\ndoublecross（Vectora,Vectorb）{\n30\nreturn a.x*b.y-a.y*b.x;\n31\n32\n33\nstructCircle\n34\nPointO;\n35\ndoubler;\n36\n37\nCircle（）\n38\nCircle（Point_O,double_r）:O（_O）,r（_r）{}\n39\nbooloperator==（Circleconst&b）\n40\nreturn\n（O-b.O）.norm（）<1e-5&&abs（r-b.r）<1e-5;",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 26,
+      "text": "基于计算几何与带阔值启发式搜索的无人机无源定位模型\n26\n42\n43\n44\n11idl，id2，vertex 所成角为alpha，角顶点为vertex\n45\nstruct Angle\n46\nint id1,id2;\n47\nint vertex;\n48\ndouble alpha;\n49\n50\nAngle（int_id1，int _id2，int _ver,double _alpha）{\n51\nid1=_id1;id2=_id2;vertex=_ver;alpha=_alpha;\n52\n53\nbooloperator<（Angle &b）{\n54\nreturn alpha <b.alpha;\n55\n56\n3；\n57\n58\n若无人机到达标准位置\n59\nl/idl，id2，vertex所成角（以vertex为顶点）的大小\n60\nintget_angle_ass（int id1,int vertex,intid2）{\n61\nassert（id1！=id2 &&id1！=vertex&&vertex！=id2）;\n62\nif（id1>id2）swap（id1，id2）;\n63\nif（vertex==o）{\n+9\nintdel=id2-id1;\n65\nP-6=1P（<1P）\n66\nreturn40*del;\n67\nelseif（id1==0）{\n68\nintdel=abs（id2-vertex）;\n69\n-6=1P（<1P）\n70\nreturn（180-40*del）/2;\n71\nelse\n72\nintdel=id2-id1;\n73\nif（del<=4）{\n74\nif（id1<vertex&&vertex<id2）",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 27,
+      "text": "基于计算几何与带阔值启发式搜索的无人机无源定位模型\n27\n75\nreturn180-40*del/2;\n1607\nelse return 40*del/2;\n}else\n1819\ndel=9-del;\nif（id1<vertex&&vertex<id2）{\n80\nreturn40*del/2;\n81\nelsereturn180-40*del/2;\n82\n83\n84\n85\n86\n1/idl，id2，vertex实际所成角（以vertex为顶点）的大小\n87\ndouble get_angle_real（int id1，int vertex，int id2）{\n88\nassert（id1！=id2 &&id1！=vertex&&vertex！=id2）;\n89\ndouble11=（p[vertex]-p[id1]）.norm(）;\n90\ndouble\n12=（p[vertex]-p[id2]）.norm(）;\n91\ndouble13=（p[id1]-p[id2]）.norm（）;\n92\ndoub1etmp=（11*11+12*12-13*13）/（2*11*12）;\n93\nassert（-1.01 <=tmp &&tmp<=1.01）;\n94\nif（tmp>1）tmp=1;\n95\nif（tmp<-1）tmp=-1;\n96\ndouble alpha =acos（tmp);\n97\nreturn alpha;\n98\n99\n100\n//P，Q，vertex实际所成角（以vertex为顶点）的大小\n101\ndouble get_angle_real（Point P，Point vertex，Point Q）{\n102\ndouble11=（vertex-P）.norm（）;\n103\ndouble\n12=（vertex-Q）.norm（）；\n104\ndoub1e13=（P-Q）.norm（）;\n105\ndoub1etmp=（11*11+12*12-13*13）/（2*11*12）;\n106\nassert（-1.01<=tmp&&tmp<=1.01）；\n107\nif（tmp>1）tmp=1;\n108\nif（tmp<-1）tmp=-1;",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 28,
+      "text": "基于计算几何与带阔值启发式搜索的无人机无源定位模型\n28\n109\ndouble alpha =acos（tmp）;\n110\nreturn alpha;\n112\n113\nint sgn（double x）{\n114\nif（x>0）return1;\n115\nif（x<0）return\n-1;\n116\nreturn 0;\n117\n118\n119\n//过点P、Q的张角为alpha的圆\n120\nCircle get_circle（int id，Point P,Point Q，double alpha）{\n121\nPoint 0,01,02,M;\n122\nM=（P+Q）/2;\n123\nVectorv（Q-P）;\n124\ndoubleh=v.norm(）/2*tan（abs（pi/2-alpha））;\n125\ndoubler;\n126\nif（abs（pi/2-alpha）>1e-5）{\n127\nr=h/sin（abs（pi/2-alpha））;\n128\nelsef\n129\n=v.norm（）/2;\n130\n}\n131\nV=V/v.norm（）*h;\n132\nswap（v.x,v.y);\n133\nV.x*=-1;\n134\n01=M+v;02=M-v;\n135\nintf1=sgn（cross（p[id]-P,Q-P））;\n136\nintf2=sgn（cross（O1-P,Q-P））;\n137\nif（alpha>pi/2）{\n138\nif（f1==f2）0=02;\n139\nelse0=01;\n140\n}else{\n141\nif（f1==f2）0=01;\n142\nelse0=02;",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 29,
+      "text": "基于计算几何与带阔值启发式搜索的无人机无源定位模型\n29\n143\n144\nreturn Circle(O,r）;\nC每次最多三架无人机发送信号时的启发式搜索\n#include<bits/stdc++.h>\n#include\"geometry.hpp\"\nusing namespace std;\nPoint findpos_3drones（int id,vector<Angle>ang）{\nint id1,id2;\ndouble alpha,beta;\nfor（autoi:ang）{\nif（i.id1&&i.id2）{\n10\nid1=i.id1；id2=i.id2;\n11\n12\n13\nfor（autoi:ang）{\n14\nif（i.id1+i.id2==id1）{\n15\nalpha-i.alpha;\n16\nelseif（i.id1+i.id2==id2）\n17\nbeta = i.alpha;\n18\n19\n20\nCircle 01,02;\n21\nO1=get_circle（id,ass[0],ass[id1],alpha）;\n22\n02=get_circle（id,ass[0],ass[id2],beta）;\n23\ndoub1ex1=01.0.x，y1=01.0.y，x2=02.0.x,y2=02.0.y;\n24\ndoub1elambda=（x2*（x2-x1）+y2*（y2-y1））\n25\n/（01.0-02.0）.norm2(）；\n26\nPointtmp=O1.O*2*lambda+02.0*2*（1-lambda）;\nreturn tmp;",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 30,
+      "text": "基于计算几何与带阔值启发式搜索的无人机无源定位模型\n30\n29\n30\nPoint find_position（int id,vector<int>drone）\n31\nsort（drone.begin(）,drone.end()）;\n32\nvector<Angle> ang;\nfor（inti=0；i<drone.size（）;++i）{\n34\nfor（intj=i+1；j<drone.size（）;++j）{\n35\ndouble11=（p[id]-p[drone[i]]）.norm（）;\n36\ndouble12=（p[id]-p[drone[j]]）.norm(）;\n37\ndouble13=（p[drone[i]]-p[drone[j]]）.norm(）;\n38\ndouble\na=acos（（11*11+12*12-13*13）/2/11/12）;\n39\nang.push_back（Angle(drone[i],drone[j],id,a））;\n40\n41\n42\nreturn findpos_3drones（id,ang）;\n43\n44\n45\ndouble\nevaluate(）\n46\n0=sue otqnop\n47\nfor（inti=0；i<=9;++i）{\n48\nans +=（p[i]-ass[i]）.norm2(）;\n49\n50\nreturn ans;\n51\n52\n53\npair<double,int> search(int deep,int las）\n54\nif（deep==o）{\n55\nreturn make_pair(evaluate(),las）;\n56\nPoint tmp[N];\n58\nfor（inti=0；i<=9;++i）tmp[i]=p[i];\n59\ndoub1eans=1e100,s=-1;\n60\nfor（inti=2;i<=9;++i）{\n19\nvector<int>drone;",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 31,
+      "text": "基于计算几何与带阔值启发式搜索的无人机无源定位模型\n31\n62\ndrone.push_back（o）;drone.push_back（1）;drone.push_back（i）;\n63\nfor（intj=2;j<=9;++j）{\n64\nif（j==i）continue;\n65\nPoint pnt=find_position（j,drone）;\n66\np[j]=p[j]+ass[j]-pnt;\n67\n68\npair<double,int>nw=search（deep-1,i）;\n69\nif（nw.first<ans）{\n70\nans=nw.first；s =i;\n71\n72\nfor（intj=2;j<=9;++j）{\n73\n]du=[]\n74\n75\n76\nreturn make_pair(ans,s）;\n78\n79\nint\nmain（）（\n80\nsrand(time(o));\n81\nintn=9;\n82\nfor（inti=0；i<=9;++i）{\n83\n]e<<[！]p<<u\n84\n85\nfor（inti=1;i<=9;++i）{\n86\ntheta[i]=theta[i]/180*pi;\n87\np[i].x=d[i] *cos（theta[i]）;\n88\np[i].y=d[i] *sin（theta[i]）;\n89\nass[i].x=100*c0s（40.0*（i-1）/180*pi）;\n06\nass[i].y=100*sin（40.0*（i-1）/180*pi）;\n16\n92\n93\ncout<<evaluate（）<<endl;\n94\n95\nfor（inti=1;i<=20;++i）{",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 32,
+      "text": "基于计算几何与带阔值启发式搜索的无人机无源定位模型\n32\n96\ndoubleans=1e100;int s=search（3,-1).second;\n97\n98\ncout<<\"times:\n”<<i<<endl<<\"use：01\n<<s<<endl;\n99\nvector<int> drone;\n100\ndrone.push_back(o);drone.push_back（1);drone.push_back(s）;\n101\nfor（intj=2；j<=9;++j）{\n102\nif（j==s）continue;\n103\nPointpnt=find_position（j,drone);\n+01\np[j]=p[j] +ass[j]-pnt;\n105\n106\nfor（inti=0;i<=9;++i）{\n107\ncout<<p[i].x<<\n<<p[i].y<<endl;\n108\n109\ncout<<evaluate(）<<endl;\nO11\nputs(\"\n\"）;\n112\nfor\n（inti=0；i<=9;++i）\n113\ncout<<ass[i].x<<\n<<ass[i].y<<endl;\n114\n}\n115\nputs(\n116\n117\nreturn0;\n118\n119\n120\n/input data\n121\n00\n122\n1000\n123\n9840.10\n124\n11280.21\n125\n105119.75\n126\n98159.86\n127\n112199.96\n128\n105240.07\n129\n98280.17",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 33,
+      "text": "基于计算几何与带阔值启发式搜索的无人机无源定位模型\n33\n130\n112320.28\n131\n8/\nD每次最多四架无人机发送信号时的启发式搜索\n#include<bits/stdc++.h>\n#include\"geometry.hpp\"\nusing namespace std;\nPoint findpos_3drones（int id,vector<Angle>ang）{\nint id1,id2;\ndouble alpha,beta;\nfor（autoi：ang）{\nif（i.id1&&i.id2）\n10\nid1=i.id1;id2=i.id2；\n门\n12\n13\nfor（autoi:ang)\nt\nif（i.id1+i.id2==id1）{\n15\nalpha=i.alpha;\n16\n}elseif（i.id1+i.id2==id2）\n17\nbeta=i.alpha;\n18\n19\n}\n20\nCircle01,02;\n21\nO1=get_circle（id,ass[0],ass[id1],alpha）;\n22\n02=get_circle（id,ass[0],ass[id2],beta）;\n23\ndoub1ex1=01.0.x,y1=01.0.y,x2=02.0.x,y2=02.0.y;\n24\ndoub1elambda=（x2*（x2-x1）+y2*（y2-y1））\n25\n/（01.0-02.0）.norm2（）;\n26\nPointtmp=01.0*2*lambda+02.0*2*（1-lambda);\nreturn tmp;",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 34,
+      "text": "基于计算几何与带阔值启发式搜索的无人机无源定位模型\n30\nPoint find_position（int id,vector<int>drone）;\n31\n32\nPoint findpos_4drones（int id,vector<int>&drone）{\n33\nPoint01,02,03;\n34\nvector<int>v;\n35\nv.push_back（0）;v.push_back（1）;v.push_back（drone[2]）;\n36\nO1=find_position（id,v）;\n37\nv.clear();\n38\nv.push_back（0);v.push_back（1）;v.push_back（drone[3]）;\n39\n02=find_position（id，v）;\n40\nv.clear(）;\n41\nreturn（01+02）/2;\n42\n43\n44\nPoint find_position（int id，vector<int> drone)\n45\nsort（drone.begin(）,drone.end(））;\n46\nif（drone.size（）==3）{\n47\nvector<Angle> ang;\n48\nfor（inti=0;i<drone.size（）;++i）{\n49\nfor（intj=i+1;j<drone.size(）;++j）{\n50\ndouble11=（p[id]-p[drone[i]]）.norm();\n51\ndouble12=（p[id]-p[drone[j]]）.norm(）;\n52\ndouble13=（p[drone[i]]-p[drone[j]]）.norm（）;\n53\ndoublea=acos（（11*11+12*12-13*13）/2/11/12）;\nang.push_back（Angle（drone[i],drone[j],id,a）);\n57\nreturn findpos_3drones(id,ang);\n58\n59\nelse return findpos_4drones（id,drone);\n60\n19\n62\ndoubleevaluate(）",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 35,
+      "text": "基于计算几何与带阔值启发式搜索的无人机无源定位模型\n35\n63\ndouble ans =0;\n64\nfor（inti=0；i<=9;++i）{\n65\nans+=（p[i]-ass[i]）.norm2(）;\n66\n67\nreturn ans;\n68\n69\n70\npair<double，pair<int,int>> search（int deep,pair<int,int>las）\n71\nif（deep==0）{\n72\nreturn make_pair（evaluate(）,las);\n73\n74\nPoint tmp[N];\n75\nfor（inti=0;i<=9;++i）tmp[i]=p[i];\n76\ndouble ans=1e100;\n77\npair<int,int>s=make_pair（-1,-1）;\n78\nfor（inti=2;i<=9；++i）{\n79\nvector<int>drone;\n80\ndrone.push_back(o）;drone.push_back(1）;drone.push_back（i）;\n81\nfor（intj=2；j<=9；++j）{\n82\nif（j==i）continue;\n83\nPoint pnt=find_position（j,drone）;\n84\np[j]=p[j] +ass[j]-pnt;\n85\n86\npair<double,pair<int,int>>nw;\n87\nnw=search（deep -1，make_pair（i，-1））;\n88\nif（nw.first<ans）{\n89\nans=nw.first；s=make_pair（i,-1）;\n90\n91\nfor（intj=2;j<=9;++j）{\n92\n]du=[]\n93\n94\n95\nfor（inti=2;i<=9;++i）{\n96\nfor（intj=i+1;j<=9;++j）",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 36,
+      "text": "基于计算几何与带阔值启发式搜索的无人机无源定位模型\n36\nvector<int>drone;\n98\ndrone.push_back（o);drone.push_back（1）;\n66\ndrone.push_back（i）;drone.push_back（j）;\n100\nfor（intk=2;k<=9;++k）{\nTOI\nif（k==i11k==j）continue;\n102\nPoint pnt=find_position（k,drone）;\n103\np[k]=p[k] +ass[k]-pnt;\n104\n105\npair<double,pair<int,int>> nw;\n106\nnw=search（deep -1，make_pair（i，j））;\n107\nif（nw.first <ans）{\n108\nans=nw.first;s=make_pair（i，j）;\n109\n110\nfor（intk=2;k<=9；++k）\n111\np[k]=tmp[k];\n112\n113\n114\n115\nreturn make_pair(ans,s）;\n116\n117\n118\nintmain（）{\n119\nsrand（time(o));\n120\nfor（1nti=0；i<=9;++i）{\n121\ncin>>d[i] >>theta[i];\n122\n123\nfor（inti=1;i<=9;++i）{\n124\ntheta[i]=theta[i]/180*pi;\n125\np[i].x=d[i] *cos（theta[i]）;\n126\np[i].y=d[i] *sin（theta[i]）;\n127\nass[i].x=100*c0s（40.0*（i-1）/180*pi）;\n128\nass[i].y=100*sin（40.0*（i-1）/180*pi）;\n129\n130",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 37,
+      "text": "基于计算几何与带阔值启发式搜索的无人机无源定位模型\n37\n131\nfor（inti=1；i<=6;++i）{\n132\ncerr<<\"times:”<<i<<endl;\n133\ndouble ans=1e100;\n134\nintd=min（3，7-i）;\n135\npair<int,int>s=search（d,make_pair（-1,-1））.second;\n136\n137\ncout<<\"times:”<<i<<endl<<\"use:01”<<s.first<<\n138\nif（s.second !=-1）cout <<s.second;\n139\ncout<<endl;\n140\nvector<int>drone;\n141\ndrone.push_back(o);drone.push_back（1）;\n142\ndrone.push_back(s.first);\n143\nif（s.second !=-1) drone.push_back（s.second);\n144\nfor（intj=2；j<=9;++j）{\n145\nif（j==s.first llj==s.second）continue;\n146\nPoint pnt =find_position(j,drone);\n147\np[j]=p[j] +ass[j]-pnt;\n148\n149\nfor（intj=0；j<=9；++j）\n150\ncout<<（'<<p[j].x<<\n<<p[j].y<<\n151\nC\n152\nputs(\"\");\n153\ncout<<evaluate(）<<endl;\n154\nputs(\"\n\")；\n155\n156\nfor（inti=0;i<=9;++i）{\n157\ncout<<ass[i].x<<<<ass[i].y<<endl;\n158\n159\nputs（\n160\nreturn 0;\n191\n162\n163\n/\ninputdata\n191\n00",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 38,
+      "text": "基于计算几何与带阔值启发式搜索的无人机无源定位模型\n38\n165\n1000\n166\n9840.10\n167\n11280.21\n168\n105119.75\n169\n98159.86\n170\n112199.96\n171\n105240.07\n172\n98280.17\n173\n112320.28\n174\n8/\nE问题二代码\n#include<bits/stdc++.h>\n#include\"geometry.hpp\"\nusing namespace std;\nPoint intersection（Circle O1,Circle O2）{\ndoub1ex1=01.0.x,y1=01.0.y,x2=02.0.x,y2=02.0.y;\ndoub1elambda=（x2*（x2-x1）+y2*（y2-y1））\n/（01.0-02.0）.norm2（）；\nPointtmp=O1.0*2*lambda+02.O*2*（1-lambda）;\n10\nreturn tmp;\n12\n13\nvoidinit（）{\n14\n//确定每座无人机的标准位置\n15\nass[1]=Point（0,0）;\n16\nass[2]=Point（-25*sqrt（3）,25）;\n17\nass[4]=Point（-50*sqrt（3),50）;\n18\nass[7]=Point（-75*sqrt（3）,75）;\n61\nass[11]=Point（-100*sqrt（3),100）;\nfor（inti=3;i<=15;++i）{",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 39,
+      "text": "基于计算几何与带阔值启发式搜索的无人机无源定位模型\n39\nif（i==411i==711i==11）continue;\n2 2324 5267\nass[i]=Point（ass[i-1].x，ass[i-1].y-50）;\n1/真实位置是标准位置加一个随机扰动\nfor（inti=2;i<=15;++i）{\ndoubler=1.0*rand（）/RANDMAX*5;\n28\ndoublealpha=1.0*rand(）/RAND_MAX*pi*2;\n29\nVector del=Vector（r*cos（alpha）,r*sin（alpha））;\n30\np[i]=ass[i]+del;\n31\n32\np[5]=ass[5];\n33\n34\n35\nPoint find_pos（int id,int id1,int id2）{\n36\ndouble alpha= get_angle_real(1,id,id1）;\n37\ndouble beta =get_angle_real(1,id,id2);\n38\ndouble gama=get_angle_real（id1,id,id2）;\n39\nCircle O1=get_circle（id,ass[1],ass[id1],alpha);\n40\nCircle O2= get_circle（id,ass[1],ass[id2],beta）;\nif（O1==O2） return ass[id];\n42\nreturni\nintersection(O1,O2);\n43\n44\n45\n//判断a、b、c是否共线\n46\nbool\non_line（inta,intb，intc）{\n47\nif（abs(cross（ass[a]-ass[c],ass[b]-ass[c]））<1e-3）{\n48\nreturn 1;\n49\n)else return O;\n50\n51\n52\n//判断a、b、c、FY01是否四点共因\n53\nbool\non_circle（int a,int b，intc）{\n54\ndouble al=get_angle_real(ass[a],ass[1],ass[b]);",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 40,
+      "text": "基于计算几何与带阔值启发式搜索的无人机无源定位模型\n0\n55\ndouble be = get_angle_real(ass[a],ass[c],ass[b]);\n56\nreturn abs（al-be）<1e-611abs（al+be-pi）<1e-6;\n57\n58\n59\ndoubleevaluate(）{\n60\n0=suetqnop\n19\nfor（inti=1；i<=15;++i）{\n62\nans+=（p[i]-ass[i]）.norm2(）;\n63\n64\nreturn ans;\n65\n66\n67\nintmain（）{\n68\nsrand(2);\n69\ninitO;\n70\nfor（intj=1;j<=15；++j）\n71\ncout<<p[j].x<<\n<<p[j].y<<endl;\n72\n73\nputs(\"\n74\nintT=10;\n75\nfor（inti=1；i<=100;++i）\n76\ninta=5;\n77\nintb=rand（）%14+2;\n78\nwhile\n（on_line（1，a，b））{\n79\nb=rand（）%14+2;\n80\n81\nif\n（i%T==0）\n82\na=2;b=3;\n8\n84\ncout\n>>\n\"times:\n85\n>>o\n\"use:\n”<<a<<\n<<b<<endl;\n86\nfor（int\nj=2;j<=15；++j）{\n87\nif（i%T==0&&j!=13）continue;\n88\nif（j==a11j==b）continue;",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 41,
+      "text": "基于计算几何与带阔值启发式搜索的无人机无源定位模型\n89\nif（on_line（j,a,1））continue;\n06\nif（on_line（j,b,1））continue;\n16\nif （on_line(j,a,b））continue;\n92\nif（on_circle（j，a,b））continue;\n93\nPoint pnt =find_pos（j,a,b）;\n94\np[j]=p[j]+ass[j]-pnt;\n95\n}\n96\nfor（intj=1；j<=15；++j）{\n97\ncout<<p[j].x<<<<p[j].y<<endl;\n98\n99\ncout<<evaluate（）<<endl;\n100\nputs(\"\n101\n102\nfor（intk=1;k<=15;++k）{\n103\ncout<<ass[k].x<<<<ass[k].y<<endl;\n104\n105\nreturnO;\n106",
+      "method": "full-page-ocr"
+    }
+  ]
+}

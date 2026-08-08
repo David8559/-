@@ -1,0 +1,285 @@
+{
+  "note": "C:\\Users\\17888\\Documents\\0.数学建模知识库\\0.数学建模\\04-Research\\04-竞赛真题研究\\03-优秀获奖论文拆解\\批量标准化拆解\\A类-连续型模型\\G-2024-D-奖项待核-反潜航空深弹命中概率的优化问题.md",
+  "title": "反潜航空深弹命中概率的优化问题",
+  "source": "D:\\数学建模优秀论文分析\\高教社杯全国大学生数学建模竞赛优秀论文\\2024年高教社杯全国大学生数学建模竞赛优秀论文\\D033.pdf",
+  "sha256": "5bb37151e8c6023ed47b2dd1e553d6fb6d93ebeee0ad1d28feb12dc57a366904",
+  "pages_total": 55,
+  "extraction_method": "full-page-ocr",
+  "pages": [
+    {
+      "page": 1,
+      "text": "反潜航空深弹命中概率的优化问题\n摘要\n应用深水炸弹（简称深弹）反潜，曾是二战时期反潜的重要手段，随着现代军事技\n术的发展，鱼雷逐渐替代深弹成为现代反潜的主要武器。但在海峡等海底地形较为复杂\n的海域，由于价格低等优点，仍有一些国家在研究和使用深弹。本文针对投弹命中概率\n大小，以平面坐标系和深度来建立不同的投弹方案，探究使命中概率最大的方案。\n针对问题一，由条件可知，潜艇中心位置深度定位没有误差，且两水平定位的误差\n相互独立且服从相同的正态分布，可得两水平坐标联合概率密度函数。为探究最大投弹\n命中概率与投弹落点平面坐标（t,s）及定深引信引爆深度d的关系，本问以（t,s,d）作为决\n策变量，根据定深引信引爆深度d与潜艇中心位置深度定位值h的不同关系分别讨论5\n种情形，得到每种情形的命中概率表达式，最终得出投弹命中概率与投弹落点坐标及引\n爆深度的一般关系，分析得到当h\nH<d<h+=H时，才可能有概率最大的投弹方\n2\n2\n案，此时获得投弹最大命中概率与投弹落点平面坐标的关系p(t,s）。结论：1.投弹命中\n概率最大的方案为定深引信引爆深度d设定在潜上表面深度和下表面深度之间，投弹\n落点水平坐标在（0.0），投弹落点水平坐标为“看哪打哪”。2.投弹命中概率与潜艇航向无\n关。3.对于所给参数值，运用Matlab软件计算得出最大概率p（0,0）=0.0837。\n针对问题二，在问题一的基础上，增加考虑潜中心位置的深度定位误差问题。因\n为深度方向误差与水平方向误差相互独立，所以问题一中所求的使得投弹命中概率最大\n的投弹方案中水平方向“看哪打哪”投弹方案仍成立。接下来，根据定深引信引爆深度\nd与潜艇中心实际深度最小值7的相对位置可建立5种情形：先以情形（5）为例进行具体\n说明，根据潜艇深度2不同，在问题一的分析基础上，得到情形（5）的命中概率表达式。\n同理，依次得出其余4种情形命中概率表达式，即可获得完整的投弹命中概率表达式\nP（A;d）。对于所给参数值，通过数值计算得：当定深引信引爆深度为157.56，投弹命中\n概率最大，最大命中概率为0.0586。\n针对问题三，在问题一和问题二的基础上，我们得到当a=L+2R，b=W+2R时，命\n中潜艇的概率与d的关系式。由matlab程序求得当d=157.50时潜艇被命中的概率最大，\n潜艇被命中的最大概率为0.3232.\n关键词：反潜深弹命中概率正态分布三重积分优化算法",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 2,
+      "text": "一、问题重述\n1.1问题背景\n应用深水炸弹（简称深弹），是二战时期反潜的重要手段，随着现代军事技术的发\n展，鱼雷逐渐成为现代反潜作战的主要武器，但在海峡或浅海等海底地形较为复杂的海\n域，由于价格较低、抗干扰能力强等，深弹在一些国家仍在研究和使用。\n反潜飞机攻击水下目标前，先由侦察飞机通过电子侦察设备发现水下潜目标的大\n致位置，然后派遣反潜飞机前来攻击。当潜艇发现被电子设备跟踪时，通常会立即关闭\n电子设备及发动机，采取静默方式就地隐蔽。\n在一定条件下，反潜攻击方可知潜艇航向，由于存在定位误差，潜中心实际位置\n的3个坐标为相互独立的随机变量。潜艇主体部分简化为长方体，深弹在水中垂直下降。\n深弹采用双引信（触发引信+定深引信）引爆，定深引信预先设定引爆深度，深弹在海水\n中的最大杀伤距离称为杀伤半径。\n深弹满足以下情形之一，视为命中潜艇：\n（1）航空深弹落点在目标平面尺度范围内，且引爆深度位于潜艇上表面的下方，由\n触发引信引爆：\n（2）航空深弹落点在目标平面尺度范围内，且引爆深度位于潜艇上表面的上方，同\n时潜艇在深弹的杀伤范围内，由定深引信引爆：\n（3）航空深弹落点在目标平面尺度范围外，则到达引爆深度时，由定深引信引爆，\n且此时潜艇在深弹的杀伤范围内。\n1.2问题提出\n问题一：投射一枚深弹，潜艇中心位置深度已知且无误差，两个水平坐标定位均服\n从正态分布N（0，o）。文中给出了潜艇长100m、宽20m、高25m、深弹最大杀伤半径\n20m等具体数值条件，要求分析投弹的最大命中概率与投弹落点平面坐标及定深引信引\n爆深度之间的关系，并且得出使投弹命中概率最大的投弹方案，以及相应的最大命中概\n率表达式。\n问题二：仍投射一枚深弹，但潜艇中心位置各方向的定位均有误差。潜艇中心位置\n深度定位值Z服从单边截尾正态分布，标准差为40m，实际深度最小值为120m，其他\n参数同问题一，给出投弹命中概率表达式，并设计定深引信的引爆深度，使得投弹命中\n概率最大。\n问题三：由于单枚深弹命中率较低，为增强杀伤效果，通常需要投掷多枚深弹。设\n一架反潜飞机可携带9枚航空深弹，所有深弹定深引信引爆深度相同，投弹落点于平面\n上呈现阵列分布。在问题1，2前提下，设计投弹方案，包括引爆深度及落点之间平面\n间隔，使投弹命中概率最大（投弹命中指至少一枚深弹命中潜艇）。\n二、问题分析\n问题一：根据题目条件可知，潜艇中心位置的深度定位没有误差，两个水平坐标定\n位均服从正态分布。为探究最大投弹命中概率与投弹落点平面坐标及定深引信引爆深度\n的一般关系，本问以投弹落点坐标（t.s.d）作为决策变量，根据定深引信引爆深度d与\n潜艇中心位置深度定位值h的不同关系分别讨论了5种情形，得到每种情形投弹的命中\n概率表达式，最终得出投弹命中概率与投弹落点坐标及引爆深度的一般关系：之后根据\n前面的分析，得出投弹最大命中概率方案的结论，并且利用引理1的正态分布分析，累\n2",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 3,
+      "text": "次积分表达式的改写等方法，证明结论的正确性，并且得出投弹命中概率最大的投弹方\n案与命中最大概率的表达式，同时求出最大概率p\n问题二：与问题一不同，问题二在潜中心的深度方向上也存在误差，但由于深度\n方向的误差与水平方向上的误差相互独立，所以问题一中所得到的水平方向方案仍然成\n立。接下来根据定深引信引爆深度d与潜中心位置实际深度最小值/的相对位置进行\n5种情形讨论，以情形（5）为例具体说明，进行与第一问类似的求解方式解其5种不同情\n况的命中概率表达式，相加得到情形（5）的命中概率表达式。其余4种情形同理，最终\n将5种情形的命中概率表达式进行总结，得到最终投弹命中的概率表达式。通过计算，\n可得到投弹命中概率的最大值以及对应的定深引信引爆深度。\n问题三：多枚深弹同时投掷，至少有一枚或多枚深弹的落点在潜艇的水平范围内，\n参数与问题一、二相同。九枚深弹引爆深度相同，落点平面坐标呈阵列分布。在建立模\n型时，以最大化投中概率为优化目标。考虑定深引信引爆深度与阵列间隔，对于间隔的\n处理方法与问题一类似，定深引信引爆深度考虑方法与问题二相近，建出总命中概率模\n型，进行优化求解。\n三、模型假设\n1.假设潜艇采取静默时，立即静止\n2.假设反潜攻击方在一定条件下知道潜艇航向\n3.假设深弹之间互不影响，不会引起连锁爆炸等情况\n四、符号说明\n符号\n含义\n单位\nL\n潜艇长度\nm\nW\n潜艇宽度\nm\nH\n潜艇高度\nm\n深弹x轴坐标\nm\ns\n深弹y轴坐标\nm\nd\n深弹轴坐标\nm\nho\n潜艇中心位置深度定位值\nm\n潜艇上表面深度定位值\n川\n潜艇下表面深度定位值\nm\nR\n深弹最大杀伤范围半径\nm\nr\n与潜艇相交的截面半径\nu\n潜艇中心位置实际深度最小值\nm\nA\n“成功命中潜艇”事件\n积分区域\n五、模型建立与求解\n5.1问题一模型建立与求解\n3",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 4,
+      "text": "5.1.1问题一模型建立\n以投弹落点平面坐标（,s）和定深引信引爆深度d为决策变量。在潜艇中心位置深度\n的定位值h无误差的假设下，根据d与h的不同关系，分情形分析投弹落点（,s）能够命\n中潜艇的范围，计算潜落入到被命中范围的概率。通过比较可以获得能够使得投弹命\n中概率最大的引爆深度d的设定范围，进一步可以求得使得投弹命中概率最大的投弹落\n点（s）。将潜艇上表面深度记为h，下表面深度记为h，由题目可得\nh=ho--H,\n2\nhF=ho+H.\n1\n2\n5.1.2.1投弹命中概率与投弹落点坐标及设定引爆深度的一般关系\n在目标坐标系中，潜艇中心位置的水平位置定位坐标为（0.0)，但由于测量误差，\n潜艇实际水平位置坐标为二维随机变量（X.Y），X，Y相互独立且均服从正态分布\nN（0.o²），所以（X，Y）服从二维正态分布N（0.0，o²，o²，0)，其联合概率密度函数\n为：\n1\nx'+y\nf(x,y)=\n(1)\n根据d与h的不同关系，分为以下五种情形进行分析：（1）深弹引爆深度d小于等\n于潜艇上表面与最大杀伤半径的差值；（2）深弹引爆深度d小于潜艇上表面的深度，大\n深度之间；（4）深弹深度d大于潜艇下表面，小于下表面与最大杀伤半径之和：（5）深\n弹深度d大于潜艇下表面与最大杀伤半径之和。具体如下：\n（1）深弹引爆深度d小于等于潜上表面与最大杀伤半径的差值\nd<h-R=ho--H-R\n2\n此时，无论投弹落点（，s）在哪和潜艇实际水平位置（X，Y）在哪，炸弹在达到引爆深\n度d时便爆炸，引爆深度过低，杀伤半径无法触及到潜艇的上表面，命中概率：\np(t,s,d)=0\n（2）深弹引爆深度d小于潜艇上表面的深度h=ho-\nH，大于上表面与最大杀伤\n2\n半径的差值，即\nh-R<d＜h\n如图1所示",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 5,
+      "text": "图1情形二引爆深度d位置示意图\n此时，深弹杀伤范围与潜艇上表面所在平面相交产生截面，截面为圆盘，用杀伤\n半径R和上表面与深弹深度差值通过勾股定理可计算出截面圆盘的半径：\nr=√R²-（h-d)²\n(2)\n进而可得，截面圆盘的圆周投影到水平面的标准方程\n(x-t)²+（y-s)²=R²-（h-d)²\n(3)\n潜艇的上表面只要与截面圆盘有接触，潜即会被命中。在潜艇方位角为β时，\n根据截面圆盘和潜艇会被命中的临界位置，可以获得潜艇会被命中范围为临界位置潜\n艇中心点形成的包络线所围的区域Q：中心为（,s)，长侧的直线段长为L，短侧的直\n线段长为W，四个“角”均为半径r=√R²-（h-d的1/4的圆弧。\n如图2阴影部分所示\n图2情形二可命中范围区域Q\n潜艇实际水平位置（X，Y）落在Ω内的概率即为此时命中潜艇的概率：\np(t,s,d)=ff(x,y)drdy\n(4)\n（3）深弹引爆深度d设定在潜艇上表面深度和下表面深度之间\nh<d<h\n此时，如果潜艇的表面刚好在投弹点下方，深弹由触发引信引爆，潜艇被命中：\n如果潜表面不在投弹点下方，深弹由定深引信引爆，当潜艇的侧面触及炸弹的最大",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 6,
+      "text": "杀伤范围，潜艇也被命中。深弹杀伤范围与深度d的水平面截面圆盘的半径为R，截\n面圆盘的圆周投影到水平面的标准方程\n(x-1)²+（y-s)²=R²\n(5)\n在潜艇方位角为β时，根据截面圆盘和潜会被命中的临界位置，可以获得潜艇会被\n命中的范围为临界位置潜艇中心点形成的包络线所围的区域Ω2：中心为（,s），长侧的\n直线段长为L，短侧的直线段长为W，四个“角”均为半径为R的1/4的圆弧。\n如图3阴影部分所示\n图3情形三可命中范围区域Q\n潜艇实际水平位置（X，Y）落在Q内的概率即为此时命中潜艇的概率：\np(t,s,d)=ff（x,y)dxdy\n(6)\n（4）深弹深度d大于潜艇下表面，小于下表面与最大杀伤半径的和，即\n如图4所示\nhF≤d<hF+R\n图4情形二引爆深度d位置示意图\n此时，如果潜艇的表面刚好在投弹点下方，深弹由触发引信引爆，潜艇被命中：\n如果潜艇表面不在投弹点下方，深弹由定深引信引爆，当潜艇的下表面触及炸弹的最\n大杀伤范围，潜艇也被命中。深弹杀伤范围与深度h的水平面截面圆盘的半径为\nr=√R²-(d-n)²\n(7)\n截面圆盘的圆周投影到水平面的标准方程",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 7,
+      "text": "(x-t)²+（y-s)²≤R²-（d-h)²\n(8)\n在潜方位角为β时，根据截面圆盘和潜艇会被命中的临界位置，可以获得潜艇\n会被命中的范围为临界位置潜艇中心点形成的包络线所围的区域Q：中心为（t,s），长\n侧的直线段长为L，短侧的直线段长为W，四个“角”均为半径为r=√R²-（d-h）\n的1/4的圆弧。\n如图5阴影部分所示\n图5情形四可命中范围区域Q\n潜艇实际水平位置（X.Y）落在Q内的概率即为此时命中潜艇的概率：\np(t,s,d)={{f（x,y）dxdy\n(9)\n（5）深弹深度d大于潜艇下表面与最大杀伤半径之和，即\nd≥h+R\n此时，只有当潜艇的表面刚好在投弹点下方，深弹由触发引信引爆，潜艇才能被命\n中。在潜艇方位角为β时，潜会被命中的范围为一长方形区域Q：中心在（t,s），长为\nL，宽为W。\n如图6阴影部分所示\n图6情形五可命中范围区域Ω",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 8,
+      "text": "潜艇实际水平位置（X，Y）落在Q内的概率即为此时命中潜艇的概率：\np（t,s,d)={{f（x,yxxy\n(10)\n综上，投弹命中概率与投弹落点坐标及设定引爆深度的一般关系为：\n0,d≤ho\n-R\n2\n{f（x.y）bxdy，ho-\nH-R<d＜ho\n日\n2\n2\np（l,s,d)=\nf（x,y）dxdy，ho\nH<d<ho+\n2\n{f（x,y）bxdy，ho+\nI<d≤ho+-H+R,\n2\n2\nf（x,y）cdcdy,d>ho+\nH+R,\n其中Q，2，Ω，Q分别如图2、图3、图5与图6所示。\n5.1.2.2投弹最大命中概率的方案及证明\n根据以上分析，可以得到如下结论：\n定理1：对任意的水平投弹落点（t,s），当<d<h时，p（1,s,d）取得最大值\np（t,s）=fff（x，yxdxdy\n(11)\n其中f（x,y)\n，Q为中心为（s），长侧的直线段长为L，短侧的直线段长\n2πo²\n为W，四个“角”均为半径为R的1/4的圆弧区域（如图3）。\n证明：首先，当h<d<h时，p（t,s,d）=f（x,y）xxdy关于d为正的常数值。分情\n形讨论，\nH-R时，{f（xy）acy≥p（1,sd)=0;\n①当d＜h-R=ho-\n2\n②当h-R<d＜h时，由于r=√R²-（-d)²＜R，Q22（如图7），\n{ff（x,y）dy={f（xy）xay+{f（x,y）xdy≥f（x.y）tdy=p（t,sd):\n010,",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 9,
+      "text": "图7可命中范围Q与Ω的重叠图\n③当hF<d<hF+R时，由于r=√R²-（d-h）²<R，=Ω，\n{f（x,y）dxdy=f（x,y）dxy+ff（x,y）ddy≥{{f（x,y）dxdy=p（1,s,d):\nO,\n0,Q\n④当d≥h+R时，由于Ω=，\nfSf（x,yxdxdy=fff（x,y）dxdy+ff(x.y）dry≥fff（x.y）dxdy=p（t,s.d),\n0,\n0,10\n2,\n所以，对任意的水平投弹落点（t.s），当h<d<h时，取得最大值p（t.s）\np（t,s)=ff(x.y)dxdy\n2,\n其中Ω如图3所示。\n证毕。\n结论1：任意的水平投弹落点（s)，使得投弹命中概率最大的投弹方案中设定定深\n引信引爆深度d为定位的潜艇上、下表面深度之间。\n为解决投弹命中概率最大的投弹方案中投弹落点（t,s）的问题，先介绍一下引理：\n引理1：设函数g（t）=[e²dx（m>0)，则当t=0时g（）取得最大值。\nx\ng（0)={e20dx\n(Z1)\n证明：对函数g（t）求导得：\n(t+m)2\n(1-m)\ng'1）=e2e²\n令g（1）=0解得唯一极值点1=0即为最大值点，所以当1=0时g（r）取得最大值\ng(0)=f\"e2²dx.\n注：引理1的几何意义如图8所示，即当定长度的积分区间的中点在原点时，积分\n值最大。",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 10,
+      "text": "图8正态分布示意图\n在定深引信引爆深度d设定在最优范围内，可以得到最大命中概率与投弹落点平面\n坐标（.s）的更具体的关系。\n定理2：（最大命中概率与投弹落点平面坐标关系）对于p（t,s）=jf（x.y）drdy，其\n中f（x.y)，Q为中心为（.s），长侧的直线段长为L，短侧的直线段长为W，四个“角”\n均为半径为R的1/4的圆弧区域（如图3），\n1\np(t,s)\ndy'dr'\n(13)\n2πo\n或\n'+R+\nr'sa(s'y)\np(t,s)\n20²dx)dy'\n(14)\n2π0\n其中\nm（t'x）=\nW\nR\nL\n2\n2\n2\n+R\n2\nR≤\n2\nn（s'y)=\n2\n2\nW\nM\n+,1>5\n+R\n2\n2\n0",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 11,
+      "text": "证明：将图3坐标系按逆时针旋转0=β-得到新的坐标系，新的横轴用X表示，\n2\n纵轴用Y'表示（如图9）\n图9旋转后新坐标系\n两个坐标系中坐标的对应关系式为：\ncosθ\nsinθx\n(cos0-sin0\n（y'（-sinθcosθ（y）\n或\nsin0cos0\n为方便观察，将新坐标系摆正如图10。\n图10撰正后新坐标系\n原来的区域Ω在新的坐标系中对应的区域为Ω，Ω的形状与Q相同，中心点\n（t，s）与（t,s）为：\n(o )\n其他参数或边界曲线表达式如图11所示",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 12,
+      "text": "图11边界曲线表达式示意图\n可以改写为累次积分表达式\np(t,s)={{f（x.y)drdy\n=fff（xcosθ-y'sinθ,xsinθ+y'cosθ)|J|dx'dy\ndx\n(15)\n+m(r'x)\nm(rx)\ndy'dx\n其中m（tx）=\nW\nL\n+R,\n2\n2\n2\n2\n同理，若先对x后对y积分得：\n'+R+\ncaru+,\np(t,s)\n2a\ndr)dy\n2元g\nr'-m（s'y）\n2\n(16)\n+n(s.y)\ne\n20dx）dy\n2πo",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 13,
+      "text": "其中n（sy）=\nM\nM\n2\n2\n2\nM\nW\n+,1\n≤y<t'+\n+R\n2\n2\n证毕。\n定理3：（最大命中概率表达式）p（t,s）在（0.0）取得最大值，且最大值表达式为\np(0,0)\n(17)\n证明：由引理1得g（s）=\n（x）=+\ndy'的最大值为g（0）=\nm(x)\n又由积分保号性可知\nm(r'x)\np(t,s)≤\nxp（.Apo\n2π0\nm(r'x)\n且当s'=0时等号成立.\n改写积分次序，\np(t,s)\ndx')dy'\n2πo\nA\nt'-n(2y）\n'+R+\nIW\n2o\n+n(s'y）\nip（.xpo\n2π0\n-n(s'y\n2\n同理，\np(t,s)≤\n(2y)\n20²dx')dy'\n且当r'=0时等号成立.\n综上，当s'=0，t'=0时，即\n也即1=0,s=0时，p（t,s）取最大值\n13",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 14,
+      "text": "p(0,0)=\n2元0\n由于积分值与积分变量符号无关，\nR-（x+=）\np(0,0)=\ndy\n2πg\ny\n证毕。\n综合结论1及以上定理，可得如下结论：\n结论2：投弹命中概率最大的投弹方案为：东西方向1=0，南北方向s=0.即投弹落\n点平面坐标为“看哪打哪”；定深引信引爆深度设定在潜艇h=h-H与h=h+H\n2\n之间，即潜艇上下表面之间。\n结论3：投弹命中概率与潜艇航向无关。\n5.1.2问题一模型求解\n针对所给参数值：潜艇长100m，宽20m，高25m，潜艇航向方位角为90°，\n深弹杀伤半径为20m，潜艇中心位置的水平定位标准差o=120m，潜艇中心位置的\n深度定位值为150m，利用Matlab中integral2函数计算出模型的结果（程序见附\n录），最大概率为p（0.0）=0.0837.\n5.2问题二模型建立与求解\n5.2.1投弹命中概率表达式的建立\n如果潜艇中心的深度方向有误差，由于深度方向的误差与平面两个水平方向的误差\n相互独立，所以问题一中所求投弹命中概率最大的投弹方案中水平方向的方案仍然成立，\n即东西方向仍为1=0.南北方向仍为s=0。记定深引信引爆深度设定为d，潜艇命中的\n事件为A，潜艇被命中的概率为P（Ad），当潜艇深度Z=z时潜艇被命中的概率\nP（4|Z=zd)。根据d与潜艇中心位置实际深度最小值1的相对位置分以下情形讨论（如\n图12），\n14",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 15,
+      "text": "d-R-\nH\n+R\nd-R\n+K+\nH\n+p\nH\nd-R\nH\nd+R+\nH\n情形1\n情形2\n请形3\n情形4\n情形5\n图12d与实际深度最小值/相对位置图\n情形（1）：d+R+\nH≤1;\n2\n情形（2）：d+R≤1<d+\nR\n情形（3）：d-R<1<d+R；\n情形（4）：d-R\nH<l<d-R:\n2\n情形（5）：1<d-\nR\n在各情形中可以求得P（A|Z=z;d）的表达式。\n以情形（5）为例进行具体说明。当1<d-\n<d时，潜艇深\n度Z=2位于不同的位置，被命中的方式不完全相同，与问题1的五种情况类似，将问\n题1中的h换为z，具体为\n①1<z<d-R-\nH，潜艇只能在触发引信引爆时命中，即潜艇在水平中心位置落\n2\n入到长方形区域Q（如图13）时被命中，命中概率为\nP(A|Z=z.d)=fff（x,y）dxdy=\n(18)\n图13①区域\n②d-\n潜艇可能在触发引信引爆时命中，也可能被下侧方的\n深弹爆炸命中，类似于问题1，下表面平面与深弹杀伤范围截面为一半径为\n15",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 16,
+      "text": "的圆盘，此时潜艇在水平中心位置落入到区域Q（如图14）\n时被命中，命中概率为\nP(A|Z=z,d)=ff（x.y)dxdy\n-（x)\nf（x,y）dy+{\n[dxf(xy)dy\n(61)\n(x-=2)\nf(x,y)dy,\n其中\n图14②区域\n潜艇可能在触发引信引爆时命中，也可能被侧方的深弹爆\n2\n炸命中，此时潜艇在水平中心位置落入到区域2（如图15）时被命中，命中概率为\nP(A|Z=z;d)=ff(x,y)dxdy\n（x+-L）²\nf(x,ydy+3d3f（xy)dy\n(20)\nf(x,y)dy,",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 17,
+      "text": "图15③区域\n④d\n+R，潜艇的上表面平面与深弹杀伤范围截面为一半径为\n2\n2\nH)的圆盘，潜艇上表面只要与截面圆盘即被命中，此时潜艇水平中\n2\n心位置落入到区域Q（如图16）时被命中，命中概率为\nP(A|Z=z,d)=fff(x.y)dxdy\nf(x,y)dy+\np\nf(x.y）dy\n(21)\nf(x,y)dy.\n其中\nH)²\n图16④区域\nH+R≤z，此时深弹爆炸无法波及到深度2任意位置处的潜艇，\n2\nP(A|Z=z,d)=0.。\n7",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 18,
+      "text": "综上，情形（5）：1<d-R\nH即I+R+\n<d时潜艇被命中的概率为\n2\n2\nP(A;d)={P（A|Z=2;d)fa(2)d\nP(A|Z=z；d)fo（z）d\n?\nP(A|Z=2；d)fo（2）d+\nP（A|Z=z；d)f(2）dz,\n其中①中的P（A|Z=z;d）见式(18）.②中的P（A|Z=z;d)见式（19)，③中的P（A|Z=z;d)\n见式（20），④中的P（A|Z=z:d）见式（21）。\n类似的，\n情形（1）：d+R+-\n1\nH</即d≤I-R-\nH时，定深引信事先设定的引爆深度过浅，\n2\n2\n潜艇被命中的概率P（A,d)=0.\n情形（2）：d+R<1<d+R+\nH即1-\nH\n<d≤1-R时，潜艇被命中的概率为\n2\nP(A;d)={P(A|Z=z,d)fno(z)dz\np(A1Z=2,d)a（2）d,\n其中④中的P（A|Z=2）见式（21）。\n情形（3）：d-R<l<d+R即1-R<d＜1+R时潜艇被命中的概率为\nP(A;d)={P(A|Z=z;d)fo(2）dz\nP(A|Z=2d)（2）d+\n2P(A|Z=z；d）)fno(2）d,\n?\n其中③中的P（A|Z=z;d）见式（20），④中的P（A|Z=z;d）见式（21）\n情形（4）：d-R-\n1\nH<1<d-R即1+R<d<l+R+-\nH时潜艇被命中的概率为\n2\n2\nP(A;d)=P(A|Z=z,d)f(2)d\nP(A|Z=z,d)fn(2）\nP(A|Z=z；d）fa(z)d\nP(A|Z=z;d)fa(2）d,\n其中②中的P（A|Z=zd）见式（19）.③中的P（A|Z=z;d)见式（20），④中的P（A|Z=z；d)\n见式（21）。\n综上，投弹命中的概率表达式为分为5段的分段函数：\n18",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 19,
+      "text": "0,d<1-R\n2\nP(A|Z=z,d)fo(z)d,1-R-\nH<d<1-R\n2\nP(A|Z=2；d）)fo(2）dz+\nPd+RiH\nP(A|Z=2:d)fo(2)d,1-R<d≤1+R,\n#\nP（A|Z=z,d）f（2)dz+\nP(A|Z=z；d）f(z）d\nP(A;d)=\nP(A|Z=z；d)fa(z)dz，1+R<d＜1+R+\n2\nP(A|Z=z;d)f(z)d+\nP(A|Z=z,d)fna(2)d\n?\nP(A|Z=z;d)fo(2)dz+\nP(A|Z=z;d)fo(2)d，1+R+\np>\n2\n(22)\n其中①中的P（A|Z=zd）见式（18），②中的P（A|Z=z:d）见式（19），③中的P（A|Z=z:d)\n见式（20），④中的P（A|Z=z;d）见式（21），f（x,y）见式（1），\nfn.o,(2)=\n1\n1\n0:1-①（\n1-h\n5.2.2问题二模型求解\n由于P（A；d）表达式复杂，只能采用数值解法。针对所给参数值：潜艇中心位置的深\n度定位值为150m，标准差o，=40m，潜艇中心位置实际深度的最小值为120m，潜\n艇长100m，宽20m，高25m，潜艇航向方位角为90°，深弹杀伤半径为20m，潜\n艇中心位置的水平定位标准差o=120m，先在较大的可能范围[87.5,180]内以1为d的\n步长计算P（A:d），结果如图17所示，可以确定使得概率最大的d在[156.160]之间\n（Matlab程序见附录2）。更进一步，在[156.160]内将d按步长0.01计算P（Ad）（见附录\n2)，结果如图18，得当定深引信引爆深度为157.56m时命中潜艇概率最大，最大概率\n为0.0586。\n61",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 20,
+      "text": "9.0R\n.0\n100\n13\n图17[87.5,180]内d的步长为1时命中潜艇的概率与d的关系\n0.05862\n0.05861\n0.0586\n0.05855\n60.0585\n0.0545\n156.5\n157.5\n154.5\n图18[156.160]内d的步长为0.01时命中潜艇的概率与d的关系\n5.3问题三模型建立与求解\n5.3.1问题三求解思路\n单枚深弹命中的概率为P（4)，每枚深弹相互独立，可视P（4）与问题二情况相似，\n即问题二的大部分关系可以直接在本问中沿用。本问探究多枚深弹命中至少一枚命中潜\n艇的方案，使得命中概率最大。先研究9枚炸弹命中范围不重叠的情况，即\na≥L+2R，b≥W+2R的情形，由于水平测量误差（X，Y）服从正态分布N（0.0,o，²，0），\n有问题一可知投弹点水平位置离原点越远，命中概率越小，从而只需考虑\na=L+2R,b=W+2R.又根据问题二的结论，比较小的d命中概率较小，只需考虑\nd≥/+R+-H的情形。炸弹编号如图19所示。此时1号炸弹命中潜艇的概率与问题2\n2\n相同：2号炸弹命中潜艇的概率记为P（4d）：\n20",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 21,
+      "text": "图19九枚炸弹命中范围相切的情形及炸弹编号\n0,d<i-R-\n1\nH,\n2\nP(A|Z=2;d)fho.(2)d，1-R-\nH<d<I-R,\n2\nP(A|Z=2;d)fo（2)d+\nP(A|Z=z;d)fAo(2)d，1-R<d<1+R,\nP(A12=z;d)fh，o.（2)d\nP(A1Z=z,d)fx.（2)d\nR(Ad)=\n?\n?\nP(A|Z=z;d)fA.o(2)d，1+R<d<l+R+\nH,\n2\nP(A|Z=z;d)j，（2)d\nP(A|Z=z;d)h.o,(2)d\n?\nP(A|Z=z;d）fho,(2)d+\nP（A1Z=z;d）fAo,（2)d,1+R+\n2\n(23)\n式（23）形式与式（22）相同，但是其中①的\nP(A|2=z;d)=\n②的",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 22,
+      "text": "P(A|Z=z;d\nf（x,y)dy\nf（x,y)dy\nf(x,y)dy,\n③的\nP(A|Z=2;d)\n（x.y)d\nf(x,y)dy,\n④的\nP(A|Z=z;d\nf（x,y)dy+\nf（x,y)dy\nf(x,y)dy.\n其他炸弹可类似处理。命中潜艇的概率为9个概率总和。\n5.3.2问题三模型分析及求解\n对于问题中的参数，当a=L+2Rb=W+2R时，由matlab程序（见附录3）可以求\n得当d=157.50时潜艇被命中的概率最大，潜艇被命中的最大概率为0.3232.对于其他\n可能有多枚炸弹命中潜艇的情形有待进一步研究。\n六、模型的优缺点\n（1）模型考虑范围全面，满足普遍性和适用性。\n（2）模型证明严谨，理论可靠性强。\n（3）模型建立基于潜艇瞬时静止假设，缺乏一定实际性\n（4）模型建立所利用专业数学知识，缺乏一定简易性\n七、模型的推广\n在实际水下反潜方面，可以将本文中反潜深弹的参数替换成其他水下反潜武器（如\n鱼雷等）的参数，进而提高水下军事导弹命中概率，对我国水下军事发展具有积极作用。\n本模型涉及到如何以最优方式部署资源以最大化特定结果的概率，不仅可用于军事\n领域，还可以推广至医学研究、金融市场等。\n八、参考文献\n[1]李宗吉，程善政，刘洋.蒙特卡洛模拟法计算航空自导深弹命中概率D.弹箭与制导学\n报2012,32(02):22-24.DOI:10.15892/j.cnki.djzdxb.2012.02.031.\n22",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 23,
+      "text": "[2]李居伟，谢力波，刘钧贤，反潜巡逻机使用航空自导深弹攻潜效能及方法研究[D.数字海\n洋与水下攻防，2018.1（01）：3437.\n[3]赵萍萍，王丽霞.重积分的一般计算方法[J.高等数学研究，2022.25（02）：57-59.\n[4]孙常存，袁鹏，闫雪，等.反潜助飞鱼雷命中概率影响因素仿真分析[兵工自动\n化,2023,42(10):40-43+77.\n23",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 24,
+      "text": "附录\n附录1\n第一问求解代码：\nsigma=120；%标准差，单位：米\nL=100；%潜艇长度，单位：米\nR=20；%杀伤半径，单位：米\nW=20；%潜艇宽度，单位：米\n%定义被积函数\nf=@（x,y）exp（-（x.^2+y.^2）/（2*sigma^2））;\n%计算第一个积分项（左侧部分）\nI1=integra12（f，-R-L/2,-L/2,@（x)-W/2-sqrt（R^2-（x+L/2).^2),\n@（x）W/2+sqrt（R^2-（x+L/2).~2））;\n%计算第二个积分项（中间部分）\nI2=integra12(f,-L/2,L/2,-W/2-R,W/2+R);\n%计算第三个积分项（右侧部分）\nI3=integra12（f,L/2,R+L/2,@（x)-W/2-sqrt（R^2-（x-L/2).^2）,\n@（x）W/2+sqrt（R^2-（x-L/2）.^2））;\n%计算总积分\np00=（1/（2*pi*sigma^2））*（I1+I2+I3）;\n%显示结果\ndisp([The probability p(0,0)is:,num2str(poo）]);\n附录2.1\nfunction[d,I]=x2\nsigma=120;%标准差\nL=100；%潜艇长度\nR=20；%杀伤半径\nW=20；%潜艇宽度\nH=25;%高度\nsigma_z=40；%z的标准差\n11=120;\nh0=150;\n（（zes）/（+x)-）dxa（（esd）/)（x）@=+\nPhi=@（x）normcdf（x,θ,1）;\ndm=1/(1-Phi（（11-h0）/sigma_z）);\n%定义函数g（z）\n24",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 25,
+      "text": "）/（zv·（oy-z））-）dx（（Td）bs/)up（zeuTs/）（z）@=z\nsigma_z^2));\n%test=integral(@（z)g_z（z),120,2ee);\nfun=@（x,y,z）f（x,y).*g_z（z）;\nd=152.5:1:180;\nI1=arrayfun（@（d）integral3（@（x，y,z）f（x，y).*g_z（z）,-L/2,L/2,-W/2,\nW/2,11,d-R-H/2),d);\nI2=[];\n13=[];\n14=[];\nI5=arrayfun（@（d)integra1（@（z)g_z（z）,d-H/2,d+H/2）,d）;\nI5=0.083734*15;\n16=[];\n17=[];\n18=[];\nfori=1:length（d)\ndx=0.5;\ndy=0.5;\ndz=0.5;\n%%%以下计算I2\n%初始化黎曼和\nsum=0;\n%计算黎曼和\nzmin=d（i)-R-0.S*H;\nzmax=d（i)-0.5*H;\nxmin=@（z）-L/2-sqrt（R^2-（d（i)-z-H/2).~2);\nxmax=@（z）-L/2;\nymin=@（x,z）-W/2-sqrt（R^2-（d（i）-z-H/2).^2-（x+L/2）.~2）;\n（zv·（/7+x)-Zv·（/H-z-（）p)-v）bs+Z/M（zx)=xeu\nxez:zp:uwz=zo\nxl=xmin（z）;\nxu=xmax（z);\nforx=xl:dx:xu\nyl=ymin（x,z);\n(zx)xew=n<\nfory=yl:dy:yu\nsum=sum+fun（x,y,z）*dx*dy*dz;\nend\nend\nend\nI2=[12sum];\n%%%以下计算13\n%初始化黎曼和\nsum=0;\n%计算黎曼和\nzmin=d（i）-R-0.5*H;\nzmax=d（i)-0.5*H;\nxmin=-0.5*L;\nxmax=0.5*L;\nymin=@（z)-W/2-sqrt（R^2-（d（i）-z-H/2）.~2）;\n（zv·（z/H-z-（T）p)-Z）ubs+Z/M（z)=xeu\nsum=0;\nxl=xmin;\n25",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 26,
+      "text": "xeux=nx\nforx=xl:dx:xu\nyl=ymin（z);\nyu=ymax(z);\nfory=yl:dy:yu\nsum=sum+fun（x,y,z）*dx*dy*dz;\nend\nend\nend\nI3=[I3sum];\n%%以下计算I4\n%初始化黎曼和\nsum=0;\n%计算黎曼和\nzmin=d（i)-R-0.5*H;\nzmax=d（i)-0.5*H;\nxmin=@（z)L/2;\n（z·（/H-z-（）p)-）ubs+/（z）=xeux\nymin=@（x,z)-w/2-sqrt（R^2-（d（i）-z-H/2）.~2-（x-L/2）.~2）;\n（zv（/7-x）-v（/H-z-（）p）-v）bs+Z/M（zx）=xeu\nsum=0;\nforz=zmin:dz:zmax\nxl=xmin（z);\nxu=xmax（z);\nforx=xl:dx:xu\nyl=ymin(x,z);\nyu=ymax(x,z);\nfory=yl:dy:yu\nsum=sum+fun（x,y,z)*dx*dy*dz;\nend\nend\nend\nI4=[I4sum];\n%%%以下计算16\n%初始化黎曼和\nsum=0;\n%计算黎曼和\nzmin=d（i）+0.5*H;\nzmax=d（i)+R+0.5*H;\n（v（/H+z-（T）p)-zv）bs-/-（z）@=uux\nxmax=@（z)-L/2;\n（·(/7+x）-v（/H+z-（）p)-v）bs-/M-（zx）@=uu\n（zv·（z/7+x)-v·(/H+z-（）p)-v）bs+Z/M（zx)=xeu\nxz:zp:uz=zo\nxl=xmin（z);\n（z）xeux=nx\nforx=xl:dx:xu\nyl=ymin（x,z);\nyu=ymax（x,z);\nfory=yl:dy:yu\nsum=sum+fun（x,y,z）*dx*dy*dz;\nend\n26",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 27,
+      "text": "end\nend\nI6=[16sum];\n%%%以下计算17\n%初始化黎曼和\nsum=0;\n%计算黎曼和\nzmin=d（i）+0.5*H;\nzmax=d（i）+R+0.5*H;\nxmin=@（z)-L/2;\nxmax=@（z)L/2;\n（z·（/H+z-（T）p)-v）bs-Z/M-（zx）=uu\n（zv·（/H+z-（）p)-v）bs+Z/M（zx）@=xeu\nxz:zp:uwz=zo\nxl=xmin（z）;\nxu=xmax(z);\nforx=xl:dx:xu\ny1=ymin（x,z);\nyu=ymax（x,z);\nfory=yl:dy:yu\nsum=sum+fun（x,y,z）*dx*dy*dz;\nend\nend\nend\nI7=[17 sum];\n%%%以下计算18\n%初始化黎曼和\nsum=0;\n%计算黎曼和\nzmin=d（i）+0.5*H;\nzmax=d（i）+R+0.5*H;\nxmin=@（z)L/2;\nxmax=@（z)L/2+R;\n（z·(/7-x）-·（/H+z-（）p)-v）bs-/M-（zx）=uu\nymax=@（x,z)w/2+sqrt（R^2-（d（i）-z+H/2).^2-（x-L/2).^2）;\nxl=xmin（z）;\n（z）xeux=nx\nforx=xl:dx:xu\nyl=ymin（x,z);\nyu=ymax(x,z);\nfory=yl:dy:yu\nsum=sum+fun（x,y,z）*dx*dy*dz;\nend\nend\nend\nI8=[18sum];\nend\nI=I1+I2+I3+I4+IS+I6+I7+I8;\n[peak,i]=max(I);\npeak_d=d(i);\n27",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 28,
+      "text": "附录2.2\nfunction[d,I]=x3\nsigma=120;%标准差\nL=100；%潜艇长度\nR=20；%杀伤半径\nW=20；%潜艇宽度\nH=25;%高度\nsigma_z=40;%z的标准差\n11=120;\nhe=150;\nf=@（x，y）（1/（2*pi*sigma^2））*exp（-（x.^2+y.^2）/（2*sigma^2））;\nPhi=@（x）normcdf（x,0,1）;\ndm=1/(1-Phi（（11-hθ)/sigma_z））;\n%定义函数g（z）\nz）/（zv·（oy-z））-)dx（（Tdz）ubs/)up（zeus/t）（z）@=z\nsigma_z^2));\n%test=integral(@（z)g_z（z),120,2e0);\nfun=@（x,y,z)f（x,y).*g_z（z);\nd=140:1:152.5;\n%I1=arrayfun(@（d)integra13（@（x,y,z）f（x,y)*g_z（z）,-L/2,L/2,-W/2,\nW/2,11,d-R-H/2),d）;\nI2=[];\nI3=[];\nI4=[];\nI5=arrayfun（@（d）integra1（@（z)g_z（z）,d-H/2,d+H/2),d）;\nI5=0.083734*I5;\n16=[];\n17=[];\n18=[];\nfor i=1:length(d)\ndx=0.5;\ndy=0.5;\ndz=0.5;\n%%%以下计算I2\n%初始化黎曼和\nsum=0;\n%计算黎曼和\nzmin=1l;\nzmax=d（i)-0.5*H;\n（zv·（/H-z-（）p)-）bs-Z/-（z）=ux\nxmax=@（z)-L/2;\nymin=@（x,z）-W/2-sqrt（R^2-（d（i）-z-H/2).^2-（x+L/2).^2）;\n（（/+x）-v（/H-z-（）p)-）bs+Z/M（zx）=xe\nxewz:zp:uTwz=zo\nxl=xmin（z);\nxu=xmax（z);\nforx=xl:dx:xu\nyl=ymin（x,z）;\nyu=ymax(x,z);\nfor y=yl:dy:yu\nsum=sum+fun（x,y,z）*dx*dy*dz;\nend\n28",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 29,
+      "text": "end\nend\nI2=[I2 sum];\n%%%以下计算I3\n%初始化黎曼和\nsum=0;\n%计算黎曼和\nzmin=11;\nzmax=d（i)-0.5*H;\nxmin=-0.5*L;\nxmax=0.5*L;\n（z·（/H-z-（T）p)-v）bs-Z/M-（z）=uu\n（zv·（z/H-z-（T）p)-zvy）ubs+Z/M（z）@=xeu\nsum=0;\nxl=xmin;\nxu=xmax;\nforx=xl:dx:xu\nyl=ymin(z);\nyu=ymax(z);\nfory=yl:dy:yu\nsum=sum+fun（x，y,z）*dx*dy*dz;\nend\nend\nend\nI3=[13sum];\n%%%以下计算I4\n%初始化黎曼和\nsum=0;\n%计算黎曼和\nzmin=11;\nzmax=d（i）-0.5*H;\nxmin=@（z)L/2;\n(v（/H-z-（）p)-）ubs+Z/（z）=xeux\nymin=@（x,z)-W/2-sqrt（R^2-（d（i）-z-H/2）.~2-（x-L/2).~2）;\nymax=@（x,z)w/2+sqrt（R^2-（d（i)-z-H/2）.^2-（x-L/2）.^2）;\nsum=0;\nforz=zmin:dz:zmax\nxl=xmin（z);\nxu=xmax（z);\nforx=xl:dx:xu\ny1=ymin（x,z);\nyu=ymax(x,z);\nfory=yl:dy:yu\nsum=sum+fun（x,y,z）*dx*dy*dz;\nend\nend\nend\nI4=[I4sum];\n%%%以下计算16\n%初始化黎曼和\nsum=0;\n29",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 30,
+      "text": "%计算察曼和\nzmin=d（i)+0.5*H;\nzmax=d（i）+R+0.5*H;\n（zv（/H+z-（T）p)-zv）ubs-Z/-（z)=uux\nxmax=@（z)-L/2;\n（z·（z/7+x)-v·（/H+z-（）p)-v）zbs-/M-（zx）=u\nymax=@（x,z）w/2+sqrt（R^2-（d（i)-z+H/2).^2-（x+L/2）.^2）;\nforz=zmin:dz:zmax\nxl=xmin（z）;\n（z）xeux=nx\nforx=xl:dx:xu\nyl=ymin（x,z);\nyu=ymax（x,z);\nfory=yl:dy:yu\nsum=sum+fun（x,y,z）*dx*dy*dz;\nend\nend\nend\n16=[16sum];\n%%%以下计算17\n%初始化黎曼和\nsum=0;\n%计算黎曼和\nzmin=d（i）+0.5*H;\nzmax=d（i)+R+0.5*H;\nxmin=@（z）-L/2;\nxmax=@（z）L/2;\n（zv（/H+z-（）p）-v）bs-Z/M-（zx)=uu\n（zv（/H+z-（）p)-）ubS+Z/M（zx）@=xeu\nxeuz:zp:uTwz=zJo\nx1=xmin（z）;\n(z）xeux=nx\nforx=x1:dx:xu\nyl=ymin（x,z）;\nyu=ymax（x,z);\nfory=yl:dy:yu\nsum=sum+fun（x,y,z）*dx*dy*dz;\nend\nend\nend\nI7=[17 sum];\n%%%以下计算18\n%初始化黎曼和\nsum=0;\n%计算黎曼和\nzmin=d（i）+0.5*H;\nzmax=d（i）+R+0.5*H;\nxmin=@（z)L/2;\nxmax=@（z）L/2+R;\n（z·（z/7-x）-v（/H+z-（）p)-v）bs-/M-（zx)=u\nymax=@（x,z）w/2+sqrt（R^2-（d（i）-z+H/2）.^2-（x-L/2）.^2）;\nxz:zp:uz=zJo\nxl=xmin(z);\nxu=xmax（z);\n30",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 31,
+      "text": "forx=xl:dx:xu\nyl=ymin（x,z);\nyu=ymax(x,z);\nfory=yl:dy:yu\nsum=sum+fun（x,y,z）*dx*dy*dz;\nend\nend\nend\nI8=[18sum];\nend\nI=I2+I3+I4+I5+I6+I7+I8;\n[peak,i]=max(I);\npeak_d=d（i);\n附录2.3\nfunction[d,I]=x4\nsigma=120；%标准差\nL=100；%潜艇长度\nR=20；%杀伤半径\nW=20；%潜艇宽度\nH=25；%高度\nsigma_z=40;%z的标准差\n11=120;\nhe=150;\nf=@（x，y）（1/（2*pi*sigma^2））*exp（-（x.^2+y.~2）/（2*sigma^2））;\nPhi=@（x）normcdf（x,0,1）;\ndm=1/（1-Phi（（11-hθ）/sigma_z））;\n%定义函数g（z）\n）/（v·（oy-z））-)dx（（dz）ubs/)up（zeus/）（z）@=z\nsigma_z^2));\n%test=integral(@(z)g_z（z),12e,2ee);\nfun=@（x，y,z）f（x,y).*g_z（z）;\nd=100:1:140;\n%I1=arrayfun（@（d）integral3(@（x,y,z)f（x,y)g_z（z）,-L/2,L/2,-W/2,\nW/2,11,d-R-H/2),d);\n%I2=[];\n%13=[];\n%I4=[];\nI5=arrayfun（@（d)integral（@（z)g_z（z),1l,d+H/2),d）;\n15=0.083734*15;\nI6=[];\n17=[];\n18=[];\nfor i=1:length（d）\ndx=0.5;\ndy=0.5;\ndz=0.5;\n%%%以下计算16\n31",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 32,
+      "text": "%初始化黎曼和\nsum=0;\n%计算黎曼和\nzmin=d（i）+0.5*H;\nzmax=d（i）+R+0.5*H;\n（·（/H+z-（T）p）-Zv）bs-Z/-（z）=uux\nxmax=@（z)-L/2;\n（·(/7+x）-v·（/H+z-（）p）-v）bs-/M-（zx）=uu\nymax=@（x,z)w/2+sqrt（R^2-（d（i)-z+H/2).^2-（x+L/2）.^2）;\nxl=xmin（z）;\nxu=xmax（z);\nforx=xl:dx:xu\ny1=ymin（x,z);\n:(zx）xew=n<\nfory=yl:dy:yu\nsum=sum+fun（x,y,z）*dx*dy*dz;\nend\nend\nend\n16=[16sum];\n%%%以下计算17\n%初始化黎曼和\nsum=0;\n%计算黎曼和\nzmin=d（i）+0.5*H;\nzmax=d（i）+R+0.5*H;\nxmin=@（z）-L/2;\nxmax=@（z)L/2;\nymin=@（x,z)-W/2-sqrt（R^2-（d（i）-z+H/2）.~2）;\n（z·（/H+z-（）p)-v）ubs+Z/M（zx）=xeu\nforz=zmin:dz:zmax\nxl=xmin（z);\n(z）xeux=nx\nforx=xl:dx:xu\ny1=ymin（x,z);\nyu=ymax(x,z);\nfory=yl:dy:yu\nsum=sum+fun（x,y,z）*dx*dy*dz;\nend\nend\nend\n17=[17sum];\n%%%以下计算I8\n%初始化黎曼和\nsum=0;\n%计算黎曼和\nzmin=d（i）+0.5*H;\nzmax=d（i）+R+0.5*H;\nxmin=@（z）L/2;\nxmax=@（z)L/2+R;\n（z（/7-x)-v（/H+z-（）p)-v）bs-/M-（zx)=uu\n（zv·（z/7-x)-v·（/H+z-（T）p)-v）zbs+Z/M（zx)=xeu\nforz=zmin:dz:zmax\n32",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 33,
+      "text": "x1=xmin（z）;\n(z）xeux=nx\nforx=xl:dx:xu\nyl=ymin（x,z);\nyu=ymax(x,z);\nfor y=yl:dy:yu\nsum=sum+fun（x,y,z）*dx*dy*dz;\nend\nend\nend\n18=[18sum];\nend\nI=I5+I6+I7+18;\n[peak,i]=max(I);\npeak_d=d（i);\n附录2.4\nfunction[d,I]=x5\nsigma=120;%标准差\nL=100；%潜艇长度\nR=20；%杀伤半径\nW=20；x潜艇宽度\nH=25；%高度\nsigma_z=40;%z的标准差\n11=120;\nhe=150;\n（（zes)/（z+x)-)dx（（esd）/)（x）=+\nPhi=@（x）normcdf（x,0,1）;\ndm=1/（1-Phi（(11-he）/sigma_z））;\n%定义函数g（z）\nz）/（zv（oy-z））-)dx（（Tdz）bs/）p（zeuTs/）（z）@=zg\nsigma_z^2));\n%test=integral（@（z)g_z（z),120,200);\nfun=@（x,y,z)f（x,y).g_z（z）;\nd=87.5:1:100;\n%I1=arrayfun（@（d)integra13（@（x,y,z)f（x,y).g_z（z),-L/2,L/2,-W/2,\nW/2,11,d-R-H/2),d);\n%I2=[];\n%13=[];\n%I4=[];\n%I5=arrayfun（@（d)integral（@（z)g_z（z),1l,d+H/2),d);\n%I5=0.083734*I5;\n16=[];\n17=[];\n18=[];\nfor i=1:length(d)\ndx=0.5;\ndy=0.5;\ndz=0.5;\n33",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 34,
+      "text": "%%%以下计算16\n%初始化黎曼和\nsum=0;\n%计算黎曼和\nzmin=11;\nzmax=d（i)+R+0.5*H;\n（·（/H+z-（T）p)-v）bs-Z/-（z）=uux\nxmax=@（z)-L/2;\nymin=@（x,z)-W/2-sqrt（R^2-（d（i)-z+H/2）.^2-（x+L/2）.~2）;\nymax=@（x,z）w/2+sqrt（R^2-（d（i）-z+H/2）.^2-（x+L/2）.^2）;\nforz=zmin:dz:zmax\nxl=xmin（z);\n(z）xeux=nx\nforx=xl:dx:xu\nyl=ymin(x,z）;\nyu=ymax(x,z);\nfory=yl:dy:yu\nsum=sum+fun（x,y,z）*dx*dy*dz;\nend\nend\nend\n16=[16sum];\n%%%以下计算I7\n%初始化黎曼和\nsum=0;\n%计算黎曼和\nzmin=11;\nzmax=d（i)+R+0.5*H;\nxmin=@（z)-L/2;\nxmax=@（z)L/2;\nymin=@（x,z）-W/2-sqrt（R2-（d（i）-z+H/2）.~2）;\n（z·（/H+z-（）p)-v）bs+Z/M（zx）=xeu\nxz:zp:uz=zo\nxl=xmin（z）;\n(z）xewx=nx\nforx=xl:dx:xu\nyl=ymin（x,z);\nyu=ymax（x,z);\nfory=yl:dy:yu\nsum=sum+fun（x,y,z）*dx*dy*dz;\nend\nend\nend\n17=[17sum];\n%%%以下计算I8\n%初始化黎曼和\nsum=0;\n%计算黎曼和\nzmin=11;\nzmax=d（i)+R+0.5*H;\nxmin=@（z)L/2;\nxmax=@（z)L/2+R;\n（z·（/-x）-v·（/H+z-（）p)-v）bs-/M-（zx)=u\nymax=@（x,z)w/2+sqrt（R^2-（d（i)-z+H/2).^2-(x-L/2).~2）;\n34",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 35,
+      "text": "xl=xmin（z);\nxu=xmax（z);\nforx=xl:dx:xu\nyl=ymin（x,z);\nyu=ymax(x,z);\nfory=yl:dy:yu\nsum=sum+fun（x,y,z）*dx*dy*dz;\nend\nend\nend\n18=[18sum];\nend\nI=I6+I7+18;\n[peak,i]=max(I);\npeak_d=d(i);\n附录2.5\nfunction[d,I,peak,peak_d]=x6\nsigma=120;%标准差\nL=100；%潜艇长度\nR=20；%杀伤半径\nW=20；%潜宽度\nH=25;%高度\nsigma_z=40；%z的标准差\n11=120;\nhe=150;\nf=@（x，y）（1/（2*pi*sigma^2））*exp（-（x.^2+y.^2）/（2*sigma^2））;\nPhi=@（x）normcdf（x,0,1）;\ndm=1/(1-Phi（(11-ho)/sigma_z）);\n%定义函数g（z）\nz）/（Zv·（oy-z））-)dx（（Tdz）ubs/t）up（zeuTs/t）（z)@=zg\nsigma_z^2));\n%test=integral(@（z)g_z（z),120,2e0);\nfun=@（x，y,z)f（x，y).*g_z（z);\nd=156:0.01:160;\nI1=arrayfun（@（d）integral3（@（x,y，z）f（x,y).*g_z（z）,-L/2,L/2,-W/2,\nW/2,11,d-R-H/2),d);\n12=[];\nI3=[];\nI4=[];\nI5=arrayfun（@（d)integral（@（z)g_z（z),d-H/2,d+H/2),d);\nI5=0.083734*I5;\nI6=[];\n17=[];\n18=[];\nfori=1:length(d)\ndx=0.5;\n35",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 36,
+      "text": "dy=0.5;\ndz=0.5;\n%%%以下计算I2\n%初始化黎曼和\nsum=0;\n%计算黎曼和\nzmin=d（i)-R-0.S*H;\nzmax=d（i)-0.5*H;\nxmin=@（z)-L/2-sqrt（R2-（d（i）-z-H/2）.^2）;\nxmax=@（z)-L/2;\nymin=@（x,z)-W/2-sqrt（R^2-（d（i）-z-H/2）.~2-（x+L/2).^2）;\n（（/+x)-v（/H-z-（）p)-）bs+/M（zx)=xeu\nxez:zp:uwz=zJo\nxl=xmin（z）;\nxu=xmax(z);\nforx=xl:dx:xu\nyl=ymin（x,z);\n（zx）xewA=n\nfory=y1:dy:yu\nsum=sum+fun（x,y,z）*dx*dy*dz;\nend\nend\nend\nI2=[I2sum];\n%%%以下计算I3\n%初始化黎曼和\nsum=0;\n%计算黎曼和\nzmin=d（i）-R-0.5*H;\nzmax=d（i)-0.5*H;\nxmin=-0.S*L;\nxmax=0.5*L;\n（·（/H-z-（）p)-zv）bs-Z/M-（z）=uu\n（·（/H-z-（）p）-v）bs+/M（z）@=xeu\nsum=0;\nxl=xmin;\nxeux=nx\nforx=xl:dx:xu\nyl=ymin（z);\nyu=ymax(z);\nfory=yl:dy:yu\nsum=sum+fun（x,y,z）*dx*dy*dz;\nend\nend\nend\nI3=[13sum];\n%%%以下计算I4\n%初始化黎曼和\nsum=0;\n%计算黎曼和\nzmin=d（i)-R-0.5*H;\nzmax=d（1)-0.5*H;\nxmin=@（z)L/2;\n36",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 37,
+      "text": "（2v·（/H-z-（）p）-v）bs+/7（z）@=xeux\n（·(/7-x）-·（/H-z-（）p）-v）bs-/M-（zx）@=uu\nymax=@（x,z)w/2+sqrt（R^2-（d（i)-z-H/2).^2-（x-L/2).^2）;\nsum=0;\nxez:zp:uz=zo\nxl=xmin(z);\nxu=xmax（z);\nforx=xl:dx:xu\nyl=ymin（x,z）;\nyu=ymax（x,z);\nfory=yl:dy:yu\nsum=sum+fun（x,y,z）*dx*dy*dz;\nend\nend\nend\nI4=[I4sum];\n%%%以下计算16\n%初始化黎曼和\nsum=0;\n%计算黎曼和\nzmin=d（i）+0.5*H;\nzmax=d（i）+R+0.5*H;\n（z·（z/H+z-（T）p）-zv）bs-Z/-（z）@=uux\nxmax=@（z)-L/2;\n（z·（/7+x）-（/H+z-（）p)-v）ubs-/M-（zx)=uu\n（·（/+x）-v·（z/H+z-（）p)-zv）bs+Z/M（zx)=xe\nxl=xmin（z）;\n(z)xewx=nx\nforx=xl:dx:xu\nyl=ymin（x,z）;\nyu=ymax（x,z);\nfory=yl:dy:yu\nsum=sum+fun（x,y,z）*dx*dy*dz;\nend\nend\nend\nI6=[I6sum];\n%%%以下计算17\n%初始化黎曼和\nsum=0;\n%计算黎曼和\nzmin=d（i）+0.5*H;\nzmax=d（i）+R+0.5*H;\nxmin=@（z)-L/2;\nxmax=@（z）L/2;\n（（/H+z-（）p)-v）bs-/M-（zx)=uu\nymax=@（x,z）w/2+sqrt（R^2-（d（i）-z+H/2).^2）;\nxewz:zp:uwz=zJo\nxl=xmin（z）;\n(z）xeux=nx\nforx=xl:dx:xu\nyl=ymin（x,z）;\nyu=ymax(x,z);\n37",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 38,
+      "text": "fory=yl:dy:yu\nsum=sum+fun（x,y,z）*dx*dy*dz;\nend\nend\nend\nI7=[17sum];\n%%%以下计算I8\n%初始化黎曼和\nsum=0;\n%计算黎曼和\nzmin=d（i）+0.5*H;\nzmax=d（i）+R+0.5*H;\nxmin=@（z)L/2;\nxmax=@（z)L/2+R;\n（z·（z/7-x）-v·（/H+z-（）p)-v）ubs-/M-（zx)=uu\n（zv（z/7-x)-v（/H+z-（）p)-v）bs+Z/M（zx)=xeu\nxez:zp:uTwz=zJo\nxl=xmin（z）;\nxu=xmax（z);\nforx=x1:dx:xu\nyl=ymin（x,z);\nyu=ymax（x,z);\nfory=yl:dy:yu\nSum=sum+fun（x,y,z)*dx*dy*dz;\nend\npua\nend\n18=[18 sum];\nend\nI=I1+I2+I3+I4+IS+I6+I7+I8;\n[peak,i]=max(I);\npeak_d=d（i);\n附录3\n第三问求解代码：\nfunction[d,I,peak,peak_d]=x7\nsigma=120;%标准差\nL=100；%潜艇长度\nR=20；%杀伤半径\nW=20；%潜艇宽度\nH=25;%高度\nsigma_z=4e;%z的标准差\n11=120;\nhe=150;\na=L+2*R;\nb=W+2*R;\nf=@（x，y）（1/（2*pi*sigma^2））*exp（-（x.^2+y.~2）/（2*sigma^2））;\n38",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 39,
+      "text": "Phi=@（x）normcdf（x，0，1）;\ndm=1/（1-Phi（（11-hθ)/sigma_z）);\n%定义函数g（z）\nz）/（zv（oy-z））-)dx（（Tdz）ubs/）up（zeuts/t）（z）@=z\nsigma_z^2));\n%test=integral（@（z)g_z（z),120,200);\nfun=@（x,y,z)f（x,y).*g_z（z);\nd=152.5:1:165;\nI11=arrayfun（@（d）integral3（@（x,y,z）f（x,y).*g_z（z）,-L/2,L/2,-W/2,\nW/2,11,d-R-H/2),d);\nI12=arrayfun（@（d)integral3（@（x,y,z)f（x,y).*g_z（z),a-L/2,a+L/2,b-W/2,\nb+W/2,11,d-R-H/2),d);\nI13=arrayfun（@（d)integral3（@（x,y,z）f（x,y).*g_z（z）,-L/2,+L/2,b-W/2,\nb+W/2,11,d-R-H/2),d);\nI14=arrayfun（@（d)integral3（@（x,y,z)f（x,y).*g_z（z),a-L/2,a+L/2,-W/2,\n+W/2,11,d-R-H/2),d);\nI1=I11+I12+I13+I14;\nI21=[];\n122=[];\nI23=[];\nI24=[];\nI31=[];\n132=[];\n133=[];\nI34=[];\nI41=[];\nI42=[];\nI43=[];\nI44=[];\nI511=[];\nI512=[];\nI513=[];\nI514=[];\nI521=[];\nI522=[];\n1523=[];\nI524=[];\nI531=[];\n1532=[];\n1533=[];\nI534=[];\n161=[];\n162=[];\n163=[];\nI64=[];\n171=[];\n172=[];\n173=[];\n174=[];\n181=[];\n182=[];\n183=[];\nI84=[];\n39",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 40,
+      "text": "for i=1:length(d)\ndx=1;\ndy=1;\ndz=1;\n%%%以下计算121\n%初始化黎曼和\nsum=0;\n%计算黎曼和\nzmin=d（i)-R-0.5*H;\nzmax=d（i)-0.5*H;\n（·（/H-z-（）p)-v）bs-/-（z）=uux\nxmax=@（z)-L/2;\nymin=@（x,z)-W/2-sqrt（R^2-（d（i）-z-H/2）.~2-（x+L/2).^2）;\nymax=@（x,z)w/2+sqrt（R^2-（d（i）-z-H/2）.^2-（x+L/2）.^2）;\nxz:zp:uwz=zo\nxl=xmin（z);\nxu=xmax(z);\nforx=xl:dx:xu\nyl=ymin（x,z);\nyu=ymax（x,z);\nfory=yl:dy:yu\nsum=sum+fun（x,y,z）*dx*dy*dz;\nend\nend\nend\nI21=[I21 sum];\n%%%以下计算122\n%初始化黎曼和\nsum=0;\n%计算黎曼和\nzmin=d（i)-R-0.5*H;\nzmax=d（i）-0.5*H;\nxmin=@（z)a-L/2-sqrt（R^2-（d（i）-z-H/2).~2）;\nxmax=@（z)a-L/2;\n（zv·（z/7+x)-Zv·(/H-z-（T）p)-v）ubs-z/M-q（zx）=uu\n（z（/7+x）-Zv（z/H-z-（）p)-Zv）bs+/M+q（zx)=xeu\nforz=zmin:dz:zmax\nxl=xmin（z）;\n(z）xeux=nx\nforx=xl:dx:xu\nyl=ymin（x,z);\nyu=ymax（x,z);\nfory=yl:dy:yu\nsum=sum+fun（x,y,z）*dx*dy*dz;\nend\nend\nend\nI22=[I22 sum];\n%%%以下计算123\n%初始化黎曼和\nsum=0;\n%计算黎曼和\nzmin=d（i)-R-0.5*H;\nzmax=d（i)-0.5*H;\nxmin=@（z)-L/2-sqrt（R2-（d（i)-z-H/2).^2）;\n40",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 41,
+      "text": "xmax=@（z)-L/2;\n（z·（z/+x)-v·（z/H-z-（）p)-v）bs-/M-q（zx)=uu\n（zv·（z/7+x）-v（/H-z-（）p)-v）bs+Z/M+q（zx）=xeu\nforz=zmin:dz:zmax\nxl=xmin（z);\n(z)xeux=nx\nforx=xl:dx:xu\nyl=ymin（x,z);\nyu=ymax（x,z);\nfory=yl:dy:yu\nsum=sum+fun（x,y,z）·dx*dy*dz;\nend\nend\nend\nI23=[I23sum];\n%%%以下计算I24\n%初始化黎曼和\nsum=0;\n%计算黎曼和\nzmin=d（i)-R-0.5*H;\nzmax=d（i)-0.5*H;\nxmin=@（z)a-L/2-sqrt（R^2-（d（i）-z-H/2）.2）;\nxmax=@（z)a-L/2;\n（（/+x）-（/H-z-（）p)-v）bs-/M-（zx）=uu\n（z·（/7+x）-Z（/H-z-（）p)-v）ubs+Z/M+（zx)=xeu\nxl=xmin（z);\nxu=xmax（z);\nforx=xl:dx:xu\nyl=ymin（x,z);\nyu=ymax（x,z);\nfor y=yl:dy:yu\nsum=sum+fun（x,y,z）*dx*dy*dz;\nend\nend\nend\nI24=[I24sum];\n%%%以下计算I31\n%初始化黎曼和\nsum=0;\n%计算黎曼和\nzmin=d（i)-R-0.5*H;\nzmax=d（i）-0.5*H;\nxmin=-0.5*L;\nxmax=0.5*L;\n（z·（/H-z-（T）p）-v）bs-/M-（z）=uu\n（z·（z/H-z-（）p)-Zv）ubs+Z/M（z）=xeu\nsum=0;\nxz:zp:uz=zo\nxl=xmin;\nfxeux=nx\nforx=xl:dx:xu\nyl=ymin(z);\nyu=ymax(z);",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 42,
+      "text": "fory=yl:dy:yu\nsum=sum+fun（x,y,z）*dx*dy*dz;\nend\nend\nend\nI31=[I31 sum];\n%%%以下计算I32\n%初始化黎曼和\nsum=0;\n%计算黎曼和\nzmin=d（i)-R-0.5*H;\nzmax=d（i)-0.5*H;\nxmin=a-0.5*L;\nxmax=a+0.5*L;\nymin=@（z)b-W/2-sqrt（R^2-（d（i)-z-H/2）.~2）;\n（·（z/H-z-（）p)-v）bs+Z/M+q（z）=xeu\nsum=0;\nforz=zmin:dz:zmax\nxl=xmin;\nxeux=nx\nforx=xl:dx:xu\nyl=ymin(z);\nyu=ymax(z);\nfory=yl:dy:yu\nsum=sum+fun（x,y,z）*dx*dy*dz;\nend\nend\nend\nI32=[I32 sum];\n%%%以下计算133\n%初始化黎曼和\nsum=0;\n%计算黎曼和\nzmin=d（i)-R-0.5*H;\nzmax=d（i）-0.5*H;\nxmin=-0.5*L;\nxmax=0.S*L;\nymin=@（z)b-W/2-sqrt（R^2-（d（i）-z-H/2).^2）;\nymax=@（z)b+W/2+sqrt（R^2-（d（i）-z-H/2).~2）;\nsum=0;\nx0z:zp:uwz=zJo\nxl=xmin;\nfxeux=nx\nforx=xl:dx:xu\nyl=ymin(z);\nyu=ymax(z);\nfory=yl:dy:yu\nsum=sum+fun（x,y,z)*dx*dy*dz;\nend\nend\nend\nI33=[133 sum];\n%%%以下计算134\n42",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 43,
+      "text": "%初始化黎曼和\nsum=0;\n%计算黎曼和\nzmin=d（i)-R-0.5*H;\nzmax=d（i）-0.5*H;\nS0-e=uux\nxmax=a+0.5*L;\n（zv·（/H-z-（T）p)-v）bs-/M-（z）=uu\n（z·（/H-z-（T）p)-）ubs+/M+（z）=xeu\nsum=0;\nforz=zmin:dz:zmax\nxl=xmin;\nxeux=nx\nforx=x1:dx:xu\nyl=ymin(z);\nyu=ymax(z);\nfory=yl:dy:yu\nsum=sum+fun（x,y,z）*dx*dy*dz;\nend\nend\nend\nI34=[I34sum];\n%%%以下计算I41\n%初始化黎曼和\nsum=0;\n%计算黎曼和\nzmin=d（i）-R-0.5*H;\nzmax=d（i）-0.5*H;\nxmin=@（z）L/2;\n（zv·（z/H-z-（）p）-v）ubs+Z/（z）=xeux\nymin=@（x,z)-W/2-sqrt（R^2-（d（i）-z-H/2）.^2-（x-L/2).~2）;\nymax=@（x,z）w/2+sqrt（R^2-（d（i）-z-H/2）.^2-（x-L/2).^2）;\nsum=0;\nxz:zp:uz=zo\nxl=xmin（z）;\n(z)xeux=nx\nforx=xl:dx:xu\nyl=ymin(x,z);\n（zx）xew<=n\nfory=yl:dy:yu\nsum=sum+fun（x,y,z）*dx*dy*dz;\nend\nend\nend\nI41=[I41 sum];\n%%%以下计算I42\n%初始化黎曼和\nsum=0;\n%计算黎曼和\nzmin=d（i)-R-0.5*H;\nzmax=d（i)-0.5*H;\nxmin=@（z)a+L/2;\nxmax=@（z)a+L/2+sqrt（R^2-（d（i）-z-H/2).^2）;\n（·（/-x）-·（/H-z-（）p）-）bs-/M-q（zx）=uu\n（zv·（z/7-x）-v（/H-z-（T）p)-v）bs+Z/M+q（zx）=xeu\nsum=0;\n43",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 44,
+      "text": "x:p:uz=zo\nxl=xmin（z）;\nxu=xmax（z);\nforx=xl:dx:xu\nyl=ymin（x,z);\nyu=ymax(x,z);\nfory=yl:dy:yu\nsum=sum+fun（x,y,z）*dx*dy*dz;\nend\nend\nend\nI42=[I42sum];\n%%%以下计算I43\n%初始化黎曼和\nsum=0;\n%计算黎曼和\nzmin=d（i）-R-0.S*H;\nzmax=d（i)-0.5*H;\nxmin=@（z)L/2;\n（z·(/H-z-（T）p)-v）bs+Z/1（z）=xeux\nymin=@（x,z）b-W/2-sqrt（R^2-（d（i)-z-H/2）.^2-（x-L/2）.^2）;\nymax=@（x,z）b+W/2+sqrt（R2-（d（i)-z-H/2).^2-（x-L/2）.~2）;\nsum=0;\nxewz:zp:uwz=zo\nxl=xmin（z）;\nxu=xmax(z);\nforx=xl:dx:xu\nyl=ymin（x,z);\n（zx）xew<=n\nfory=yl:dy:yu\nsum=sum+fun（x,y,z）*dx*dy*dz;\nend\nend\nend\nI43=[I43 sum];\n%%%以下计算144\n%初始化黎曼和\nsum=0;\n%计算黎曼和\nzmin=d（i)-R-0.5*H;\nzmax=d（i)-0.5*H;\nxmin=@（z)a+L/2;\n（zv（/H-z-（）p）-）bs+Z/+e（z）=xeux\n（·(/7-x）-（/H-z-（）p)-）bs-/M-（2x）@=uu\n（z（z/7-x)-Z·（z/H-z-（）p)-z）bs+Z/M（zx)=xeu\nsum=0;\nxl=xmin（z）;\n(z）xeux=nx\nforx=xl:dx:xu\nyl=ymin（x,z);\nyu=ymax（x,z);\nfory=yl:dy:yu\nsum=sum+fun（x,y,z)*dx*dy*dz；\n44",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 45,
+      "text": "end\nend\nend\nI44=[I44 sum];\n%%%以下计算1511\n%初始化黎曼和\nsum=0;\n%计算黎曼和\nzmin=d（i)-0.5*H;\nzmax=d（i）+0.5*H;\nxmin=-L/2-R;\nxmax=-L/2;\n（z·（z/7-x）-v）bs-/M-（x)=uu\n（z（/-x）-z）bs+Z/M（x)=xeu\nsum=0;\nxl=xmin;\nxewx=nx\nforx=xl:dx:xu\nyl=ymin（x);\nyu=ymax(x);\nfory=yl:dy:yu\nsum=sum+fun（x，y,z）*dx*dy*dz;\nend\nend\nend\n1511=[I511 sum];\n%%%以下计算I512\n%初始化黎曼和\nsum=0;\n%计算黎曼和\nzmin=d（i）-0.5*H;\nzmax=d（i）+0.5*H;\nxmin=a-L/2-R;\nxmax=a-L/2;\n（（/7-x）-v）bs-/M-q（x）=u\n（z(z/7-x)-）bs+/M+q（x）=xe\nsum=0;\nforz=zmin:dz:zmax\nxl=xmin;\nxewx=nx\nforx=x1:dx:xu\nyl=ymin(x);\nyu=ymax(x);\nfory=yl:dy:yu\nsum=sum+fun（x,y,z）*dx*dy*dz;\nend\nend\nend\nI512=[I512 sum];\n%%%以下计算I513\n%初始化黎曼和\nsum=0;\n%计算黎曼和\nzmin=d（i)-0.5*H;\nzmax=d（i)+0.5*H;\n45",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 46,
+      "text": "xmin=-L/2-R;\nxmax=-L/2;\nymin=@（x)b-w/2-sqrt（R^2-（x-L/2）.^2）;\n（z（z/7-x）-zv）bs+Z/M+q（x）=xeu\nsum=0;\nxl=xmin;\nxeux=nx\nforx=xl:dx:xu\nyl=ymin（x);\nyu=ymax(x);\nfor y=yl:dy:yu\nsum=sum+fun（x,y,z）*dx*dy*dz;\nend\nend\nend\nI513=[I513 sum];\n%%%以下计算1514\n%初始化黎曼和\nsum=0;\n%计算黎曼和\nzmin=d（i）-0.5*H;\nzmax=d（i）+0.5*H;\nxmin=a-L/2-R;\n/-e=xeux\n（z·（/7-x）-v）bs-/M-（x）=uu\n（（/7-x)-z）bs+Z/M（x）=xe\nsum=0;\nxl=xmin;\nxeux=nx\nforx=x1:dx:xu\nyl=ymin（x);\n（x）xeu=n<\nfory=yl:dy:yu\nsum=sum+fun（x,y,z）*dx*dy*dz;\nend\nend\nend\nI514=[I514sum];\n%%%以下计算1521\n%初始化黎曼和\nsum=0;\n%计算黎曼和\nzmin=d（i）-0.5*H;\nzmax=d（1)+0.5*H;\nxmin=-L/2;\nxmax=L/2;\nymin=-W/2-R;\nymax=w/2+R;\nsum=0;\nforz=zmin:dz:zmax\nxl=xmin;\nxu=xmax;\nforx=xl:dx:xu\nyl=ymin;\n9",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 47,
+      "text": "yu=ymax;\nfory=yl:dy:yu\nsum=sum+fun（x,y,z）*dx*dy*dz;\nend\nend\nend\nI521=[1521 sum];\n%%%以下计算1522\n%初始化黎曼和\nsum=0;\n%计算黎曼和\nzmin=d（i）-0.5*H;\nzmax=d（i）+0.5*H;\nxmin=a-L/2;\n/+e=xeux\nymin=b-W/2-R;\nymax=b+W/2+R;\nsum=0;\nforz=zmin:dz:zmax\nxl=xmin;\nfxeux=nx\nforx=x1:dx:xu\nyl=ymin;\nyu=ymax;\nfory=yl:dy:yu\nsum=sum+fun（x,y,z）*dx*dy*dz;\nend\nend\nend\nI522=[I522 sum];\n%%%以下计算1523\n%初始化黎曼和\nsum=0;\n%计算黎曼和\nzmin=d（i）-0.5*H;\nzmax=d（i）+0.5*H;\nxmin=-L/2;\nxmax=L/2;\nymin=b-W/2-R;\n+Z/M+q=xeu\nsum=0;\nforz=zmin:dz:zmax\nxl=xmin;\nxewx=nx\nforx=xl:dx:xu\nyl=ymin;\nyu=ymax;\nfory=yl:dy:yu\nsum=sum+fun（x,y,z）*dx*dy*dz;\nend\nend\nend\nI523=[I523 sum];\n%%以下计算15224\n%初始化黎曼和\nsum=0;\n%计算黎曼和",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 48,
+      "text": "zmin=d（i）-0.5*H;\nzmax=d（i）+0.5*H;\nxmin=a-L/2;\nxmax=a+L/2;\nymin=-W/2-R;\n+/M=xeu\nsum=0;\nxz:zp:uz=zJo\nxl=xmin;\nxeux=nx\nforx=xl:dx:xu\nyl=ymin;\nyu=ymax;\nfory=yl:dy:yu\nsum=sum+fun（x,y,z）·dx*dy*dz;\nend\nend\nend\nI524=[I524sum];\n%%%以下计算1531\n%初始化黎曼和\nsum=0;\n%计算黎曼和\nzmin=d（i）-0.5*H;\nzmax=d（i）+0.5*H;\nxmin=L/2;\nxmax=L/2+R;\nymin=@（x)-W/2-sqrt（R^2-（x-L/2).^2）;\nymax=@（x）w/2+sqrt（R^2-（x-L/2).^2）;\nsum=0;\nxl=xmin;\nfxeux=nx\nforx=x1:dx:xu\nyl=ymin(x);\nyu=ymax(x);\nfory=yl:dy:yu\nsum=sum+fun（x,y,z）·dx*dy*dz;\nend\nend\nend\nI531=[1531 sum];\n%%%以下计算I532\n%初始化黎曼和\nsum=0;\n%计算黎曼和\nzmin=d（i）-0.5*H;\nzmax=d（i）+0.5*H;\nxmin=a+L/2;\n+/+=xex\nymin=@（x）b-W/2-sqrt（R^2-（x-L/2).^2）;\n（z（/7-x）-）bs+/M+q（x）=xe\nsum=0;\nforz=zmin:dz:zmax\nxl=xmin;\nxu=xmax;\nforx=xl:dx:xu\n48",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 49,
+      "text": "yl=ymin（x);\nyu=ymax(x);\nfory=yl:dy:yu\nsum=sum+fun（x,y,z）*dx*dy*dz;\nend\nend\nend\nI532=[I532 sum];\n%%%以下计算1533\n%初始化黎曼和\nsum=0;\n%计算黎曼和\nzmin=d（i）-0.5*H;\nzmax=d（i）+0.5*H;\nxmin=L/2;\nxmax=L/2+R;\n（（z/7-x)-）bs-Z/M-q（x）=u\nymax=@（x)b+w/2+sqrt（R^2-（x-L/2).~2）;\nsum=0;\nxl=xmin;\nxewx=nx\nforx=xl:dx:xu\nyl=ymin（x);\n（x）xeu=n<\nfory=yl:dy:yu\nsum=sum+fun（x,y,z）*dx*dy*dz;\nend\nend\nend\nI533=[I533 sum];\n%%%以下计算1534\n%初始化黎曼和\nsum=0;\n%计算黎曼和\nzmin=d（i)-0.5*H;\nzmax=d（i）+0.5*H;\nxmin=a+L/2;\n+7+=xx\n（（z/7-x)-v）bs-Z/M-（x)=uu\n（zv（z/7-x)-v）ubs+/M（x）=xeu\nsum=0;\nxwz:zp:uz=zo\nxl=xmin;\nfxeux=nx\nforx=xl:dx:xu\nyl=ymin(x);\nyu=ymax(x);\nfory=yl:dy:yu\nsum=sum+fun（x,y,z）*dx*dy*dz;\nend\nend\nend\n1534=[1534sum];\n%%%以下计算161\n%初始化黎曼和\n6",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 50,
+      "text": "sum=0;\n%计算黎曼和\nzmin=d（i）+0.5*H;\nzmax=d（i）+R+0.5*H;\n（·（/H+z-（）p）-v）bs-/-（z）@=uux\nxmax=@（z)-L/2;\n（z·（/7+x）-v（/H+z-（）p)-v）bs-/M-（zx)=u\nymax=@（x,z）w/2+sqrt（R^2-（d（i）-z+H/2).^2-（x+L/2).^2）;\nfor z=zmin:dz:zmax\nxl=xmin（z);\n(z）xeux=nx\nforx=xl:dx:xu\nyl=ymin（x,z);\nyu=ymax(x,z);\nfory=yl:dy:yu\nsum=sum+fun（x,y,z）*dx*dy*dz;\nend\nend\nend\nI61=[I61 sum];\n%%%以下计算I62\n%初始化黎曼和\nsum=0;\n%计算黎曼和\nzmin=d（i)+0.5*H;\nzmax=d（i）+R+0.5*H;\nxmin=@（z）a-L/2-sqrt（R^2-（d（i）-z+H/2）.^2）;\nxmax=@（z)a-L/2;\n（zv·（/7+x）-（/H+z-（T）p)-v）zubs-/M-q（zx）=u\n（zv·（z/7+x）-·（/H+z-（）p)-v）bs+Z/M+q（zx）=xe\nforz=zmin:dz:zmax\nxl=xmin（z);\nxu=xmax（z);\nforx=xl:dx:xu\nyl=ymin（x,z);\nyu=ymax（x,z);\nfory=yl:dy:yu\nsum=sum+fun（x,y,z）*dx*dy*dz;\nend\nend\nend\nI62=[I62 sum];\n%%%以下计算163\n%初始化黎曼和\nsum=0;\n%计算黎曼和\nzmin=d（i）+0.5*H;\nzmax=d（i）+R+0.5*H;\n（·（/H+z-（T）p)-v）bs-/-（z）@=uux\nxmax=@（z)-L/2;\n（·（z/7+x）-zv·（/H+z-（）p）-zv）bs-/M-q（zx）=uu\n（·（/7+x)-v·（/H+z-（）p)-v）bs+/M+q（zx）=xeu\nxz:zp:uz=zo\nx1=xmin（z);\n50",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 51,
+      "text": "xu=xmax(z);\nforx=x1:dx:xu\nyl=ymin（x,z）;\nyu=ymax（x,z);\nfory=yl:dy:yu\nsum=sum+fun（x,y,z）*dx*dy*dz;\nend\nend\nend\nI63=[I63 sum];\n%%%以下计算164\n%初始化黎曼和\nsum=0;\n%计算黎曼和\nzmin=d（i）+0.5*H;\nzmax=d（i）+R+0.5*H;\nxmin=@（z)a-L/2-sqrt（R^2-（d（i）-z+H/2).^2）;\nxmax=@（z）a-L/2;\nymin=@（x,z）-W/2-sqrt（R^2-（d（i）-z+H/2）.^2-（x+L/2).^2）;\n（zv·（z/7+x)-v·(z/H+z-（T）p)-Zv）ubs+Z/M（zx)=xeu\nxeuz:zp:uwz=zJo\nxl=xmin（z);\n(z)xeux=nx\nforx=xl:dx:xu\nyl=ymin（x,z);\nyu=ymax(x,z);\nfory=yl:dy:yu\nsum=sum+fun（x,y,z）*dx*dy*dz;\nend\nend\nend\n164=[I64sum];\n%%%以下计算171\n%初始化黎曼和\nsum=0;\n%计算黎曼和\nzmin=d（i）+0.5*H;\nzmax=d（i）+R+θ.5*H;\nxmin=@（z)-L/2;\nxmax=@（z)L/2;\n（·（/H+z-（）p)-v）bs-/M-（zx)=u\n（zv·（/H+z-（T）p)-v）ubs+Z/M（zx）@=xeu\nxl=xmin（z）;\n(z）xeux=nx\nforx=xl:dx:xu\nyl=ymin（x,z);\nyu=ymax（x,z）;\nfory=yl:dy:yu\nsum=sum+fun（x,y,z）*dx*dy*dz;\nend\npua\nend\n171=[171 sum];\n51",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 52,
+      "text": "%%%以下计算172\n%初始化黎曼和\nsum=0;\n%计算黎曼和\nzmin=d（i)+0.5*H;\nzmax=d（i）+R+0.5*H;\nxmin=@（z)a-L/2;\nxmax=@（z）a+L/2;\n（zv·（/H+z-（）p)-）bs-/M-q（zx）=uu\n（z·（z/H+z-（）p)-Zv）ubs+Z/M+q（zx)=xeu\nforz=zmin:dz:zmax\nxl=xmin（z);\n(z）xeux=nx\nforx=xl:dx:xu\nyl=ymin(x,z）;\nyu=ymax(x,z);\nfory=yl:dy:yu\nsum=sum+fun（x,y,z）*dx*dy*dz;\nend\nend\nend\nI72=[I72sum];\n%%%以下计算173\n%初始化黎曼和\nsum=0;\n%计算黎曼和\nzmin=d（i）+0.5*H;\nzmax=d（i）+R+0.5*H;\nxmin=@（z）-L/2;\nxmax=@（z)L/2;\n（z·（z/H+z-（）p)-v）bs-Z/M-q（zx）=u\n（z（z/H+z-（）p)-v）ubs+Z/M+q（zx）=xeu\nxz:p:uwz=zo\nxl=xmin（z）;\nxu=xmax（z);\nforx=xl:dx:xu\nyl=ymin(x,z);\nyu=ymax（x,z);\nfory=yl:dy:yu\nsum=sum+fun（x,y,z）*dx*dy*dz;\nend\nend\nend\n173=[173sum];\n%%%以下计算174\n%初始化黎曼和\nsum=e;\n%计算黎曼和\nzmin=d（i）+0.5*H;\nzmax=d（i）+R+0.5*H;\nxmin=@（z)a-L/2;\nxmax=@（z）a+L/2;\n（z（/H+z-（）p）-v）bs-/M-（zx)=u\nymax=@（x,z）w/2+sqrt（R^2-（d（i）-z+H/2）.^2）;\nxz:p:uwz=zo\nxl=xmin（z）;\n52",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 53,
+      "text": "xu=xmax(z);\nforx=x1:dx:xu\nyl=ymin（x,z）;\nyu=ymax（x,z);\nfory=yl:dy:yu\nsum=sum+fun（x,y,z）*dx*dy*dz;\nend\nend\nend\nI74=[I74 sum];\n%%%以下计算181\n%初始化黎曼和\nsum=0;\n%计算黎曼和\nzmin=d（i）+0.5*H;\nzmax=d（i)+R+0.5*H;\nxmin=@（z)L/2;\nxmax=@（z)L/2+R;\nymin=@（x,z）-W/2-sqrt（R^2-（d（i）-z+H/2）.^2-（x-L/2).^2）;\n（zv·（z/7-x)-v·(z/H+z-（）p)-v）bs+Z/M（zx)=xeu\nx1=xmin（z);\nxu=xmax(z);\nforx=x1:dx:xu\nyl=ymin（x,z);\n（zx)xew=n\nfory=yl:dy:yu\nsum=sum+fun（x,y,z）*dx*dy*dz;\nend\nend\nend\nI81=[181 sum];\n%以下计算I82\n%初始化黎曼和\nsum=0;\n%计算黎曼和\nzmin=d（i）+0.5*H;\nzmax=d（i）+R+θ.5*H;\nxmin=@（z)a+L/2;\nxmax=@（z)a+L/2+R;\n（zv·（z/7-x)-v·（/H+z-（）p)-v）ubs-/M-q（zx）=u\n（·（z/-x)-v·（z/H+z-（）p）-v）bs+Z/M+q（zx）=xeu\nxl=xmin（z）;\nxu=xmax（z);\nforx=xl:dx:xu\nyl=ymin（x,z);\nyu=ymax（x,z）;\nfory=yl:dy:yu\nsum=sum+fun（x,y,z）*dx*dy*dz;\nend\npua\nend\nI82=[I82 sum];\n53",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 54,
+      "text": "%%%以下计算183\n%初始化黎曼和\nsum=0;\n%计算黎曼和\nzmin=d（i)+0.5*H;\nzmax=d（i）+R+0.5*H;\nxmin=@（z)L/2;\nxmax=@（z)L/2+R;\n（zv（/7-x)-v（/H+z-（）p)-v）bs-/M-q（zx）@=uu\n（zv·（z/7-x)-v·（/H+z-（）p)-zv）bs+Z/M+q（zx）=xe\nforz=zmin:dz:zmax\nxl=xmin（z);\n（z）xeux=nx\nforx=xl:dx:xu\nyl=ymin(x,z）;\nyu=ymax(x,z);\nfory=yl:dy:yu\nsum=sum+fun（x,y,z）*dx*dy*dz;\nend\nend\nend\nI83=[I83 sum];\n%%%以下计算I84\n%初始化黎曼和\nsum=0;\n%计算黎曼和\nzmin=d（i）+0.5*H;\nzmax=d（i）+R+0.5*H;\nxmin=@（z)a+L/2;\nxmax=@（z)a+L/2+R;\n（z·（z/7-x）-v（/H+z-（）p)-v）bs-/M-（zx)=uu\n（zv·（z/7-x)-v（z/H+z-（）p)-zv）bs+Z/M（zx）=xeu\nxz:p:uz=zo\nxl=xmin（z）;\nxu=xmax（z);\nforx=x1:dx:xu\nyl=ymin(x,z);\nyu=ymax（x,z);\nfory=yl:dy:yu\nsum=sum+fun（x,y,z）*dx*dy*dz;\nend\nend\nend\n184=[I84 sum];\nend\nI=I11+4*I12+2*I13+2*I14+I21+4*I22+2*I23+2*I24+I31+4*I32+2*I33+2*I34+I41+4*I42+2*\nI43+2*I44+I511+4*I512+2*I513+2*IS14+I521+4*I522+2*I523+2*I524+I531+4*I532+2*I533\n+2*I534+I61+4*I62+2*I63+2*I64+I71+4*I72+2*I73+2*I74+I81+4*I82+2*I83+2*I84;\n[peak,i]=max(I);\npeak_d=d（i);\nI2=integral2（f，-L/2,L/2,-W/2-R,W/2+R）;\n%计算第三个积分项（右侧部分）\n54",
+      "method": "full-page-ocr"
+    },
+    {
+      "page": 55,
+      "text": "I3=integra12（f，L/2,R+L/2,@（x)-W/2-sqrt（R^2-（x-L/2）.^2),\n@（x）W/2+sqrt（R^2-（x-L/2).^2)）;\n%计算总积分\np00=（1/（2*pi*sigma^2））*（I1+I2+I3）;\n%显示结果\ndisp（[The probability p(0,0)is:,num2str(p0o）]);",
+      "method": "full-page-ocr"
+    }
+  ]
+}
